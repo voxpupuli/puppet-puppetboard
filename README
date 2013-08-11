@@ -2,15 +2,33 @@ puppetboard
 
 This is the puppetboard module.
 
+Usage
+-----
+
+Basically just pick a user and go.
+
+
+    class { 'puppetboard': }
+
+
+    class { 'puppetboard': 
+      user => 'pboard',
+    }
+
+
 License
 -------
+
+Apache 2
 
 
 Contact
 -------
 
+krum.spencer@gmail.com
+
 
 Support
 -------
 
-Please log tickets and issues at our [Projects site](http://projects.example.com)
+Please log tickets and issues at github issues.
