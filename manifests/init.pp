@@ -36,7 +36,13 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 class puppetboard(
-  $user = 'puppetboard', # The user to run puppetboard as
+  $user = 'puppetboard',  # The user to run puppetboard as
+  $mode = 'dev',          # also can run it under mod_wsgi
+  $listen = '127.0.0.1',  # listen locally or globally
+  $experimental = 'true', # enable experimental features
+  $port = '5000',
+  $manage_packages = 'true',
+  $manage_apache_service = 'true',
 ) {
 
   class { 'python':
@@ -45,11 +51,23 @@ class puppetboard(
     virtualenv => true,
   }
 
+  if $manage_packages == 'true' {
+    package { 'dtach':
+      ensure => present,
+    }
+  }
+
+  group { 'puppetboard':
+    ensure => present,
+  }
+
   user { $user:
     ensure     => present,
     home       => "/home/${user}",
     shell      => '/bin/bash',
     managehome => true,
+    gid        => 'puppetboard',
+    require    => Group['puppetboard'],
   }
 
   vcsrepo { "/home/${user}/puppetboard":
@@ -73,6 +91,84 @@ class puppetboard(
     distribute   => false,
     owner        => $user,
     require      => Vcsrepo["/home/${user}/puppetboard"],
+  }
+
+  if $listen == 'public' {
+    file_line { 'puppetboard listen':
+      path    => "/home/${user}/puppetboard/dev.py",
+      line    => " app.run('0.0.0.0')",
+      match   => ' app.run\(\'([\d\.]+)\'\)',
+      notify  => Service['puppetboard'],
+      require => [
+        File["/home/${user}/puppetboard"],
+        Python::Virtualenv["/home/${user}/virtenv-puppetboard"]
+      ],
+    }
+  }
+
+  if $experimental == 'true' {
+    file_line { 'puppetboard experimental':
+      path    => "/home/${user}/puppetboard/puppetboard/default_settings.py",
+      line    => 'PUPPETDB_EXPERIMENTAL=True',
+      match   => 'PUPPETDB_EXPERIMENTAL=(True|False)',
+      #notify  => Service['puppetboard'],
+      require => [
+        File["/home/${user}/puppetboard"],
+        Python::Virtualenv["/home/${user}/virtenv-puppetboard"]
+      ],
+    }
+  }
+
+  if $mode == 'dev' {
+    
+    notify { "not starting puppetboard in dev mode": }
+
+  }
+
+  if $mode == 'wsgi' {
+
+    case $::osfamily { 
+      'Debian': { 
+         $apache_root = '/etc/apache2/sites-enabled'
+         $apache_service = 'apache2'
+       }
+      'RedHat': {
+         $apache_root = '/etc/httpd/conf.d'
+         $apache_service = 'httpd'
+      }
+      default: { fail("This module is not supported on ${::osfamily}") }
+    }
+
+    if $manage_packages == 'true' {
+      package { 'libapache2-mod-wsgi': 
+        ensure => present,
+      }
+    }
+
+
+    file { "/home/${user}/puppetboard/wsgi.py":
+      ensure  => present,
+      content => template('puppetboard/wsgi.py.erb'),
+      owner   => $user,
+      group   => 'puppetboard',
+      notify  => Service[$apache_service],
+    }
+
+
+    file { "${apache_root}/puppetboard":
+      ensure  => present,
+      content => template('puppetboard/puppetboard.erb'),
+      owner   => $user,
+      group   => 'puppetboard',
+      notify  => Service[$apache_service],
+    }
+
+    if $manage_apache_service == 'true' {
+       service { $apache_service:
+         ensure => running, 
+       }
+    }
+ 
   }
 
 }

@@ -1,0 +1,14 @@
+from __future__ import absolute_import
+
+activate_this = '/home/<%= @user %>/virtenv-puppetboard/bin/activate_this.py'
+execfile(activate_this, dict(__file__=activate_this))
+
+import os
+import sys
+
+me = os.path.dirname(os.path.abspath(__file__))
+# Add us to the PYTHONPATH/sys.path if we're not on it
+if not me in sys.path:
+    sys.path.insert(0, me)
+
+from puppetboard.app import app as application

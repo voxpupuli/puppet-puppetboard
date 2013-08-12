@@ -1,0 +1,14 @@
+Listen 5000
+<VirtualHost <%= @listen %>:<%= @port %>>
+    ServerName puppetboard
+
+    WSGIDaemonProcess puppetboard user=<%= @user %> group=puppetboard threads=5
+    WSGIScriptAlias / /home/<%= @user %>/puppetboard/wsgi.py
+
+    <Directory /home/<%= @user %>/puppetboard>
+        WSGIProcessGroup puppetboard
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>
