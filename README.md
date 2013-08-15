@@ -1,6 +1,9 @@
 puppetboard
+===========
 
-This is the puppetboard module.
+NOTE: Right now installing with the module tool is broken. Try the Puppetfile instead.
+
+This is the puppetboard puppet module.
 
 puppetboard is a puppet dashboard
 
