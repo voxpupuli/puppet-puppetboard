@@ -12,16 +12,25 @@ https://github.com/nedap/puppetboard
 Usage
 -----
 
-Basically just pick a user and go.
+Declare the base puppetboard manifest:
+
+```puppet
+class { 'puppetboard': }
+```
+
+If you want puppetboard available through Apache, there are two manifests
+to help:
+
+```puppet
+# Apache vhost
+class { 'puppetboard::apache::vhost':
+  vhost_name 'pboard.example.com',
+}
 
 
-    class { 'puppetboard': }
-
-
-    class { 'puppetboard': 
-      user => 'pboard',
-    }
-
+# Standard Apache alias
+class { 'puppetboard::apache::conf': }
+```
 
 License
 -------
