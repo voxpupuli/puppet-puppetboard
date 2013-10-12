@@ -18,16 +18,24 @@ Declare the base puppetboard manifest:
 class { 'puppetboard': }
 ```
 
-If you want puppetboard available through Apache, there are two manifests
-to help:
+If you want puppetboard available through Apache, there are two classes
+to help. The first, `puppetboard::apache::vhost`, will create a full
+virtual host. This is useful if you want puppetboard to be available from
+http://puppetboard.example.com:
 
 ```puppet
 # Apache vhost
 class { 'puppetboard::apache::vhost':
   vhost_name 'pboard.example.com',
 }
+```
 
+The second, `puppetboard::apache::conf`, will create a simple entry in
+`/etc/apache2/conf.d` (or `/etc/httpd/conf.d`, depending on your distribution).
+This is useful if you simply want puppetboard accessible from
+http://example.com/puppetboard:
 
+```puppet
 # Standard Apache alias
 class { 'puppetboard::apache::conf': }
 ```
