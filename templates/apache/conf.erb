@@ -1,0 +1,9 @@
+WSGIDaemonProcess puppetboard user=<%= @user -%> group=<%= @user -%> threads=<%= @threads %>
+WSGIScriptAlias <%= @wsgi_alias -%> <%= @docroot -%>/wsgi.py
+
+<Directory <%= @docroot -%>>
+    WSGIProcessGroup <%= @user %>
+    WSGIApplicationGroup %{GLOBAL}
+    Order deny,allow
+    Allow from all
+</Directory>
