@@ -1,73 +1,49 @@
 # == Class: puppetboard
 #
-# Full description of class puppetboard here.
+# Base class for Puppetboard.
+# Sets up the user and python environment.
+#
+# You should also use one of the apache classes as well.
 #
 # === Parameters
 #
 # Document parameters here.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*user*]
+#   Puppetboard system user.
+#   Defaults to 'puppetboard'
 #
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
+# [*experimental*]
+#   Enable experimental features.
+#   Defaults to true
 #
 # === Examples
 #
-#  class { puppetboard:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
+#  class { 'puppetboard':
+#    user  => 'pboard',
+#    group => 'pboard',
+#  } ->
+#  class { 'puppetboard::apache::conf':
+#    user  => 'pboard',
+#    group => 'pboard',
 #  }
 #
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2013 Your name here, unless otherwise noted.
-#
 class puppetboard(
-  $user = 'puppetboard',  # The user to run puppetboard as
-  $mode = 'dev',          # also can run it under mod_wsgi
-  $listen = '127.0.0.1',  # listen locally or globally
-  $experimental = 'true', # enable experimental features
-  $port = '5000',
-  $manage_packages = 'true',
-  $manage_apache_service = 'true',
-) {
+  $user          = $::puppetboard::params::user,
+  $group         = $::puppetboard::params::group,
+  $experimental  = true,
+) inherits ::puppetboard::params {
 
-  class { 'python':
-    version    => 'system',
-    dev        => true,
-    virtualenv => true,
-  }
-
-  if $manage_packages == 'true' {
-    package { 'dtach':
-      ensure => present,
-    }
-  }
-
-  group { 'puppetboard':
+  group { $group:
     ensure => present,
   }
 
   user { $user:
     ensure     => present,
-    home       => "/home/${user}",
     shell      => '/bin/bash',
     managehome => true,
-    gid        => 'puppetboard',
-    require    => Group['puppetboard'],
+    gid        => $group,
+    require    => Group[$group],
   }
 
   vcsrepo { "/home/${user}/puppetboard":
@@ -106,7 +82,7 @@ class puppetboard(
     }
   }
 
-  if $experimental == 'true' {
+  if ($experimental) {
     file_line { 'puppetboard experimental':
       path    => "/home/${user}/puppetboard/puppetboard/default_settings.py",
       line    => 'PUPPETDB_EXPERIMENTAL=True',
@@ -117,58 +93,6 @@ class puppetboard(
         Python::Virtualenv["/home/${user}/virtenv-puppetboard"]
       ],
     }
-  }
-
-  if $mode == 'dev' {
-    
-    notify { "not starting puppetboard in dev mode": }
-
-  }
-
-  if $mode == 'wsgi' {
-
-    case $::osfamily { 
-      'Debian': { 
-         $apache_root = '/etc/apache2/sites-enabled'
-         $apache_service = 'apache2'
-       }
-      'RedHat': {
-         $apache_root = '/etc/httpd/conf.d'
-         $apache_service = 'httpd'
-      }
-      default: { fail("This module is not supported on ${::osfamily}") }
-    }
-
-    if $manage_packages == 'true' {
-      package { 'libapache2-mod-wsgi': 
-        ensure => present,
-      }
-    }
-
-
-    file { "/home/${user}/puppetboard/wsgi.py":
-      ensure  => present,
-      content => template('puppetboard/wsgi.py.erb'),
-      owner   => $user,
-      group   => 'puppetboard',
-      notify  => Service[$apache_service],
-    }
-
-
-    file { "${apache_root}/puppetboard":
-      ensure  => present,
-      content => template('puppetboard/puppetboard.erb'),
-      owner   => $user,
-      group   => 'puppetboard',
-      notify  => Service[$apache_service],
-    }
-
-    if $manage_apache_service == 'true' {
-       service { $apache_service:
-         ensure => running, 
-       }
-    }
- 
   }
 
 }
