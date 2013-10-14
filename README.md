@@ -38,7 +38,7 @@ class { 'puppetboard': }
 
 # Access Puppetboard through pboard.example.com
 class { 'puppetboard::apache::vhost':
-  vhost_name 'pboard.example.com',
+  vhost_name => 'pboard.example.com',
 }
 ```
 
