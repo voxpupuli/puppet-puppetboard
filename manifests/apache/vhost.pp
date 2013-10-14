@@ -6,7 +6,7 @@ class puppetboard::apache::vhost (
   $group       = $::puppetboard::params::group,
 ) inherits ::puppetboard::params {
 
-  $docroot = "/home/${user}/puppetboard",
+  $docroot = "/home/${user}/puppetboard"
 
   $wsgi_script_aliases = {
     '/' => "${docroot}/wsgi.py",
