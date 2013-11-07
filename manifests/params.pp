@@ -13,5 +13,6 @@ class puppetboard::params {
 
   $user  = 'puppetboard'
   $group = 'puppetboard'
+  $basedir = '/srv/puppetboard'
 
 }

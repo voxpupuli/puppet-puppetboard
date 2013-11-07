@@ -13,6 +13,14 @@
 #   Puppetboard system user.
 #   Defaults to 'puppetboard'
 #
+# [*group*]
+#   Puppetboard system group.
+#   Defaults to 'puppetboard'
+#
+# [*basedir*]
+#   Base directory where to build puppetboard vcsrepo and python virtualenv.
+#   Defaults to '/srv/puppetboard'
+#
 # [*experimental*]
 #   Enable experimental features.
 #   Defaults to true
@@ -22,15 +30,18 @@
 #  class { 'puppetboard':
 #    user  => 'pboard',
 #    group => 'pboard',
+#    basedir => '/www/puppetboard'
 #  } ->
 #  class { 'puppetboard::apache::conf':
 #    user  => 'pboard',
 #    group => 'pboard',
+#    basedir => '/www/puppetboard'
 #  }
 #
 class puppetboard(
   $user          = $::puppetboard::params::user,
   $group         = $::puppetboard::params::group,
+  $basedir       = $::puppetboard::params::basedir,
   $experimental  = true,
 ) inherits ::puppetboard::params {
 
@@ -43,10 +54,18 @@ class puppetboard(
     shell      => '/bin/bash',
     managehome => true,
     gid        => $group,
+    system     => true,
     require    => Group[$group],
   }
 
-  vcsrepo { "/home/${user}/puppetboard":
+  file { $basedir:
+    ensure   => 'directory',
+    owner    => $user,
+    group    => $group,
+    mode     => '0755',
+  }
+
+  vcsrepo { "${basedir}/puppetboard":
     ensure   => present,
     provider => git,
     owner    => $user,
@@ -54,43 +73,43 @@ class puppetboard(
     require  => User[$user],
   }
 
-  file { "/home/${user}/puppetboard":
+  file { "${basedir}/puppetboard":
     owner   => $user,
     recurse => true,
   }
 
-  python::virtualenv { "/home/${user}/virtenv-puppetboard":
+  python::virtualenv { "${basedir}/virtenv-puppetboard":
     ensure       => present,
     version      => 'system',
-    requirements => "/home/${user}/puppetboard/requirements.txt",
+    requirements => "${basedir}/puppetboard/requirements.txt",
     systempkgs   => true,
     distribute   => false,
     owner        => $user,
-    require      => Vcsrepo["/home/${user}/puppetboard"],
+    require      => Vcsrepo["${basedir}/puppetboard"],
   }
 
   if $listen == 'public' {
     file_line { 'puppetboard listen':
-      path    => "/home/${user}/puppetboard/dev.py",
+      path    => "${basedir}/puppetboard/dev.py",
       line    => " app.run('0.0.0.0')",
       match   => ' app.run\(\'([\d\.]+)\'\)',
       notify  => Service['puppetboard'],
       require => [
-        File["/home/${user}/puppetboard"],
-        Python::Virtualenv["/home/${user}/virtenv-puppetboard"]
+        File["${basedir}/puppetboard"],
+        Python::Virtualenv["${basedir}/virtenv-puppetboard"]
       ],
     }
   }
 
   if ($experimental) {
     file_line { 'puppetboard experimental':
-      path    => "/home/${user}/puppetboard/puppetboard/default_settings.py",
+      path    => "${basedir}/puppetboard/puppetboard/default_settings.py",
       line    => 'PUPPETDB_EXPERIMENTAL=True',
       match   => 'PUPPETDB_EXPERIMENTAL=(True|False)',
       #notify  => Service['puppetboard'],
       require => [
-        File["/home/${user}/puppetboard"],
-        Python::Virtualenv["/home/${user}/virtenv-puppetboard"]
+        File["${basedir}/puppetboard"],
+        Python::Virtualenv["${basedir}/virtenv-puppetboard"]
       ],
     }
   }

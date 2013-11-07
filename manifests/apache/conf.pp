@@ -6,9 +6,10 @@ class puppetboard::apache::conf (
   $threads    = 5,
   $user       = $::puppetboard::params::user,
   $group      = $::puppetboard::params::group,
+  $basedir    = $::puppetboard::params::basedir,
 ) inherits ::puppetboard::params {
 
-  $docroot = "/home/${user}/puppetboard"
+  $docroot = "${basedir}/puppetboard"
 
   file { "${docroot}/wsgi.py":
     ensure  => present,
