@@ -39,10 +39,21 @@
 #  }
 #
 class puppetboard(
-  $user          = $::puppetboard::params::user,
-  $group         = $::puppetboard::params::group,
-  $basedir       = $::puppetboard::params::basedir,
-  $experimental  = true,
+  $user             = $::puppetboard::params::user,
+  $group            = $::puppetboard::params::group,
+  $basedir          = $::puppetboard::params::basedir,
+
+  $puppetdb_host    = $::puppetboard::params::puppetdb_host,
+  $puppetdb_port    = $::puppetboard::params::puppetdb_port,
+  $puppetdb_key     = $::puppetboard::params::puppetdb_key,
+  $puppetdb_ssl     = $::puppetboard::params::puppetdb_ssl,
+  $puppetdb_cert    = $::puppetboard::params::puppetdb_cert,
+  $puppetdb_timeout = $::puppetboard::params::puppetdb_timeout,
+  $unresponsive     = $::puppetboard::params::unresponsive,
+  $enable_query     = $::puppetboard::params::enable_query,
+  $python_loglevel  = $::puppetboard::params::python_loglevel,
+  $experimental     = $::puppetboard::params::experimental,
+
 ) inherits ::puppetboard::params {
 
   group { $group:
@@ -78,6 +89,19 @@ class puppetboard(
     recurse => true,
   }
 
+  file { 'puppetboard/default_settings.py':
+    path   => "${basedir}/puppetboard/puppetboard/default_settings.py",
+    owner  => $user,
+    group    => $group,
+    mode     => '0644',
+    content  => template('puppetboard/default_settings.py.erb'),
+    require => [
+      File["${basedir}/puppetboard"],
+      Python::Virtualenv["${basedir}/virtenv-puppetboard"]
+    ],
+
+  }
+
   python::virtualenv { "${basedir}/virtenv-puppetboard":
     ensure       => present,
     version      => 'system',
@@ -94,19 +118,6 @@ class puppetboard(
       line    => " app.run('0.0.0.0')",
       match   => ' app.run\(\'([\d\.]+)\'\)',
       notify  => Service['puppetboard'],
-      require => [
-        File["${basedir}/puppetboard"],
-        Python::Virtualenv["${basedir}/virtenv-puppetboard"]
-      ],
-    }
-  }
-
-  if ($experimental) {
-    file_line { 'puppetboard experimental':
-      path    => "${basedir}/puppetboard/puppetboard/default_settings.py",
-      line    => 'PUPPETDB_EXPERIMENTAL=True',
-      match   => 'PUPPETDB_EXPERIMENTAL=(True|False)',
-      #notify  => Service['puppetboard'],
       require => [
         File["${basedir}/puppetboard"],
         Python::Virtualenv["${basedir}/virtenv-puppetboard"]
