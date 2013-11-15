@@ -15,4 +15,17 @@ class puppetboard::params {
   $group = 'puppetboard'
   $basedir = '/srv/puppetboard'
 
+  $puppetdb_host = 'localhost'
+  $puppetdb_port = 8080
+  $puppetdb_key = 'None'
+  $puppetdb_ssl = 'False'
+  $puppetdb_cert = 'None'
+  $puppetdb_timeout = 20
+  $dev_listen_host = '127.0.0.1'
+  $dev_listen_port = 5000
+  $unresponsive = 3
+  $enable_query = 'True'
+  $python_loglevel = 'info'
+  $experimental = 'False'
+
 }
