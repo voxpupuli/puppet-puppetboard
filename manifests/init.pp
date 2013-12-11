@@ -109,6 +109,7 @@ class puppetboard(
     systempkgs   => true,
     distribute   => false,
     owner        => $user,
+    cwd          => "${basedir}/puppetboard",
     require      => Vcsrepo["${basedir}/puppetboard"],
   }
 
