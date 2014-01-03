@@ -10,20 +10,64 @@
 # Document parameters here.
 #
 # [*user*]
-#   Puppetboard system user.
-#   Defaults to 'puppetboard'
+#   (string) Puppetboard system user.
+#   Defaults to 'puppetboard' ($::puppetboard::params::user)
 #
 # [*group*]
-#   Puppetboard system group.
-#   Defaults to 'puppetboard'
+#   (string) Puppetboard system group.
+#   Defaults to 'puppetboard' ($::puppetboard::params::group)
 #
 # [*basedir*]
-#   Base directory where to build puppetboard vcsrepo and python virtualenv.
-#   Defaults to '/srv/puppetboard'
+#   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
+#   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
+#
+# [*puppetdb_host*]
+#   (string) PuppetDB Host
+#   Defaults to 'localhost' ($::puppetboard::params::puppetdb_host)
+#
+# [*puppetdb_port*]
+#   (int) PuppetDB Port
+#   Defaults to 8080 ($::puppetboard::params::puppetdb_port)
+#
+# [*puppetdb_key*]
+#   (string, absolute path) path to PuppetMaster/CA signed client SSL key
+#   Defaults to 'None' ($::puppetboard::params::puppetdb_key)
+#
+# [*puppetdb_ssl*]
+#   (string) whether PuppetDB uses SSL or not,  'True' or 'False'.
+#   Defaults to 'False' ($::puppetboard::params::puppetdb_ssl)
+#
+# [*puppetdb_cert*]
+#   (string, absolute path) path to PuppetMaster/CA signed client SSL cert
+#   Defaults to 'None' ($::puppetboard::params::puppetdb_cert)
+#
+# [*puppetdb_timeout*]
+#   (int) timeout, in seconds, for connecting to PuppetDB
+#   Defaults to 20 ($::puppetboard::params::puppetdb_timeout)
+#
+# [*dev_listen_host*]
+#   (string) host that dev server binds to/listens on
+#   Defaults to '127.0.0.1' ($::puppetboard::params::dev_listen_host)
+#
+# [*dev_listen_port*]
+#   (int) port that dev server binds to/listens on
+#   Defaults to 5000 ($::puppetboard::params::dev_listen_port)
+#
+# [*unresponsive*]
+#   (int) number of hours after which a node is considered "unresponsive"
+#   Defaults to 3 ($::puppetboard::params::unresponsive)
+#
+# [*enable_query*]
+#   (string) Whether to allow the user to run raw queries against PuppetDB. 'True' or 'False'.
+#   Defaults to 'True' ($::puppetboard::params::enable_query)
+#
+# [*python_loglevel*]
+#   (string) Python logging module log level.
+#   Defaults to 'info' ($::puppetboard::params::python_loglevel)
 #
 # [*experimental*]
-#   Enable experimental features.
-#   Defaults to true
+#   (string) Enable experimental features. 'True' or 'False'.
+#   Defaults to true ($::puppetboard::params::experimental)
 #
 # === Examples
 #
@@ -89,6 +133,19 @@ class puppetboard(
     recurse => true,
   }
 
+  # Template Uses:
+  # - $puppetdb_host
+  # - $puppetdb_port
+  # - $puppetdb_ssl
+  # - $puppetdb_key
+  # - $puppetdb_cert
+  # - $puppetdb_timeout
+  # - $dev_listen_host
+  # - $dev_listen_port
+  # - $unresponsive
+  # - $enable_query
+  # - $python_loglevel
+  # - $experimental
   file { 'puppetboard/default_settings.py':
     path   => "${basedir}/puppetboard/puppetboard/default_settings.py",
     owner  => $user,
@@ -99,7 +156,6 @@ class puppetboard(
       File["${basedir}/puppetboard"],
       Python::Virtualenv["${basedir}/virtenv-puppetboard"]
     ],
-
   }
 
   python::virtualenv { "${basedir}/virtenv-puppetboard":
