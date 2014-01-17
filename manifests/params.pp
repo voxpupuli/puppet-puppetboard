@@ -1,3 +1,9 @@
+# == Class: puppetboard::params
+#
+# Defines default values for puppetboard parameters.
+#
+# Inherited by Class['puppetboard'].
+#
 class puppetboard::params {
 
   case $::osfamily {

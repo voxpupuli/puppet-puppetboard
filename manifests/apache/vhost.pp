@@ -1,3 +1,36 @@
+# == Class: puppetboard::apache::vhost
+#
+# Sets up an apache::vhost to run PuppetBoard,
+# and writes an appropriate wsgi.py from template.
+#
+# === Parameters
+#
+# Document parameters here.
+#
+# [*vhost_name*]
+#   (string) The vhost ServerName.
+#   No default.
+#
+# [*port*]
+#   (int) Port for the vhost to listen on.
+#   Defaults to 5000.
+#
+# [*threads*]
+#   (int) Number of WSGI threads to use.
+#   Defaults to 5
+#
+# [*user*]
+#   (string) WSGI daemon process user, and daemon process name
+#   Defaults to 'puppetboard' ($::puppetboard::params::user)
+#
+# [*group*]
+#   (int) WSGI daemon process group owner, and daemon process group
+#   Defaults to 'puppetboard' ($::puppetboard::params::group)
+#
+# [*basedir*]
+#   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
+#   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
+#
 class puppetboard::apache::vhost (
   $vhost_name,
   $port        = 5000,
@@ -19,6 +52,9 @@ class puppetboard::apache::vhost (
     user    => $user,
   }
 
+  # Template Uses:
+  # - $basedir
+  #
   file { "${docroot}/wsgi.py":
     ensure  => present,
     content => template('puppetboard/wsgi.py.erb'),
