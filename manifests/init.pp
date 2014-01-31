@@ -69,6 +69,10 @@
 #   (string) Enable experimental features. 'True' or 'False'.
 #   Defaults to true ($::puppetboard::params::experimental)
 #
+# [*revision*]
+#   (string) Commit, tag, or branch from Puppetboard's Git repo to be used
+#   Defaults to undef, meaning latest commit will be used ($::puppetboard::params::revision)
+#
 # === Examples
 #
 #  class { 'puppetboard':
@@ -97,6 +101,7 @@ class puppetboard(
   $enable_query     = $::puppetboard::params::enable_query,
   $python_loglevel  = $::puppetboard::params::python_loglevel,
   $experimental     = $::puppetboard::params::experimental,
+  $revision         = $::puppetboard::params::revision,
 
 ) inherits ::puppetboard::params {
 
@@ -125,6 +130,7 @@ class puppetboard(
     provider => git,
     owner    => $user,
     source   => "https://github.com/nedap/puppetboard",
+    revision => $revision,
     require  => User[$user],
   }
 
