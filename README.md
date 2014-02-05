@@ -75,7 +75,9 @@ Apache 2
 Contact
 -------
 
-Much of this is taken from Hunter Haugen's puppetboard-vagrant repo
+Much of the early stuff was taken from Hunter Haugen's puppetboard-vagrant repo
+
+#puppetboard on freenode
 
 krum.spencer@gmail.com
 
