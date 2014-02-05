@@ -33,5 +33,5 @@ class puppetboard::params {
   $enable_query = 'True'
   $python_loglevel = 'info'
   $experimental = 'False'
-
+  $revision = undef
 }
