@@ -30,6 +30,7 @@ puppetboard to be available from http://pboard.example.com:
 
 # Configure Apache on this server
 class { 'apache': }
+class { 'apache::mod::wsgi': }
 
 # Configure Puppetboard
 class { 'puppetboard': }
