@@ -3,9 +3,16 @@ puppetboard
 
 This is the puppetboard puppet module.
 
-puppetboard is a puppet dashboard
+Puppetboard is a puppet dashboard
 
 https://github.com/nedap/puppetboard
+
+
+Installation
+------------
+
+    puppet module install nibalizer-puppetboard
+
 
 Usage
 -----
@@ -56,9 +63,7 @@ class { 'apache':
   default_mods  => false,
 }
 
-package { 'libapache2-mod-wsgi':
-  ensure => present,
-}
+class { 'apache::mod::wsgi': }
 
 # Configure Puppetboard
 class { 'puppetboard': }
@@ -66,6 +71,17 @@ class { 'puppetboard': }
 # Access Puppetboard from example.com/puppetboard
 class { 'puppetboard::apache::conf': }
 ```
+
+If you are using RedHat based systems use:
+
+```puppet
+
+  class { 'apache::mod::wsgi':
+    wsgi_socket_prefix => "/var/run/wsgi",
+  }
+
+```
+
 
 License
 -------
@@ -76,14 +92,16 @@ Apache 2
 Contact
 -------
 
-Much of the early stuff was taken from Hunter Haugen's puppetboard-vagrant repo
+Email: krum.spencer@gmail.com
+IRC: #puppetboard and #puppet on freenode
 
-#puppetboard on freenode
+Attribution
+-----------
 
-krum.spencer@gmail.com
+The core of this module was based on Hunter Haugen's puppetboard-vagrant repo.
 
 
 Support
 -------
 
-Please log tickets and issues at github issues.
+Please log tickets and issues on github.
