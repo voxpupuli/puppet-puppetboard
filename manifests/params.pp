@@ -32,6 +32,7 @@ class puppetboard::params {
   $unresponsive = 3
   $enable_query = 'True'
   $python_loglevel = 'info'
+  $python_proxy = false
   $experimental = 'False'
   $revision = undef
 }

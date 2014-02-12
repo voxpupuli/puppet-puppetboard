@@ -65,6 +65,10 @@
 #   (string) Python logging module log level.
 #   Defaults to 'info' ($::puppetboard::params::python_loglevel)
 #
+# [*python_proxy*]
+#   (string) HTTP proxy server to use for pip/virtualenv.
+#   Defaults to false ($::puppetboard::params::python_proxy)
+#
 # [*experimental*]
 #   (string) Enable experimental features. 'True' or 'False'.
 #   Defaults to true ($::puppetboard::params::experimental)
@@ -100,6 +104,7 @@ class puppetboard(
   $unresponsive     = $::puppetboard::params::unresponsive,
   $enable_query     = $::puppetboard::params::enable_query,
   $python_loglevel  = $::puppetboard::params::python_loglevel,
+  $python_proxy     = $::puppetboard::params::python_proxy,
   $experimental     = $::puppetboard::params::experimental,
   $revision         = $::puppetboard::params::revision,
 
@@ -173,6 +178,7 @@ class puppetboard(
     owner        => $user,
     cwd          => "${basedir}/puppetboard",
     require      => Vcsrepo["${basedir}/puppetboard"],
+    proxy        => $python_proxy,
   }
 
   if $listen == 'public' {
