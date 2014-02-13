@@ -72,7 +72,9 @@ class { 'puppetboard': }
 class { 'puppetboard::apache::conf': }
 ```
 
-If you are using RedHat based systems use:
+### Redhat
+
+RedHat has restrictions on the /etc/apache directory that require wsgi to be configured to use /var/run.
 
 ```puppet
 
@@ -81,6 +83,28 @@ If you are using RedHat based systems use:
   }
 
 ```
+
+### Apache, RedHat and a non-standard port
+
+
+```puppet
+
+# Configure Apache on this server
+class { 'apache': }
+class { 'apache::mod::wsgi':
+  wsgi_socket_prefix => "/var/run/wsgi",
+}
+
+# Configure Puppetboard
+class { 'puppetboard': }
+
+# Access Puppetboard through pboard.example.com
+class { 'puppetboard::apache::vhost':
+  vhost_name => 'puppetboard.example.com',
+  port => '8888',
+}
+```
+
 
 
 License
