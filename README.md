@@ -14,6 +14,14 @@ Installation
     puppet module install nibalizer-puppetboard
 
 
+Dependencies
+------------
+
+Note that this module no longer explicitly requires the puppetlabs apache module. If you want to use the apache functionality of this module you will have to specify that the apache module is installed with:
+
+
+    puppet module install puppetlabs-apache
+
 Usage
 -----
 
