@@ -21,6 +21,10 @@
 #   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
+# [*git_source*]
+#   (string) Location of upstream Puppetboard GIT repository
+#   Defaults to 'https://github.com/nedap/puppetboard' ($::puppetboard::params::git_source)
+#
 # [*puppetdb_host*]
 #   (string) PuppetDB Host
 #   Defaults to 'localhost' ($::puppetboard::params::puppetdb_host)
@@ -94,6 +98,7 @@ class puppetboard(
   $user             = $::puppetboard::params::user,
   $group            = $::puppetboard::params::group,
   $basedir          = $::puppetboard::params::basedir,
+  $git_source       = $::puppetboard::params::git_source,
 
   $puppetdb_host    = $::puppetboard::params::puppetdb_host,
   $puppetdb_port    = $::puppetboard::params::puppetdb_port,
@@ -134,7 +139,7 @@ class puppetboard(
     ensure   => present,
     provider => git,
     owner    => $user,
-    source   => "https://github.com/nedap/puppetboard",
+    source   => $git_source,
     revision => $revision,
     require  => User[$user],
   }
