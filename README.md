@@ -22,6 +22,28 @@ Note that this module no longer explicitly requires the puppetlabs apache module
 
     puppet module install puppetlabs-apache
 
+This module also requires the ``git`` and ``virtualenv`` packages. These can be enabled in the module by:
+
+
+```puppet
+class { 'puppetboard':
+  manage_git        => true,
+  manage_virtualenv => true,
+}
+
+```
+
+or by:
+
+```puppet
+class { 'puppetboard':
+  manage_git        => 'latest',
+  manage_virtualenv => 'latest',
+}
+
+```
+
+
 Usage
 -----
 
