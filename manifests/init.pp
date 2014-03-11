@@ -81,6 +81,11 @@
 #   (string) Commit, tag, or branch from Puppetboard's Git repo to be used
 #   Defaults to undef, meaning latest commit will be used ($::puppetboard::params::revision)
 #
+# [*manage_git*]
+#   (bool) If true, require the git package. If false do nothing.
+#   Defaults to false
+#
+#
 # === Examples
 #
 #  class { 'puppetboard':
@@ -112,6 +117,7 @@ class puppetboard(
   $python_proxy     = $::puppetboard::params::python_proxy,
   $experimental     = $::puppetboard::params::experimental,
   $revision         = $::puppetboard::params::revision,
+  $manage_git       = false,
 
 ) inherits ::puppetboard::params {
 
@@ -196,6 +202,12 @@ class puppetboard(
         File["${basedir}/puppetboard"],
         Python::Virtualenv["${basedir}/virtenv-puppetboard"]
       ],
+    }
+  }
+
+  if $manage_git {
+    package {'git':
+      ensure => $manage_git,
     }
   }
 
