@@ -85,6 +85,9 @@
 #   (bool) If true, require the git package. If false do nothing.
 #   Defaults to false
 #
+# [*manage_virtualenv*]
+#   (bool) If true, require the virtualenv package. If false do nothing.
+#   Defaults to false
 #
 # === Examples
 #
@@ -100,24 +103,25 @@
 #  }
 #
 class puppetboard(
-  $user             = $::puppetboard::params::user,
-  $group            = $::puppetboard::params::group,
-  $basedir          = $::puppetboard::params::basedir,
-  $git_source       = $::puppetboard::params::git_source,
+  $user              = $::puppetboard::params::user,
+  $group             = $::puppetboard::params::group,
+  $basedir           = $::puppetboard::params::basedir,
+  $git_source        = $::puppetboard::params::git_source,
 
-  $puppetdb_host    = $::puppetboard::params::puppetdb_host,
-  $puppetdb_port    = $::puppetboard::params::puppetdb_port,
-  $puppetdb_key     = $::puppetboard::params::puppetdb_key,
-  $puppetdb_ssl     = $::puppetboard::params::puppetdb_ssl,
-  $puppetdb_cert    = $::puppetboard::params::puppetdb_cert,
-  $puppetdb_timeout = $::puppetboard::params::puppetdb_timeout,
-  $unresponsive     = $::puppetboard::params::unresponsive,
-  $enable_query     = $::puppetboard::params::enable_query,
-  $python_loglevel  = $::puppetboard::params::python_loglevel,
-  $python_proxy     = $::puppetboard::params::python_proxy,
-  $experimental     = $::puppetboard::params::experimental,
-  $revision         = $::puppetboard::params::revision,
-  $manage_git       = false,
+  $puppetdb_host     = $::puppetboard::params::puppetdb_host,
+  $puppetdb_port     = $::puppetboard::params::puppetdb_port,
+  $puppetdb_key      = $::puppetboard::params::puppetdb_key,
+  $puppetdb_ssl      = $::puppetboard::params::puppetdb_ssl,
+  $puppetdb_cert     = $::puppetboard::params::puppetdb_cert,
+  $puppetdb_timeout  = $::puppetboard::params::puppetdb_timeout,
+  $unresponsive      = $::puppetboard::params::unresponsive,
+  $enable_query      = $::puppetboard::params::enable_query,
+  $python_loglevel   = $::puppetboard::params::python_loglevel,
+  $python_proxy      = $::puppetboard::params::python_proxy,
+  $experimental      = $::puppetboard::params::experimental,
+  $revision          = $::puppetboard::params::revision,
+  $manage_git        = false,
+  $manage_virtualenv = false,
 
 ) inherits ::puppetboard::params {
 
@@ -208,6 +212,12 @@ class puppetboard(
   if $manage_git {
     package {'git':
       ensure => $manage_git,
+    }
+  }
+
+  if $manage_virtualenv {
+    package { $::puppetboard::params::virtualenvpkg:
+      ensure => $manage_virtualenv
     }
   }
 

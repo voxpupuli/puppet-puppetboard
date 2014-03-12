@@ -36,4 +36,5 @@ class puppetboard::params {
   $python_proxy = false
   $experimental = 'False'
   $revision = undef
+  $virtualenv = 'python-virtualenv'
 }
