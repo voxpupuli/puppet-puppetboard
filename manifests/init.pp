@@ -216,7 +216,7 @@ class puppetboard(
   }
 
   if $manage_virtualenv {
-    package { $::puppetboard::params::virtualenvpkg:
+    package { $::puppetboard::params::virtualenv:
       ensure => $manage_virtualenv
     }
   }
