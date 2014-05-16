@@ -37,4 +37,5 @@ class puppetboard::params {
   $experimental = 'False'
   $revision = undef
   $virtualenv = 'python-virtualenv'
+  $reports_count=10
 }
