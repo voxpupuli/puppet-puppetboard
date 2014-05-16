@@ -89,6 +89,9 @@
 #   (bool) If true, require the virtualenv package. If false do nothing.
 #   Defaults to false
 #
+# [*reports_count*]
+#   (int) This is the number of reports that we want the dashboard to display.
+#   Defaults to 10
 # === Examples
 #
 #  class { 'puppetboard':
@@ -122,6 +125,7 @@ class puppetboard(
   $revision          = $::puppetboard::params::revision,
   $manage_git        = false,
   $manage_virtualenv = false,
+  $reports_count     = $::puppetboard::params::reports_count,
 
 ) inherits ::puppetboard::params {
 
