@@ -1,5 +1,5 @@
 name 'nibalizer-puppetboard'
-version '1.4.0'
+version '1.3.0'
 source 'git://github.com/nibalizer/puppet-module-puppetboard.git'
 author 'Spencer Krum'
 description 'Install and configure PuppetBoard'
