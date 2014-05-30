@@ -89,6 +89,14 @@
 #   (bool) If true, require the virtualenv package. If false do nothing.
 #   Defaults to false
 #
+# [*manage_user*]
+#   (bool) If true, manage (create) this group. If false do nothing.
+#   Defaults to true
+#
+# [*manage_group*]
+#   (bool) If true, manage (create) this group. If false do nothing.
+#   Defaults to true
+#
 # === Examples
 #
 #  class { 'puppetboard':
@@ -120,22 +128,28 @@ class puppetboard(
   $python_proxy      = $::puppetboard::params::python_proxy,
   $experimental      = $::puppetboard::params::experimental,
   $revision          = $::puppetboard::params::revision,
+  $manage_user       = true,
+  $manage_group      = true,
   $manage_git        = false,
   $manage_virtualenv = false,
 
 ) inherits ::puppetboard::params {
 
-  group { $group:
-    ensure => present,
+  if $manage_group {
+    group { $group:
+      ensure => present,
+    }
   }
 
-  user { $user:
-    ensure     => present,
-    shell      => '/bin/bash',
-    managehome => true,
-    gid        => $group,
-    system     => true,
-    require    => Group[$group],
+  if $manage_user {
+    user { $user:
+      ensure     => present,
+      shell      => '/bin/bash',
+      managehome => true,
+      gid        => $group,
+      system     => true,
+      require    => Group[$group],
+    }
   }
 
   file { $basedir:
