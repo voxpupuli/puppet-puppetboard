@@ -32,6 +32,7 @@ class puppetboard::params {
   $dev_listen_port = 5000
   $unresponsive = 3
   $enable_query = 'True'
+  $localise_timestamp = 'True'
   $python_loglevel = 'info'
   $python_proxy = false
   $experimental = 'False'

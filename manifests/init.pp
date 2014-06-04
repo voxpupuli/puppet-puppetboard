@@ -65,6 +65,10 @@
 #   (string) Whether to allow the user to run raw queries against PuppetDB. 'True' or 'False'.
 #   Defaults to 'True' ($::puppetboard::params::enable_query)
 #
+# [*localise_timestamp*]
+#   (string) Whether to localise the timestamps in the UI. 'True' or 'False'.
+#   Defaults to 'True' ($::puppetboard::params::localise_timestamp)
+#
 # [*python_loglevel*]
 #   (string) Python logging module log level.
 #   Defaults to 'info' ($::puppetboard::params::python_loglevel)
@@ -111,27 +115,28 @@
 #  }
 #
 class puppetboard(
-  $user              = $::puppetboard::params::user,
-  $group             = $::puppetboard::params::group,
-  $basedir           = $::puppetboard::params::basedir,
-  $git_source        = $::puppetboard::params::git_source,
+  $user                = $::puppetboard::params::user,
+  $group               = $::puppetboard::params::group,
+  $basedir             = $::puppetboard::params::basedir,
+  $git_source          = $::puppetboard::params::git_source,
 
-  $puppetdb_host     = $::puppetboard::params::puppetdb_host,
-  $puppetdb_port     = $::puppetboard::params::puppetdb_port,
-  $puppetdb_key      = $::puppetboard::params::puppetdb_key,
-  $puppetdb_ssl      = $::puppetboard::params::puppetdb_ssl,
-  $puppetdb_cert     = $::puppetboard::params::puppetdb_cert,
-  $puppetdb_timeout  = $::puppetboard::params::puppetdb_timeout,
-  $unresponsive      = $::puppetboard::params::unresponsive,
-  $enable_query      = $::puppetboard::params::enable_query,
-  $python_loglevel   = $::puppetboard::params::python_loglevel,
-  $python_proxy      = $::puppetboard::params::python_proxy,
-  $experimental      = $::puppetboard::params::experimental,
-  $revision          = $::puppetboard::params::revision,
-  $manage_user       = true,
-  $manage_group      = true,
-  $manage_git        = false,
-  $manage_virtualenv = false,
+  $puppetdb_host       = $::puppetboard::params::puppetdb_host,
+  $puppetdb_port       = $::puppetboard::params::puppetdb_port,
+  $puppetdb_key        = $::puppetboard::params::puppetdb_key,
+  $puppetdb_ssl        = $::puppetboard::params::puppetdb_ssl,
+  $puppetdb_cert       = $::puppetboard::params::puppetdb_cert,
+  $puppetdb_timeout    = $::puppetboard::params::puppetdb_timeout,
+  $unresponsive        = $::puppetboard::params::unresponsive,
+  $enable_query        = $::puppetboard::params::enable_query,
+  $localise_timestamp  = $::puppetboard::params::localise_timestamp,
+  $python_loglevel     = $::puppetboard::params::python_loglevel,
+  $python_proxy        = $::puppetboard::params::python_proxy,
+  $experimental        = $::puppetboard::params::experimental,
+  $revision            = $::puppetboard::params::revision,
+  $manage_user         = true,
+  $manage_group        = true,
+  $manage_git          = false,
+  $manage_virtualenv   = false,
 
 ) inherits ::puppetboard::params {
 
@@ -184,6 +189,7 @@ class puppetboard(
   # - $dev_listen_port
   # - $unresponsive
   # - $enable_query
+  # - $localise_timestamp
   # - $python_loglevel
   # - $experimental
   file { 'puppetboard/default_settings.py':
