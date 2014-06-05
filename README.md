@@ -102,6 +102,28 @@ class { 'puppetboard': }
 class { 'puppetboard::apache::conf': }
 ```
 
+#### Apache (with Reverse Proxy)
+
+You can also relocate puppetboard to a sub-URI of a Virtual Host. This is
+useful if you want to reverse-proxy puppetboard, but are not planning on
+dedicating a domain just for puppetboard:
+
+```puppet
+class { 'puppetboard::apache::vhost':
+  vhost_name => 'dashes.acme',
+  wsgi_alias => '/pboard',
+}
+```
+
+In this case puppetboard will be available (on the default) on
+http://dashes.acme:5000/pboard. You can then reverse-proxy to it like so:
+
+```apache
+Redirect /pboard /pboard/
+ReverseProxy /pboard/ http://dashes.acme:5000/pboard/
+ProxyPassReverse /pboard/ http://dashes.acme:5000/pboard/
+```
+
 ### Redhat
 
 RedHat has restrictions on the /etc/apache directory that require wsgi to be configured to use /var/run.
