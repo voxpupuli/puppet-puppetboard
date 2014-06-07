@@ -3,3 +3,5 @@
 *.swn
 pkg/
 .vagrant/
+.bundle/
+vendor/
