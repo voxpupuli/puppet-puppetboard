@@ -157,6 +157,42 @@ class { 'puppetboard::apache::vhost':
 }
 ```
 
+### Using SSL to the PuppetDB host
+
+
+If you would like to use certificate auth into the PuppetDB service, use any of the configurations from above and set the following parameters to your puppetboard class.
+
+```puppet
+
+class { 'puppetboard':
+  manage_virtualenv => true,
+  puppetdb_host => 'puppet.example.com',
+  puppetdb_port => '8081',
+  puppetdb_key  => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
+  puppetdb_ssl  => 'True',
+  puppetdb_cert => "/var/lib/puppet/ssl/certs/${::certname}.pem",
+}
+
+```
+
+Note that the above only works if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
+
+
+```puppet
+
+class { 'puppetboard':
+  manage_virtualenv => true,
+  puppetdb_host => 'puppet.example.com',
+  puppetdb_port => '8081',
+  puppetdb_key  => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
+  puppetdb_ssl  => "'/var/lib/puppet/ssl/certs/ca.pem'",
+  puppetdb_cert => "/var/lib/puppet/ssl/certs/${::certname}.pem",
+}
+
+```
+
+
+
 
 
 License
