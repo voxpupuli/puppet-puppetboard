@@ -71,10 +71,10 @@ describe 'puppetboard class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    binding.pry
+    #binding.pry
 
     it 'should answer to localhost' do
-      shell("/usr/bin/curl localhost:80") do |r|
+      shell("/usr/bin/curl localhost:5000") do |r|
         r.stdout.should =~ /niele Sluijters/
         r.exit_code.should == 0
       end
