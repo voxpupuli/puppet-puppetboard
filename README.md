@@ -75,6 +75,7 @@ class { 'puppetboard': }
 # Access Puppetboard through pboard.example.com
 class { 'puppetboard::apache::vhost':
   vhost_name => 'pboard.example.com',
+  port       => 80,
 }
 ```
 
@@ -150,7 +151,7 @@ class { 'apache::mod::wsgi':
 # Configure Puppetboard
 class { 'puppetboard': }
 
-# Access Puppetboard through pboard.example.com
+# Access Puppetboard through pboard.example.com, port 8888
 class { 'puppetboard::apache::vhost':
   vhost_name => 'puppetboard.example.com',
   port => '8888',
