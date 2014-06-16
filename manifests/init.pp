@@ -104,6 +104,10 @@
 #   (bool) If true, manage (create) this group. If false do nothing.
 #   Defaults to true
 #
+# [*reports_count*]
+#   (int) This is the number of reports that we want the dashboard to display.
+#   Defaults to 10
+#
 # === Examples
 #
 #  class { 'puppetboard':
@@ -142,6 +146,7 @@ class puppetboard(
   $manage_group        = true,
   $manage_git          = false,
   $manage_virtualenv   = false,
+  $reports_count       = $::puppetboard::params::reports_count,
 
 ) inherits ::puppetboard::params {
   validate_bool($enable_query)
@@ -208,7 +213,6 @@ class puppetboard(
     content => template('puppetboard/settings.py.erb'),
     require => Vcsrepo["${basedir}/puppetboard"],
   }
-
 
   python::virtualenv { "${basedir}/virtenv-puppetboard":
     ensure       => present,
