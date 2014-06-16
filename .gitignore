@@ -2,3 +2,6 @@
 *.swo
 *.swn
 pkg/
+.vagrant/
+.bundle/
+vendor/
