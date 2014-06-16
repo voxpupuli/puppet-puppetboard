@@ -53,6 +53,17 @@ Declare the base puppetboard manifest:
 class { 'puppetboard': }
 ```
 
+### Number of Reports
+
+By default, puppetboard displays only 10 reports. This number can be
+controlled to set the number of repports to show.
+
+```puppet
+class { 'puppetboard':
+  reports_count => 40
+}
+
+```
 ### Apache
 
 If you want puppetboard accessible through Apache and you're able to use the
