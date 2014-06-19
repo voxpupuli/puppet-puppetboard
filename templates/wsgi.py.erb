@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+os.environ['PUPPETBOARD_SETTINGS'] = '<%= @basedir %>/puppetboard/settings.py'
 activate_this = '<%= @basedir %>/virtenv-puppetboard/bin/activate_this.py'
 execfile(activate_this, dict(__file__=activate_this))
 

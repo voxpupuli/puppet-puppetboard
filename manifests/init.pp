@@ -62,11 +62,11 @@
 #   Defaults to 3 ($::puppetboard::params::unresponsive)
 #
 # [*enable_query*]
-#   (string) Whether to allow the user to run raw queries against PuppetDB. 'True' or 'False'.
+#   (bool) Whether to allow the user to run raw queries against PuppetDB.
 #   Defaults to 'True' ($::puppetboard::params::enable_query)
 #
 # [*localise_timestamp*]
-#   (string) Whether to localise the timestamps in the UI. 'True' or 'False'.
+#   (bool) Whether to localise the timestamps in the UI.
 #   Defaults to 'True' ($::puppetboard::params::localise_timestamp)
 #
 # [*python_loglevel*]
@@ -78,12 +78,15 @@
 #   Defaults to false ($::puppetboard::params::python_proxy)
 #
 # [*experimental*]
-#   (string) Enable experimental features. 'True' or 'False'.
+#   (bool) Enable experimental features.
 #   Defaults to true ($::puppetboard::params::experimental)
 #
 # [*revision*]
 #   (string) Commit, tag, or branch from Puppetboard's Git repo to be used
 #   Defaults to undef, meaning latest commit will be used ($::puppetboard::params::revision)
+#
+# [*reports_count*]
+#   (string) the number of reports to display
 #
 # [*manage_git*]
 #   (bool) If true, require the git package. If false do nothing.
@@ -119,7 +122,8 @@ class puppetboard(
   $group               = $::puppetboard::params::group,
   $basedir             = $::puppetboard::params::basedir,
   $git_source          = $::puppetboard::params::git_source,
-
+  $dev_listen_host     = $::puppetboard::params::dev_listen_host,
+  $dev_listen_port     = $::puppetboard::params::dev_listen_port,
   $puppetdb_host       = $::puppetboard::params::puppetdb_host,
   $puppetdb_port       = $::puppetboard::params::puppetdb_port,
   $puppetdb_key        = $::puppetboard::params::puppetdb_key,
@@ -133,12 +137,16 @@ class puppetboard(
   $python_proxy        = $::puppetboard::params::python_proxy,
   $experimental        = $::puppetboard::params::experimental,
   $revision            = $::puppetboard::params::revision,
+  $reports_count       = $::puppetboard::params::reports_count,
   $manage_user         = true,
   $manage_group        = true,
   $manage_git          = false,
   $manage_virtualenv   = false,
 
 ) inherits ::puppetboard::params {
+  validate_bool($enable_query)
+  validate_bool($experimental)
+  validate_bool($localise_timestamp)
 
   if $manage_group {
     group { $group:
@@ -178,31 +186,29 @@ class puppetboard(
     recurse => true,
   }
 
-  # Template Uses:
-  # - $puppetdb_host
-  # - $puppetdb_port
-  # - $puppetdb_ssl
-  # - $puppetdb_key
-  # - $puppetdb_cert
-  # - $puppetdb_timeout
-  # - $dev_listen_host
-  # - $dev_listen_port
-  # - $unresponsive
-  # - $enable_query
-  # - $localise_timestamp
-  # - $python_loglevel
-  # - $experimental
-  file { 'puppetboard/default_settings.py':
-    path   => "${basedir}/puppetboard/puppetboard/default_settings.py",
-    owner  => $user,
-    group    => $group,
-    mode     => '0644',
-    content  => template('puppetboard/default_settings.py.erb'),
-    require => [
-      File["${basedir}/puppetboard"],
-      Python::Virtualenv["${basedir}/virtenv-puppetboard"]
-    ],
+  #Template consumes:
+  #$dev_listen_host
+  #$dev_listen_port
+  #$enable_query
+  #$experimental
+  #$localise_timestamp
+  #$python_loglevel
+  #$puppetdb_cert
+  #$puppetdb_host
+  #$puppetdb_key
+  #$puppetdb_port
+  #$puppetdb_ssl_verify
+  #$puppetdb_timeout
+  #$unresponsive
+  file {"${basedir}/puppetboard/settings.py":
+    ensure  => 'file',
+    group   => $group,
+    mode    => '0644',
+    owner   => $user,
+    content => template('puppetboard/settings.py.erb'),
+    require => Vcsrepo["${basedir}/puppetboard"],
   }
+
 
   python::virtualenv { "${basedir}/virtenv-puppetboard":
     ensure       => present,
