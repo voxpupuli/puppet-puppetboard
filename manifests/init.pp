@@ -186,6 +186,20 @@ class puppetboard(
     recurse => true,
   }
 
+  #Template consumes:
+  #$dev_listen_host
+  #$dev_listen_port
+  #$enable_query
+  #$experimental
+  #$localise_timestamp
+  #$python_loglevel
+  #$puppetdb_cert
+  #$puppetdb_host
+  #$puppetdb_key
+  #$puppetdb_port
+  #$puppetdb_ssl_verify
+  #$puppetdb_timeout
+  #$unresponsive
   file {"${basedir}/puppetboard/settings.py":
     ensure  => 'file',
     group   => $group,

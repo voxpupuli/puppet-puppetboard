@@ -1,61 +1,46 @@
-<%
-dev_listen_host     = scope.lookupvar('puppetboard::dev_listen_host')
-dev_listen_port     = scope.lookupvar('puppetboard::dev_listen_port')
-enable_query        = scope.lookupvar('puppetboard::enable_query')
-experimental        = scope.lookupvar('puppetboard::experimental')
-localise_timestamp  = scope.lookupvar('puppetboard::localise_timestamp')
-pboard_loglevel     = scope.lookupvar('puppetboard::python_loglevel')
-puppetdb_cert       = scope.lookupvar('puppetboard::puppetdb_cert')
-puppetdb_host       = scope.lookupvar('puppetboard::puppetdb_host')
-puppetdb_key        = scope.lookupvar('puppetboard::puppetdb_key')
-puppetdb_port       = scope.lookupvar('puppetboard::puppetdb_port')
-puppetdb_ssl_verify = scope.lookupvar('puppetboard::puppetdb_ssl_verify')
-puppetdb_timeout    = scope.lookupvar('puppetboard::puppetdb_timeout')
-unresponsive_hours  = scope.lookupvar('puppetboard::unresponsive')
--%>
-<% if dev_listen_host -%>
+<% if @dev_listen_host -%>
 DEV_LISTEN_HOST = '<%= @dev_listen_host %>'
 <% end -%>
-<% if dev_listen_port -%>
+<% if @dev_listen_port -%>
 DEV_LISTEN_PORT = <%= @dev_listen_port %>
 <% end -%>
-<% if pboard_loglevel -%>
-LOGLEVEL = '<%= pboard_loglevel-%>'
+<% if @python_loglevel -%>
+LOGLEVEL = '<%= @python_loglevel-%>'
 <% end -%>
-<% if puppetdb_host -%>
+<% if @puppetdb_host -%>
 PUPPETDB_HOST = '<%= @puppetdb_host %>'
 <% end -%>
-<% if puppetdb_port -%>
+<% if @puppetdb_port -%>
 PUPPETDB_PORT = <%= @puppetdb_port %>
 <% end -%>
-<% if puppetdb_ssl_verify -%>
+<% if @puppetdb_ssl_verify -%>
 PUPPETDB_SSL_VERIFY = '<%= @puppetdb_ssl_verify %>'
 <% else -%>
 PUPPETDB_SSL_VERIFY = False
 <% end -%>
-<% if puppetdb_key -%>
+<% if @puppetdb_key -%>
 PUPPETDB_KEY = '<%= @puppetdb_key %>'
 <% end-%>
-<% if puppetdb_cert -%>
+<% if @puppetdb_cert -%>
 PUPPETDB_CERT = '<%= @puppetdb_cert %>'
 <% end -%>
-<% if puppetdb_timeout -%>
+<% if @puppetdb_timeout -%>
 PUPPETDB_TIMEOUT = <%= @puppetdb_timeout %>
 <% end -%>
-<% if unresponsive -%>
+<% if @unresponsive -%>
 UNRESPONSIVE_HOURS = <%= @unresponsive %>
 <% end -%>
-<% if enable_query -%>
+<% if @enable_query -%>
 ENABLE_QUERY = True
 <% else -%>
 ENABLE_QUERY = False
 <% end -%>
-<% if localise_timestamp -%>
+<% if @localise_timestamp -%>
 LOCALISE_TIMESTAMP = True
 <% else -%>
 LOCALISE_TIMESTAMP = False
 <% end -%>
-<% if experimental -%>
+<% if @experimental -%>
 PUPPETDB_EXPERIMENTAL = True
 <% else -%>
 PUPPETDB_EXPERIMENTAL = False
