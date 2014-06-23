@@ -1,0 +1,39 @@
+Starting with 2.5.0
+
+Moved template from managing default_settings.py to settings.py
+
+Handled better the stringification of ssl_key and ssl_cert
+
+Added beaker tests
+
+Abstracted out REPORTS_COUNT
+
+Misc bug fixes
+
+Docs improvements
+
+Lint/syntax testing with travis integration
+
+Github now reports activity to #puppetboard on freenode
+
+Allow puppetboard to be prefixed when running in wsgi
+
+Optionally manage user/group
+
+Allow timestamps to be localized
+
+Contributors this release:
+
+Igor Galić <i.galic@brainsware.org>
+Tomas Theunissen <t.p.theunissen@avisi.nl>
+William Van Hevelingen <blkperl@cat.pdx.edu>
+Colleen Murphy <cmurphy@cat.pdx.edu>
+Wolf Noble <wnoble@rmn.com>
+Thomas Kräuter <kraeutert@gmail.com>
+Sigmund Augdal <sigmund.augdal@uninett.no>
+Daniele Sluijters <github@daenney.net>
+
+
+
+
+
