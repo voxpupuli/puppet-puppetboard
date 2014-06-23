@@ -115,7 +115,7 @@ describe 'puppetboard class' do
 
     #binding.pry
 
-    describe file("/srv/puppetboard/puppetboard/puppetboard/default_settings.py") do
+    describe file("/srv/puppetboard/puppetboard/settings.py") do
       it { should contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
       it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
