@@ -1,3 +1,7 @@
+Version 2.6.0
+
+Changed git managed to installed
+
 Starting with 2.5.0
 
 Moved template from managing default_settings.py to settings.py

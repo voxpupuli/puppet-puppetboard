@@ -241,7 +241,7 @@ class puppetboard(
 
   if $manage_git {
     package {'git':
-      ensure => $manage_git,
+      ensure => installed,
     }
   }
 
