@@ -138,9 +138,9 @@ ReverseProxy /pboard/ http://dashes.acme:5000/pboard/
 ProxyPassReverse /pboard/ http://dashes.acme:5000/pboard/
 ```
 
-### Redhat
+### Redhat/CentOS
 
-RedHat has restrictions on the /etc/apache directory that require wsgi to be configured to use /var/run.
+RedHat/CentOS has restrictions on the /etc/apache directory that require wsgi to be configured to use /var/run.
 
 ```puppet
 
@@ -150,7 +150,7 @@ RedHat has restrictions on the /etc/apache directory that require wsgi to be con
 
 ```
 
-### Apache, RedHat and a non-standard port
+### Apache, RedHat/CentOS and a non-standard port
 
 
 ```puppet
