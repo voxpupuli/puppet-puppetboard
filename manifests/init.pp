@@ -37,9 +37,9 @@
 #   (string, absolute path) path to PuppetMaster/CA signed client SSL key
 #   Defaults to 'None' ($::puppetboard::params::puppetdb_key)
 #
-# [*puppetdb_ssl*]
-#   (string) whether PuppetDB uses SSL or not,  'True' or 'False'.
-#   Defaults to 'False' ($::puppetboard::params::puppetdb_ssl)
+# [*puppetdb_ssl_verify*]
+#   (string) whether PuppetDB uses SSL or not,  'True' or 'False', or the path to the puppet CA
+#   Defaults to 'False' ($::puppetboard::params::puppetdb_ssl_verify)
 #
 # [*puppetdb_cert*]
 #   (string, absolute path) path to PuppetMaster/CA signed client SSL cert
@@ -131,7 +131,7 @@ class puppetboard(
   $puppetdb_host       = $::puppetboard::params::puppetdb_host,
   $puppetdb_port       = $::puppetboard::params::puppetdb_port,
   $puppetdb_key        = $::puppetboard::params::puppetdb_key,
-  $puppetdb_ssl        = $::puppetboard::params::puppetdb_ssl,
+  $puppetdb_ssl_verify = $::puppetboard::params::puppetdb_ssl_verify,
   $puppetdb_cert       = $::puppetboard::params::puppetdb_cert,
   $puppetdb_timeout    = $::puppetboard::params::puppetdb_timeout,
   $unresponsive        = $::puppetboard::params::unresponsive,
