@@ -180,11 +180,11 @@ If you would like to use certificate auth into the PuppetDB service, use any of 
 
 class { 'puppetboard':
   manage_virtualenv => true,
-  puppetdb_host => 'puppet.example.com',
-  puppetdb_port => '8081',
-  puppetdb_key  => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
-  puppetdb_ssl  => 'True',
-  puppetdb_cert => "/var/lib/puppet/ssl/certs/${::certname}.pem",
+  puppetdb_host        => 'puppet.example.com',
+  puppetdb_port        => '8081',
+  puppetdb_key         => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
+  puppetdb_ssl_verify  => 'True',
+  puppetdb_cert        => "/var/lib/puppet/ssl/certs/${::certname}.pem",
 }
 
 ```
@@ -196,11 +196,11 @@ Note that the above only works if you have the Puppet CA root certificate added 
 
 class { 'puppetboard':
   manage_virtualenv => true,
-  puppetdb_host => 'puppet.example.com',
-  puppetdb_port => '8081',
-  puppetdb_key  => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
-  puppetdb_ssl  => "'/var/lib/puppet/ssl/certs/ca.pem'",
-  puppetdb_cert => "/var/lib/puppet/ssl/certs/${::certname}.pem",
+  puppetdb_host       => 'puppet.example.com',
+  puppetdb_port       => '8081',
+  puppetdb_key        => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
+  puppetdb_ssl_verify => "'/var/lib/puppet/ssl/certs/ca.pem'",
+  puppetdb_cert       => "/var/lib/puppet/ssl/certs/${::certname}.pem",
 }
 
 ```

@@ -25,7 +25,7 @@ class puppetboard::params {
   $puppetdb_host = 'localhost'
   $puppetdb_port = 8080
   $puppetdb_key = undef
-  $puppetdb_ssl = false
+  $puppetdb_ssl_verify = false
   $puppetdb_cert = undef
   $puppetdb_timeout = 20
   $dev_listen_host = '127.0.0.1'

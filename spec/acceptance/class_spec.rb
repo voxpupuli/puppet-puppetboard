@@ -103,7 +103,7 @@ describe 'puppetboard class' do
         puppetdb_host => 'puppet.example.com',
         puppetdb_port => '8081',
         puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
-        puppetdb_ssl  => 'True',
+        puppetdb_ssl_verify => 'True',
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
       }
       EOS
