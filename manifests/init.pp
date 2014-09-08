@@ -17,6 +17,12 @@
 #   (string) Puppetboard system group.
 #   Defaults to 'puppetboard' ($::puppetboard::params::group)
 #
+# [*groups*]
+#   (string) The groups to which the user belongs. The primary group should
+#   not be listed, and groups should be identified by name rather than by GID.
+#   Multiple groups should be specified as an array.
+#   Defaults to undef ($::puppetboard::params::groups)
+#
 # [*basedir*]
 #   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
@@ -124,6 +130,7 @@
 class puppetboard(
   $user                = $::puppetboard::params::user,
   $group               = $::puppetboard::params::group,
+  $groups              = $::puppetboard::params::groups,
   $basedir             = $::puppetboard::params::basedir,
   $git_source          = $::puppetboard::params::git_source,
   $dev_listen_host     = $::puppetboard::params::dev_listen_host,
@@ -166,6 +173,7 @@ class puppetboard(
       managehome => true,
       gid        => $group,
       system     => true,
+      groups     => $groups,
       require    => Group[$group],
     }
   }
