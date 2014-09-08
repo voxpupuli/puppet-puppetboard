@@ -179,6 +179,7 @@ If you would like to use certificate auth into the PuppetDB service, use any of 
 ```puppet
 
 class { 'puppetboard':
+  groups            => 'puppet',
   manage_virtualenv => true,
   puppetdb_host        => 'puppet.example.com',
   puppetdb_port        => '8081',
@@ -188,6 +189,7 @@ class { 'puppetboard':
 }
 
 ```
+Note that you must add the puppetboard user to the puppet group to enable it to read from the private_keys directory.
 
 Note that the above only works if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
 
@@ -195,6 +197,7 @@ Note that the above only works if you have the Puppet CA root certificate added 
 ```puppet
 
 class { 'puppetboard':
+  groups            => 'puppet',
   manage_virtualenv => true,
   puppetdb_host       => 'puppet.example.com',
   puppetdb_port       => '8081',
