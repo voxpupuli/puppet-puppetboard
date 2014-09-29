@@ -201,7 +201,7 @@ class { 'puppetboard':
   puppetdb_ssl      => 'True',
   puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
-
+```
 If you are re-using the existing puppet client certificates, they will already exist on the node (assuming puppet has been run and the client cert signed by the puppet master). However, the puppetboaard user will not have permission to read the private key unless you add it to the puppet group.
 
 Here's a complete example, re-using the puppet client certs:
@@ -218,7 +218,6 @@ class { 'puppetboard':
   puppetdb_ssl      => 'True',
   puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
-
 ```
 Note that both the above approaches only work if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
 
@@ -234,7 +233,6 @@ class { 'puppetboard':
   puppetdb_ssl      => "${ssl_dir}/certs/ca.pem",
   puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
-
 ```
 
 
