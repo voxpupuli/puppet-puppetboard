@@ -174,35 +174,65 @@ class { 'puppetboard::apache::vhost':
 ### Using SSL to the PuppetDB host
 
 
-If you would like to use certificate auth into the PuppetDB service, use any of the configurations from above and set the following parameters to your puppetboard class.
+If you would like to use certificate auth into the PuppetDB service you must configure puppetboard to use a client certificate and private key.
 
-```puppet
+You have two options for the source of the client certificate & key:
 
-class { 'puppetboard':
-  manage_virtualenv => true,
-  puppetdb_host        => 'puppet.example.com',
-  puppetdb_port        => '8081',
-  puppetdb_key         => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
-  puppetdb_ssl_verify  => 'True',
-  puppetdb_cert        => "/var/lib/puppet/ssl/certs/${::certname}.pem",
-}
+1. Generate a new certificate, signed by the puppetmaster CA
+2. Use the existing puppet client certificate
 
+If you choose option 1, generate the new certificates on the CA puppet master as follows:
 ```
+sudo puppet cert generate puppetboard.example.com
+```
+Note: this name cannot conflict with an existing certificate name.
 
-Note that the above only works if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
+The new certificate and private key can be found in $certdir/<NAME>.pem and $privatekeydir/<NAME>.pem on the CA puppet master. If you are not running puppetboard on the CA puppet master you will need to copy the certificate and key to the node runing puppetboard.
 
-
+Here's an example, using new certificates:
 ```puppet
-
+$ssl_dir = '/var/lib/puppetboard/ssl'
+$puppetboard_certname = 'puppetboard.example.com'
 class { 'puppetboard':
   manage_virtualenv => true,
-  puppetdb_host       => 'puppet.example.com',
-  puppetdb_port       => '8081',
-  puppetdb_key        => "/var/lib/puppet/ssl/private_keys/${::certname}.pem",
-  puppetdb_ssl_verify => "'/var/lib/puppet/ssl/certs/ca.pem'",
-  puppetdb_cert       => "/var/lib/puppet/ssl/certs/${::certname}.pem",
+  puppetdb_host     => 'puppetdb.example.com',
+  puppetdb_port     => '8081',
+  puppetdb_key      => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
+  puppetdb_ssl      => 'True',
+  puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
+```
+If you are re-using the existing puppet client certificates, they will already exist on the node (assuming puppet has been run and the client cert signed by the puppet master). However, the puppetboaard user will not have permission to read the private key unless you add it to the puppet group.
 
+Here's a complete example, re-using the puppet client certs:
+
+```puppet
+$ssl_dir = $::settings::ssldir
+$puppetboard_certname = $::certname
+class { 'puppetboard':
+  groups            => 'puppet',
+  manage_virtualenv => true,
+  puppetdb_host     => 'puppetdb.example.com',
+  puppetdb_port     => '8081',
+  puppetdb_key      => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
+  puppetdb_ssl      => 'True',
+  puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
+}
+```
+Note that both the above approaches only work if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
+
+```puppet
+$ssl_dir = $::settings::ssldir
+$puppetboard_certname = $::certname
+class { 'puppetboard':
+  groups            => 'puppet',
+  manage_virtualenv => true,
+  puppetdb_host     => 'puppetdb.example.com',
+  puppetdb_port     => '8081',
+  puppetdb_key      => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
+  puppetdb_ssl      => "${ssl_dir}/certs/ca.pem",
+  puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
+}
 ```
 
 

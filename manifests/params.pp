@@ -19,6 +19,7 @@ class puppetboard::params {
 
   $user  = 'puppetboard'
   $group = 'puppetboard'
+  $groups = undef
   $basedir = '/srv/puppetboard'
   $git_source = 'https://github.com/nedap/puppetboard'
 
