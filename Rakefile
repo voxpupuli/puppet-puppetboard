@@ -23,3 +23,7 @@ task :lint_output do
 end
 
 task :lint => :lint_output
+
+task :metadata do
+  sh "metadata-json-lint metadata.json"
+end
