@@ -61,7 +61,7 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": "3.x"
+      "version_requirement": ">= 3.0.0"
     },
     {
       "name": "stankevich/python",
