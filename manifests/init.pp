@@ -114,6 +114,10 @@
 #   (int) This is the number of reports that we want the dashboard to display.
 #   Defaults to 10
 #
+# [*listen*]
+#   (string) Defaults to 'private' If set to 'public' puppetboard will listen
+#   on 0.0.0.0; otherwise it will only be accessible via localhost.
+#
 # === Examples
 #
 #  class { 'puppetboard':
@@ -154,7 +158,7 @@ class puppetboard(
   $manage_git          = false,
   $manage_virtualenv   = false,
   $reports_count       = $::puppetboard::params::reports_count,
-
+  $listen              = $::puppetboard::params::listen,
 ) inherits ::puppetboard::params {
   validate_bool($enable_query)
   validate_bool($experimental)
