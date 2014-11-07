@@ -24,6 +24,7 @@ end
 
 task :lint => :lint_output
 
+desc "Lint metadata.json file"
 task :metadata do
   sh "metadata-json-lint metadata.json"
 end
