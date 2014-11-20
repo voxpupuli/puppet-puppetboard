@@ -174,6 +174,7 @@ class puppetboard(
   if $manage_group {
     group { $group:
       ensure => present,
+      system => true,
     }
   }
 
