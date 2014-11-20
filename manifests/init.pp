@@ -183,10 +183,10 @@ class puppetboard(
   }
 
   file { $basedir:
-    ensure   => 'directory',
-    owner    => $user,
-    group    => $group,
-    mode     => '0755',
+    ensure => 'directory',
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
   vcsrepo { "${basedir}/puppetboard":
