@@ -42,4 +42,5 @@ class puppetboard::params {
   $revision = undef
   $virtualenv = 'python-virtualenv'
   $listen = 'private'
+  $extra_settings = {}
 }
