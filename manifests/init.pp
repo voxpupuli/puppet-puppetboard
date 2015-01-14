@@ -93,6 +93,7 @@
 #
 # [*reports_count*]
 #   (string) the number of reports to display
+#   Defaults to 10
 #
 # [*manage_git*]
 #   (bool) If true, require the git package. If false do nothing.
