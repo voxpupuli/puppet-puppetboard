@@ -5,3 +5,4 @@ pkg/
 .vagrant/
 .bundle/
 vendor/
+Gemfile.lock
