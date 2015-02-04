@@ -11,7 +11,7 @@ https://github.com/nedap/puppetboard
 Installation
 ------------
 
-    puppet module install nibalizer-puppetboard
+    puppet module install puppet-puppetboard
 
 
 Dependencies
