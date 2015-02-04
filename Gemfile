@@ -12,4 +12,5 @@ group :development, :test do
   gem 'serverspec',             :require => false
   gem 'pry',                    :require => false
   gem 'metadata-json-lint',     :require => false
+  gem 'puppet-blacksmith',      :require => false
 end
