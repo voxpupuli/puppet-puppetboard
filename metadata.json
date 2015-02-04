@@ -1,9 +1,9 @@
 {
-  "name": "nibalizer-puppetboard",
-  "version": "2.6.0",
+  "name": "puppet-puppetboard",
+  "version": "2.7.0",
   "author": "Spencer Krum",
   "summary": "Install and configure PuppetBoard",
-  "license": "ASL 2.0",
+  "license": "Apache-2.0",
   "source": "git://github.com/puppet-community/puppet-module-puppetboard.git",
   "project_page": "https://github.com/puppet-community/puppet-module-puppetboard",
   "issues_url": "https://github.com/puppet-community/puppet-module-puppetboard/issues",
