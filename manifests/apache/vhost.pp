@@ -35,14 +35,21 @@
 #   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
+#
+# [*custom_fragment*]
+#   (string) Apache vhost config fragment to allow extra vhost settings such
+#   as auth.
+#   Defaults to undef.
+#
 class puppetboard::apache::vhost (
   $vhost_name,
-  $wsgi_alias  = '/',
-  $port        = 5000,
-  $threads     = 5,
-  $user        = $::puppetboard::params::user,
-  $group       = $::puppetboard::params::group,
-  $basedir     = $::puppetboard::params::basedir,
+  $wsgi_alias      = '/',
+  $port            = 5000,
+  $threads         = 5,
+  $user            = $::puppetboard::params::user,
+  $group           = $::puppetboard::params::group,
+  $basedir         = $::puppetboard::params::basedir,
+  $custom_fragment = undef,
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -76,6 +83,7 @@ class puppetboard::apache::vhost (
     wsgi_script_aliases         => $wsgi_script_aliases,
     wsgi_daemon_process_options => $wsgi_daemon_process_options,
     require                     => File["${docroot}/wsgi.py"],
+    custom_fragment             => $custom_fragment,
     notify                      => Service[$::puppetboard::params::apache_service],
   }
 
