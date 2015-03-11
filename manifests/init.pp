@@ -208,6 +208,7 @@ class puppetboard(
   file { "${basedir}/puppetboard":
     owner   => $user,
     recurse => true,
+    require => Vcsrepo["${basedir}/puppetboard"],
   }
 
   #Template consumes:
