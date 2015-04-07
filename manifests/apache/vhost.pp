@@ -65,7 +65,10 @@ class puppetboard::apache::vhost (
     content => template('puppetboard/wsgi.py.erb'),
     owner   => $user,
     group   => $group,
-    require => User[$user],
+    require => [
+      User[$user],
+      Vcsrepo[$docroot],
+    ],
   }
 
   ::apache::vhost { $vhost_name:

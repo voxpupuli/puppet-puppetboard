@@ -52,7 +52,10 @@ class puppetboard::apache::conf (
     content => template('puppetboard/wsgi.py.erb'),
     owner   => $user,
     group   => $group,
-    require => User[$user],
+    require => [
+      User[$user],
+      Vcsrepo[$docroot],
+    ],
   }
 
   # Template Uses:
