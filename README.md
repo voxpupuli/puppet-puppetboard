@@ -5,7 +5,7 @@ This is the puppetboard puppet module.
 
 Puppetboard is a puppet dashboard
 
-https://github.com/nedap/puppetboard
+https://github.com/puppet-community/puppetboard
 
 
 Installation
