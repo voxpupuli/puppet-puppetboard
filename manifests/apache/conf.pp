@@ -15,6 +15,10 @@
 #   (int) Number of WSGI threads to use.
 #   Defaults to 5
 #
+# [*max_reqs*]
+#   (int) Limit on number of requests allowed to daemon process
+#   Defaults to 0 (no limit)
+#
 # [*user*]
 #   (string) WSGI daemon process user, and daemon process name
 #   Defaults to 'puppetboard' ($::puppetboard::params::user)
@@ -37,6 +41,7 @@
 class puppetboard::apache::conf (
   $wsgi_alias = '/puppetboard',
   $threads    = 5,
+  $max_reqs   = 0,
   $user       = $::puppetboard::params::user,
   $group      = $::puppetboard::params::group,
   $basedir    = $::puppetboard::params::basedir,
