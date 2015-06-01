@@ -236,9 +236,6 @@ class { 'puppetboard':
 ```
 
 
-
-
-
 License
 -------
 
