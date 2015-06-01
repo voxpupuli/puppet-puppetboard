@@ -3,7 +3,7 @@ puppetboard
 
 This is the puppetboard puppet module.
 
-Puppetboard is a puppet dashboard
+Puppetboard is an open source puppet dashboard
 
 https://github.com/puppet-community/puppetboard
 
