@@ -22,7 +22,7 @@ class puppetboard::params {
   $group = 'puppetboard'
   $groups = undef
   $basedir = '/srv/puppetboard'
-  $git_source = 'https://github.com/nedap/puppetboard'
+  $git_source = 'https://github.com/puppet-community/puppetboard'
 
   $puppetdb_host = 'localhost'
   $puppetdb_port = 8080

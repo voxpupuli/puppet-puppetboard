@@ -3,9 +3,9 @@ puppetboard
 
 This is the puppetboard puppet module.
 
-Puppetboard is a puppet dashboard
+Puppetboard is an open source puppet dashboard
 
-https://github.com/nedap/puppetboard
+https://github.com/puppet-community/puppetboard
 
 
 Installation
@@ -234,9 +234,6 @@ class { 'puppetboard':
   puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
-
-
-
 
 
 License
