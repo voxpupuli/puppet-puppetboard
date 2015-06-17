@@ -15,6 +15,10 @@
 #   (string) WSGI script alias source
 #   Default: '/'
 #
+# [*ip*]
+#   (int) IP for the vhost to listen on.
+#   Defaults to undef.
+#
 # [*port*]
 #   (int) Port for the vhost to listen on.
 #   Defaults to 5000.
@@ -38,6 +42,7 @@
 class puppetboard::apache::vhost (
   $vhost_name,
   $wsgi_alias  = '/',
+  $ip          = undef, 
   $port        = 5000,
   $threads     = 5,
   $user        = $::puppetboard::params::user,
@@ -72,6 +77,7 @@ class puppetboard::apache::vhost (
   }
 
   ::apache::vhost { $vhost_name:
+    ip				=> $ip,
     port                        => $port,
     docroot                     => $docroot,
     wsgi_daemon_process         => $user,
