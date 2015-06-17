@@ -42,7 +42,7 @@
 class puppetboard::apache::vhost (
   $vhost_name,
   $wsgi_alias  = '/',
-  $ip          = undef, 
+  $ip          = undef,
   $port        = 5000,
   $threads     = 5,
   $user        = $::puppetboard::params::user,
@@ -77,7 +77,7 @@ class puppetboard::apache::vhost (
   }
 
   ::apache::vhost { $vhost_name:
-    ip				=> $ip,
+    ip                          => $ip,
     port                        => $port,
     docroot                     => $docroot,
     wsgi_daemon_process         => $user,
