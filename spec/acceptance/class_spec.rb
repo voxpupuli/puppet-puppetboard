@@ -1,5 +1,4 @@
 require 'spec_helper_acceptance'
-require 'pry'
 
 describe 'puppetboard class' do
 
@@ -72,7 +71,6 @@ describe 'puppetboard class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    #binding.pry
 
     it 'should answer to localhost' do
       shell("/usr/bin/curl localhost:5000") do |r|
@@ -114,7 +112,6 @@ describe 'puppetboard class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    #binding.pry
 
     describe file("/srv/puppetboard/puppetboard/settings.py") do
       it { should contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
