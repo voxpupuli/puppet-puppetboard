@@ -55,21 +55,21 @@
     },
     {
       "name": "puppet",
-      "version_requirement": "3.x"
+      "version_requirement": ">=3.0.0 < 4.0.0"
     }
   ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 3.0.0"
+      "version_requirement": ">= 3.0.0 < 6.0.0"
     },
     {
       "name": "stankevich/python",
-      "version_requirement": ">= 1.1.4"
+      "version_requirement": ">= 1.1.4 < 2.0.0"
     },
     {
       "name": "puppetlabs/vcsrepo",
-      "version_requirement": ">= 0.1.2"
+      "version_requirement": ">= 0.1.2 < 2.0.0"
     }
   ]
 }
