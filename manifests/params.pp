@@ -14,6 +14,22 @@ class puppetboard::params {
     'RedHat': {
       $apache_confd   = '/etc/httpd/conf.d'
       $apache_service = 'httpd'
+      File {
+        seltype => 'httpd_sys_content_t',
+      }
+      selboolean {'httpd_can_network_relay' :
+        presistent => true,
+        value      => 1,
+      }
+      selboolean {'httpd_can_network_connect' :
+        presistent => true,
+        value      => 1,
+      }
+      selboolean {'httpd_can_network_db' :
+        presistent => true,
+        value      => 1,
+      }
+
     }
     default: { fail("The ${::osfamily} operating system is not supported with the puppetboard module") }
   }
