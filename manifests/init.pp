@@ -85,7 +85,7 @@
 #
 # [*experimental*]
 #   (bool) Enable experimental features.
-#   Defaults to true ($::puppetboard::params::experimental)
+#   Defaults to false ($::puppetboard::params::experimental)
 #
 # [*revision*]
 #   (string) Commit, tag, or branch from Puppetboard's Git repo to be used
