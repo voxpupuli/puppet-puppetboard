@@ -44,8 +44,8 @@
 #   Defaults to 'None' ($::puppetboard::params::puppetdb_key)
 #
 # [*puppetdb_ssl_verify*]
-#   (string) whether PuppetDB uses SSL or not,  'True' or 'False', or the path to the puppet CA
-#   Defaults to 'False' ($::puppetboard::params::puppetdb_ssl_verify)
+#   (string) whether PuppetDB uses SSL or not (true or false)
+#   Defaults to false ($::puppetboard::params::puppetdb_ssl_verify)
 #
 # [*puppetdb_cert*]
 #   (string, absolute path) path to PuppetMaster/CA signed client SSL cert
