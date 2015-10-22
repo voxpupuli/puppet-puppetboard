@@ -35,6 +35,10 @@
 #   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
+# [*override*]
+#   (string) Sets the Apache AllowOverride value
+#   Defaults to 'None' ($::puppetboard::params::apache_override)
+#
 class puppetboard::apache::vhost (
   $vhost_name,
   $wsgi_alias  = '/',
@@ -43,6 +47,7 @@ class puppetboard::apache::vhost (
   $user        = $::puppetboard::params::user,
   $group       = $::puppetboard::params::group,
   $basedir     = $::puppetboard::params::basedir,
+  $override    = $::puppetboard::params::apache_override
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -78,6 +83,7 @@ class puppetboard::apache::vhost (
     wsgi_process_group          => $group,
     wsgi_script_aliases         => $wsgi_script_aliases,
     wsgi_daemon_process_options => $wsgi_daemon_process_options,
+    override                    => $override,
     require                     => File["${docroot}/wsgi.py"],
     notify                      => Service[$::puppetboard::params::apache_service],
   }
