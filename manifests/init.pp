@@ -170,6 +170,7 @@ class puppetboard(
   validate_bool($experimental)
   validate_bool($localise_timestamp)
   validate_hash($extra_settings)
+  validate_bool($puppetdb_ssl_verify)
 
   if $manage_group {
     group { $group:
