@@ -194,12 +194,12 @@ Here's an example, using new certificates:
 $ssl_dir = '/var/lib/puppetboard/ssl'
 $puppetboard_certname = 'puppetboard.example.com'
 class { 'puppetboard':
-  manage_virtualenv => true,
-  puppetdb_host     => 'puppetdb.example.com',
-  puppetdb_port     => '8081',
-  puppetdb_key      => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
-  puppetdb_ssl      => 'True',
-  puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
+  manage_virtualenv   => true,
+  puppetdb_host       => 'puppetdb.example.com',
+  puppetdb_port       => '8081',
+  puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
+  puppetdb_ssl_verify => true,
+  puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
 If you are re-using the existing puppet client certificates, they will already exist on the node (assuming puppet has been run and the client cert signed by the puppet master). However, the puppetboaard user will not have permission to read the private key unless you add it to the puppet group.
@@ -210,13 +210,13 @@ Here's a complete example, re-using the puppet client certs:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  groups            => 'puppet',
-  manage_virtualenv => true,
-  puppetdb_host     => 'puppetdb.example.com',
-  puppetdb_port     => '8081',
-  puppetdb_key      => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
-  puppetdb_ssl      => 'True',
-  puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
+  groups              => 'puppet',
+  manage_virtualenv   => true,
+  puppetdb_host       => 'puppetdb.example.com',
+  puppetdb_port       => '8081',
+  puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
+  puppetdb_ssl_verify => true,
+  puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
 Note that both the above approaches only work if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
