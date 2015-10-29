@@ -18,16 +18,16 @@ class puppetboard::params {
         seltype => 'httpd_sys_content_t',
       }
       selboolean {'httpd_can_network_relay' :
-        presistent => true,
-        value      => 1,
+        persistent => true,
+        value      => 'on',
       }
       selboolean {'httpd_can_network_connect' :
-        presistent => true,
-        value      => 1,
+        persistent => true,
+        value      => 'on',
       }
       selboolean {'httpd_can_network_db' :
-        presistent => true,
-        value      => 1,
+        persistent => true,
+        value      => 'on',
       }
 
     }
