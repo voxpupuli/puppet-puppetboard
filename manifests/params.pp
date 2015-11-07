@@ -25,7 +25,7 @@ class puppetboard::params {
         persistent => true,
         value      => 'on',
       }
-      selboolean {'httpd_can_network_db' :
+      selboolean {'httpd_can_network_connect_db' :
         persistent => true,
         value      => 'on',
       }
