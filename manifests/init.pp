@@ -111,6 +111,10 @@
 #   (bool) If true, manage (create) this group. If false do nothing.
 #   Defaults to true
 #
+# [*manage_selinux*]
+#   (bool) If true, manage selinux policies for puppetboard. If false do nothing.
+#   Defaults to true if selinux is enabled
+#
 # [*reports_count*]
 #   (int) This is the number of reports that we want the dashboard to display.
 #   Defaults to 10
@@ -158,6 +162,7 @@ class puppetboard(
   $experimental        = $::puppetboard::params::experimental,
   $revision            = $::puppetboard::params::revision,
   $reports_count       = $::puppetboard::params::reports_count,
+  $manage_selinux      = $::puppetboard::params::manage_selinux,
   $manage_user         = true,
   $manage_group        = true,
   $manage_git          = false,
@@ -272,4 +277,18 @@ class puppetboard(
     }
   }
 
+  if $manage_selinux {
+    selboolean {'httpd_can_network_relay' :
+      persistent => true,
+      value      => 'on',
+    }
+    selboolean {'httpd_can_network_connect' :
+      persistent => true,
+      value      => 'on',
+    }
+    selboolean {'httpd_can_network_connect_db' :
+      persistent => true,
+      value      => 'on',
+    }
+  }
 }

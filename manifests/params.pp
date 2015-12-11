@@ -17,21 +17,13 @@ class puppetboard::params {
       File {
         seltype => 'httpd_sys_content_t',
       }
-      selboolean {'httpd_can_network_relay' :
-        persistent => true,
-        value      => 'on',
-      }
-      selboolean {'httpd_can_network_connect' :
-        persistent => true,
-        value      => 'on',
-      }
-      selboolean {'httpd_can_network_connect_db' :
-        persistent => true,
-        value      => 'on',
-      }
-
     }
     default: { fail("The ${::osfamily} operating system is not supported with the puppetboard module") }
+  }
+
+  $manage_selinux = $::selinux ? {
+    false   => false,
+    default => true,
   }
 
   $user  = 'puppetboard'
