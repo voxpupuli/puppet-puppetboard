@@ -266,13 +266,13 @@ class puppetboard(
     }
   }
 
-  if $manage_git {
+  if $manage_git and !defined(Package['git']) {
     package {'git':
       ensure => installed,
     }
   }
 
-  if $manage_virtualenv {
+  if $manage_virtualenv and !defined(Package[$::puppetboard::params::virtualenv]) {
     package { $::puppetboard::params::virtualenv:
       ensure => installed,
     }
