@@ -91,10 +91,6 @@
 #   (string) Commit, tag, or branch from Puppetboard's Git repo to be used
 #   Defaults to undef, meaning latest commit will be used ($::puppetboard::params::revision)
 #
-# [*reports_count*]
-#   (string) the number of reports to display
-#   Defaults to 10
-#
 # [*manage_git*]
 #   (bool) If true, require the git package. If false do nothing.
 #   Defaults to false
@@ -161,7 +157,6 @@ class puppetboard(
   $python_proxy        = $::puppetboard::params::python_proxy,
   $experimental        = $::puppetboard::params::experimental,
   $revision            = $::puppetboard::params::revision,
-  $reports_count       = $::puppetboard::params::reports_count,
   $manage_selinux      = $::puppetboard::params::manage_selinux,
   $manage_user         = true,
   $manage_group        = true,
