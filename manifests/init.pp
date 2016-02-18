@@ -69,7 +69,7 @@
 #
 # [*enable_catalog*]
 #   (bool) Whether to allow the user to browser catalog comparisons.
-#   Defaults to 'True' ($::puppetboard::params::enable_catalog)
+#   Defaults to 'False' ($::puppetboard::params::enable_catalog)
 #
 # [*enable_query*]
 #   (bool) Whether to allow the user to run raw queries against PuppetDB.
