@@ -67,6 +67,10 @@
 #   (int) number of hours after which a node is considered "unresponsive"
 #   Defaults to 3 ($::puppetboard::params::unresponsive)
 #
+# [*enable_catalog*]
+#   (bool) Whether to allow the user to browser catalog comparisons.
+#   Defaults to 'True' ($::puppetboard::params::enable_catalog)
+#
 # [*enable_query*]
 #   (bool) Whether to allow the user to run raw queries against PuppetDB.
 #   Defaults to 'True' ($::puppetboard::params::enable_query)
@@ -151,6 +155,7 @@ class puppetboard(
   $puppetdb_cert       = $::puppetboard::params::puppetdb_cert,
   $puppetdb_timeout    = $::puppetboard::params::puppetdb_timeout,
   $unresponsive        = $::puppetboard::params::unresponsive,
+  $enable_catalog      = $::puppetboard::params::enable_catalog,
   $enable_query        = $::puppetboard::params::enable_query,
   $localise_timestamp  = $::puppetboard::params::localise_timestamp,
   $python_loglevel     = $::puppetboard::params::python_loglevel,
@@ -166,6 +171,7 @@ class puppetboard(
   $listen              = $::puppetboard::params::listen,
   $extra_settings      = $::puppetboard::params::extra_settings,
 ) inherits ::puppetboard::params {
+  validate_bool($enable_catalog)
   validate_bool($enable_query)
   validate_bool($experimental)
   validate_bool($localise_timestamp)
@@ -215,6 +221,7 @@ class puppetboard(
   #Template consumes:
   #$dev_listen_host
   #$dev_listen_port
+  #$enable_catalog
   #$enable_query
   #$experimental
   #$localise_timestamp
