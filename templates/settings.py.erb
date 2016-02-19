@@ -30,6 +30,11 @@ PUPPETDB_TIMEOUT = <%= @puppetdb_timeout %>
 <% if @unresponsive -%>
 UNRESPONSIVE_HOURS = <%= @unresponsive %>
 <% end -%>
+<% if @enable_catalog -%>
+ENABLE_CATALOG = True
+<% else -%>
+ENABLE_CATALOG = False
+<% end -%>
 <% if @enable_query -%>
 ENABLE_QUERY = True
 <% else -%>

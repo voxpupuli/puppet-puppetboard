@@ -41,6 +41,7 @@ class puppetboard::params {
   $dev_listen_host = '127.0.0.1'
   $dev_listen_port = 5000
   $unresponsive = 3
+  $enable_catalog = false
   $enable_query = true
   $localise_timestamp = true
   $python_loglevel = 'info'
