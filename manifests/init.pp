@@ -44,7 +44,7 @@
 #   Defaults to 'None' ($::puppetboard::params::puppetdb_key)
 #
 # [*puppetdb_ssl_verify*]
-#   (string) whether PuppetDB uses SSL or not (true or false)
+#   (bool, string) whether PuppetDB uses SSL or not (true or false), or the path to the puppet CA
 #   Defaults to false ($::puppetboard::params::puppetdb_ssl_verify)
 #
 # [*puppetdb_cert*]
@@ -176,7 +176,11 @@ class puppetboard(
   validate_bool($experimental)
   validate_bool($localise_timestamp)
   validate_hash($extra_settings)
-  validate_bool($puppetdb_ssl_verify)
+  if $puppetdb_ssl_verify {
+    unless is_string($puppetdb_ssl_verify) {
+      validate_bool($puppetdb_ssl_verify)
+    }
+  }
 
   if $manage_group {
     group { $group:

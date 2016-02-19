@@ -13,8 +13,10 @@ PUPPETDB_HOST = '<%= @puppetdb_host %>'
 <% if @puppetdb_port -%>
 PUPPETDB_PORT = <%= @puppetdb_port %>
 <% end -%>
-<% if @puppetdb_ssl_verify -%>
+<% if @puppetdb_ssl_verify.is_a? String -%>
 PUPPETDB_SSL_VERIFY = '<%= @puppetdb_ssl_verify %>'
+<% elsif @puppetdb_ssl_verify -%>
+PUPPETDB_SSL_VERIFY = True
 <% else -%>
 PUPPETDB_SSL_VERIFY = False
 <% end -%>
