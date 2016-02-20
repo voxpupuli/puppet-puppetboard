@@ -35,6 +35,14 @@
 #   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
+# [*auth*]
+#   (boolean) Include Apache basic authentication
+#   Defaults to undef (False)
+#
+# [*auth_file*]
+#   (string) Sets the absolute path to htpasswd file. Which, if used, needs to be generated with htpasswd utility.
+#   Defaults to undef (False)
+#
 class puppetboard::apache::vhost (
   $vhost_name,
   $wsgi_alias  = '/',
@@ -43,6 +51,8 @@ class puppetboard::apache::vhost (
   $user        = $::puppetboard::params::user,
   $group       = $::puppetboard::params::group,
   $basedir     = $::puppetboard::params::basedir,
+  $auth        = undef,
+  $auth_file   = undef,
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -71,15 +81,41 @@ class puppetboard::apache::vhost (
     ],
   }
 
-  ::apache::vhost { $vhost_name:
-    port                        => $port,
-    docroot                     => $docroot,
-    wsgi_daemon_process         => $user,
-    wsgi_process_group          => $group,
-    wsgi_script_aliases         => $wsgi_script_aliases,
-    wsgi_daemon_process_options => $wsgi_daemon_process_options,
-    require                     => File["${docroot}/wsgi.py"],
-    notify                      => Service[$::puppetboard::params::apache_service],
+  if $auth {
+    ::apache::mod { 'authn_core': }
+    ::apache::vhost { $vhost_name:
+      port                        => $port,
+      docroot                     => $docroot,
+      wsgi_daemon_process         => $user,
+      wsgi_process_group          => $group,
+      wsgi_script_aliases         => $wsgi_script_aliases,
+      wsgi_daemon_process_options => $wsgi_daemon_process_options,
+      directories                 => [
+        { 'path' => ${docroot},
+        },
+        { 'path'                => '/',
+          'provider'            => 'location',
+          'require'             => 'valid-user',
+          'auth_type'           => 'Basic',
+          'auth_name'           => 'Authentication Required',
+          'auth_basic_provider' => 'file',
+          'auth_user_file'      => ${auth_file},
+        },
+      ],
+      require                     => File["${docroot}/wsgi.py"],
+      notify                      => Service[$::puppetboard::params::apache_service],
+    }
+  } else {
+    ::apache::vhost { $vhost_name:
+      port                        => $port,
+      docroot                     => $docroot,
+      wsgi_daemon_process         => $user,
+      wsgi_process_group          => $group,
+      wsgi_script_aliases         => $wsgi_script_aliases,
+      wsgi_daemon_process_options => $wsgi_daemon_process_options,
+      require                     => File["${docroot}/wsgi.py"],
+      notify                      => Service[$::puppetboard::params::apache_service],
+    }
   }
 
 }
