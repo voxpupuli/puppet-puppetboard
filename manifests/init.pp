@@ -279,8 +279,8 @@ class puppetboard(
   }
 
   if $manage_virtualenv and !defined(Package[$::puppetboard::params::virtualenv]) {
-    package { $::puppetboard::params::virtualenv:
-      ensure => installed,
+    class { 'python':
+      virtualenv => 'present',
     }
   }
 
