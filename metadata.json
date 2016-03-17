@@ -4,9 +4,10 @@
   "author": "Spencer Krum",
   "summary": "Install and configure PuppetBoard",
   "license": "Apache-2.0",
-  "source": "git://github.com/puppet-community/puppet-module-puppetboard.git",
-  "project_page": "https://github.com/puppet-community/puppet-module-puppetboard",
-  "issues_url": "https://github.com/puppet-community/puppet-module-puppetboard/issues",
+  "source": "https://github.com/voxpupuli/puppet-module-puppetboard.git",
+  "project_page": "https://github.com/voxpupuli/puppet-module-puppetboard",
+  "tags": ["puppetboard", "puppetdb", "voxpupuli"],
+  "issues_url": "https://github.com/voxpupuli/puppet-module-puppetboard/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -36,23 +37,20 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "10.04",
         "12.04",
-        "14.04"
+        "14.04",
+        "16.04"
       ]
     }
   ],
   "requirements": [
-    {
-      "name": "pe",
-      "version_requirement": ">= 3.2.0 < 3.4.0"
-    },
     {
       "name": "puppet",
       "version_requirement": ">=3.0.0 < 4.0.0"
