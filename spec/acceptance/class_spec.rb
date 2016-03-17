@@ -1,17 +1,16 @@
 require 'spec_helper_acceptance'
 
 describe 'puppetboard class' do
-
   context 'default parameters' do
     hosts.each do |host|
       if fact('osfamily') == 'RedHat'
         if fact('architecture') == 'amd64'
-          on host, "wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm"
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
         else
-          on host, "wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm"
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
         end
       end
-      on host, "puppet module install puppetlabs/apache"
+      on host, 'puppet module install puppetlabs/apache'
       install_package host, 'python-virtualenv'
       install_package host, 'git'
     end
@@ -25,30 +24,29 @@ describe 'puppetboard class' do
     end
 
     # TODO: get this working
-    #it 'should not answer to localhost' do
+    # it 'should not answer to localhost' do
     #  shell("/usr/bin/curl localhost:80", :acceptable_exit_codes => 7) do |r|
     #    r.exit_code.should == 7 # curl (7): Couldn't connect to host
     #  end
-    #end
-
+    # end
   end
 
   context 'default parameters' do
     hosts.each do |host|
       if fact('osfamily') == 'RedHat'
         if fact('architecture') == 'amd64'
-          on host, "wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm"
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
         else
-          on host, "wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm"
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
         end
       end
-      on host, "puppet module install puppetlabs/apache"
+      on host, 'puppet module install puppetlabs/apache'
       install_package host, 'python-virtualenv'
       install_package host, 'git'
     end
 
     it 'should work with no errors' do
-      pp= <<-EOS
+      pp = <<-EOS
       # Configure Apache on this server
       class { 'apache':
         default_vhost => false,
@@ -65,15 +63,13 @@ describe 'puppetboard class' do
       }
       EOS
 
-
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_failures => true)
     end
 
-
     it 'should answer to localhost' do
-      shell("/usr/bin/curl localhost:5000") do |r|
+      shell('/usr/bin/curl localhost:5000') do |r|
         r.stdout.should =~ /niele Sluijters/
         r.exit_code.should == 0
       end
@@ -84,18 +80,18 @@ describe 'puppetboard class' do
     hosts.each do |host|
       if fact('osfamily') == 'RedHat'
         if fact('architecture') == 'amd64'
-          on host, "wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm"
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
         else
-          on host, "wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm"
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
         end
       end
-      on host, "puppet module install puppetlabs/apache"
+      on host, 'puppet module install puppetlabs/apache'
       install_package host, 'python-virtualenv'
       install_package host, 'git'
     end
 
     it 'should work with no errors' do
-      pp= <<-EOS
+      pp = <<-EOS
       class { 'puppetboard':
         manage_virtualenv => true,
         puppetdb_host => 'puppet.example.com',
@@ -106,20 +102,14 @@ describe 'puppetboard class' do
       }
       EOS
 
-
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_failures => true)
     end
 
-
-    describe file("/srv/puppetboard/puppetboard/settings.py") do
+    describe file('/srv/puppetboard/puppetboard/settings.py') do
       it { should contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
       it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
-
   end
 end
-
-
-
