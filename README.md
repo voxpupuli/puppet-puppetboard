@@ -246,7 +246,7 @@ Contact
 -------
 
 Email: krum.spencer@gmail.com
-IRC: #puppetboard and #puppet on freenode
+IRC: #voxpupuli, #puppetboard and #puppet on freenode
 
 Attribution
 -----------

@@ -1,8 +1,11 @@
-*.swp
-*.swo
-*.swn
 pkg/
+Gemfile.lock
+vendor/
+spec/fixtures/
 .vagrant/
 .bundle/
-vendor/
-Gemfile.lock
+coverage/
+log/
+.idea/
+*.iml
+.*.sw
