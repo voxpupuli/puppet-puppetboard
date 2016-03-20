@@ -8,9 +8,14 @@ class puppetboard::params {
 
   case $::osfamily {
     'Debian': {
+      if $::operatingsystem == ubuntu {
+        $apache_confd = '/etc/apache2/conf-enabled'
+      } else {
       $apache_confd   = '/etc/apache2/conf.d'
+      }
       $apache_service = 'apache2'
     }
+
     'RedHat': {
       $apache_confd   = '/etc/httpd/conf.d'
       $apache_service = 'httpd'
