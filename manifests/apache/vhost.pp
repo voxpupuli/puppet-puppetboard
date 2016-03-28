@@ -19,6 +19,18 @@
 #   (int) Port for the vhost to listen on.
 #   Defaults to 5000.
 #
+# [*ssl*]
+#   (bool) If vhost should be configured with ssl
+#   Defaults to false
+#
+# [*ssl_cert*]
+#   (string, absolute path) Path to server SSL cert
+#   No default.
+#
+# [*ssl_key*]
+#   (string, absolute path) Path to server SSL key
+#   No default.
+#
 # [*threads*]
 #   (int) Number of WSGI threads to use.
 #   Defaults to 5
@@ -43,6 +55,9 @@ class puppetboard::apache::vhost (
   $vhost_name,
   $wsgi_alias  = '/',
   $port        = 5000,
+  $ssl         = false,
+  $ssl_cert    = undef,
+  $ssl_key     = undef,
   $threads     = 5,
   $user        = $::puppetboard::params::user,
   $group       = $::puppetboard::params::group,
@@ -79,6 +94,9 @@ class puppetboard::apache::vhost (
   ::apache::vhost { $vhost_name:
     port                        => $port,
     docroot                     => $docroot,
+    ssl                         => $ssl,
+    ssl_cert                    => $ssl_cert,
+    ssl_key                     => $ssl_key,
     wsgi_daemon_process         => $user,
     wsgi_process_group          => $group,
     wsgi_script_aliases         => $wsgi_script_aliases,
