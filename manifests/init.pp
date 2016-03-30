@@ -29,7 +29,7 @@
 #
 # [*git_source*]
 #   (string) Location of upstream Puppetboard GIT repository
-#   Defaults to 'https://github.com/puppet-community/puppetboard' ($::puppetboard::params::git_source)
+#   Defaults to 'https://github.com/voxpupuli/puppetboard' ($::puppetboard::params::git_source)
 #
 # [*puppetdb_host*]
 #   (string) PuppetDB Host

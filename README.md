@@ -5,7 +5,7 @@ This is the puppetboard puppet module.
 
 Puppetboard is an open source puppet dashboard
 
-https://github.com/puppet-community/puppetboard
+https://github.com/voxpupuli/puppetboard
 
 
 Installation
