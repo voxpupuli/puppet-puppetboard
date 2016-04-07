@@ -264,7 +264,6 @@ class puppetboard(
       path    => "${basedir}/puppetboard/dev.py",
       line    => " app.run('0.0.0.0')",
       match   => ' app.run\(\'([\d\.]+)\'\)',
-      notify  => Service['puppetboard'],
       require => [
         File["${basedir}/puppetboard"],
         Python::Virtualenv["${basedir}/virtenv-puppetboard"]
