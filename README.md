@@ -1,3 +1,10 @@
+# Puppetboard
+
+[![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
+[![Puppet Forge downloads](https://img.shields.io/puppetforge/dt/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
+[![Puppet Forge score](https://img.shields.io/puppetforge/f/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-puppetboard.png)](https://travis-ci.org/voxpupuli/puppet-puppetboard)
+
 puppetboard
 ===========
 
