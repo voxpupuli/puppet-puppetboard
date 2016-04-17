@@ -1,4 +1,9 @@
-Versin 2.7.3
+Version 2.7.4
+
+Fix duplicate reports parameter
+No longer notify non-existent service
+
+Version 2.7.3
 
 Bumping so that auto-release can fire
 
