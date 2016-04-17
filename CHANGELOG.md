@@ -1,3 +1,7 @@
+# Version 2.7.5
+
+* Bumping so that auto-release can fire
+
 # Version 2.7.4
 
 * Fix duplicate reports parameter
