@@ -1,3 +1,7 @@
+# Release 2.8.1
+
+* Fix old Versionnumber in metadata.json
+
 # Release 2.8.0
 
 * Official drop Ruby 1.8 support
