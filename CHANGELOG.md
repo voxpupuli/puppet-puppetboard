@@ -1,3 +1,7 @@
+# Release 2.8.0
+
+* Official drop Ruby 1.8 support
+
 # Release 2.7.5
 
 * Bumping so that auto-release can fire
