@@ -46,29 +46,29 @@
 # Release 2.6.0
 
 * Changed git managed to installed
- 
+
 * Starting with 2.5.0
- 
+
 * Moved template from managing default_settings.py to settings.py
- 
+
 * Handled better the stringification of ssl_key and ssl_cert
- 
+
 * Added beaker tests
- 
+
 * Abstracted out REPORTS_COUNT
- 
+
 * Misc bug fixes
- 
+
 * Docs improvements
- 
+
 * Lint/syntax testing with travis integration
- 
+
 * Github now reports activity to #puppetboard on freenode
- 
+
 * Allow puppetboard to be prefixed when running in wsgi
- 
+
 * Optionally manage user/group
- 
+
 * Allow timestamps to be localized
 
 ## Contributors
