@@ -19,8 +19,8 @@ describe 'puppetboard class' do
       pp = " class { 'puppetboard': } "
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     # TODO: get this working
@@ -64,8 +64,8 @@ describe 'puppetboard class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     it 'should answer to localhost' do
@@ -103,8 +103,8 @@ describe 'puppetboard class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
