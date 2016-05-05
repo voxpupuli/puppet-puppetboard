@@ -4,14 +4,14 @@
   "author": "voxpupuli",
   "summary": "Install and configure PuppetBoard",
   "license": "Apache-2.0",
-  "source": "https://github.com/voxpupuli/puppet-module-puppetboard.git",
-  "project_page": "https://github.com/voxpupuli/puppet-module-puppetboard",
+  "source": "https://github.com/voxpupuli/puppet-puppetboard.git",
+  "project_page": "https://github.com/voxpupuli/puppet-puppetboard",
   "tags": [
     "puppetboard",
     "puppetdb",
     "voxpupuli"
   ],
-  "issues_url": "https://github.com/voxpupuli/puppet-module-puppetboard/issues",
+  "issues_url": "https://github.com/voxpupuli/puppet-puppetboard/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
