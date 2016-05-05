@@ -1,18 +1,18 @@
-# Version 2.7.5
+# Release 2.7.5
 
 * Bumping so that auto-release can fire
 
-# Version 2.7.4
+# Release 2.7.4
 
 * Fix duplicate reports parameter
 * No longer notify non-existent service
 * Moved to the voxpupuli space
 
-# Version 2.7.3
+# Release 2.7.3
 
 * Bumping so that auto-release can fire
 
-# Version 2.7.2
+# Release 2.7.2
 
 * Moved to the puppet-community space
 
@@ -43,32 +43,32 @@
 * Author: stack72 <public@paulstack.co.uk>
 * Author: txaj <txaj1@ovh.fr>
 
-# Version 2.6.0
+# Release 2.6.0
 
 * Changed git managed to installed
- 
+
 * Starting with 2.5.0
- 
+
 * Moved template from managing default_settings.py to settings.py
- 
+
 * Handled better the stringification of ssl_key and ssl_cert
- 
+
 * Added beaker tests
- 
+
 * Abstracted out REPORTS_COUNT
- 
+
 * Misc bug fixes
- 
+
 * Docs improvements
- 
+
 * Lint/syntax testing with travis integration
- 
+
 * Github now reports activity to #puppetboard on freenode
- 
+
 * Allow puppetboard to be prefixed when running in wsgi
- 
+
 * Optionally manage user/group
- 
+
 * Allow timestamps to be localized
 
 ## Contributors
