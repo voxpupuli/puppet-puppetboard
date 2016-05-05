@@ -1,3 +1,7 @@
+# Release 2.8.2
+
+* renamed the Repo from puppet-module-puppetboard -> puppet-puppetboard
+
 # Release 2.8.1
 
 * Fix old Versionnumber in metadata.json
