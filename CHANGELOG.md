@@ -1,18 +1,18 @@
-# Version 2.7.5
+# Release 2.7.5
 
 * Bumping so that auto-release can fire
 
-# Version 2.7.4
+# Release 2.7.4
 
 * Fix duplicate reports parameter
 * No longer notify non-existent service
 * Moved to the voxpupuli space
 
-# Version 2.7.3
+# Release 2.7.3
 
 * Bumping so that auto-release can fire
 
-# Version 2.7.2
+# Release 2.7.2
 
 * Moved to the puppet-community space
 
@@ -43,7 +43,7 @@
 * Author: stack72 <public@paulstack.co.uk>
 * Author: txaj <txaj1@ovh.fr>
 
-# Version 2.6.0
+# Release 2.6.0
 
 * Changed git managed to installed
  
