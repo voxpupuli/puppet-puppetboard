@@ -280,6 +280,7 @@ class puppetboard(
   if $manage_virtualenv and !defined(Package[$::puppetboard::params::virtualenv]) {
     class { '::python':
       virtualenv => 'present',
+      dev        => 'present',
     }
   }
 
