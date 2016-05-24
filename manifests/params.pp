@@ -49,6 +49,7 @@ class puppetboard::params {
   $enable_catalog = false
   $enable_query = true
   $localise_timestamp = true
+  $offline_mode = false
   $python_loglevel = 'info'
   $python_proxy = false
   $reports_count = '10'

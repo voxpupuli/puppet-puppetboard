@@ -47,6 +47,11 @@ LOCALISE_TIMESTAMP = True
 <% else -%>
 LOCALISE_TIMESTAMP = False
 <% end -%>
+<% if @offline_mode -%>
+OFFLINE_MODE = True
+<% else -%>
+OFFLINE_MODE = False
+<% end -%>
 <% if @experimental -%>
 PUPPETDB_EXPERIMENTAL = True
 <% else -%>

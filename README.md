@@ -72,6 +72,17 @@ class { 'puppetboard':
 }
 
 ```
+Offline Mode
+-----
+
+If you are running puppetboard in an environment which does not have network access to public CDNs,
+puppet board can load static assets (jquery, semantic-ui, tablesorter, etc) from the local web server instead of a CDN:
+
+```puppet
+class { 'puppetboard':
+  offline_mode => true,
+}
+```
 
 ### Apache
 
