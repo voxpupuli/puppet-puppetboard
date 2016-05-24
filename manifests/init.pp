@@ -91,6 +91,10 @@
 #   (string) HTTP proxy server to use for pip/virtualenv.
 #   Defaults to false ($::puppetboard::params::python_proxy)
 #
+# [*default_environment*]
+#   (string) set the default environment
+#   Defaults to production ($::puppetboard::params::default_environment
+#
 # [*experimental*]
 #   (bool) Enable experimental features.
 #   Defaults to false ($::puppetboard::params::experimental)
@@ -172,6 +176,7 @@ class puppetboard(
   $manage_git          = false,
   $manage_virtualenv   = false,
   $reports_count       = $::puppetboard::params::reports_count,
+  $default_environment = $::puppetboard::params::default_environment,
   $listen              = $::puppetboard::params::listen,
   $offline_mode        = $::puppetboard::params::offline_mode,
   $extra_settings      = $::puppetboard::params::extra_settings,
@@ -244,6 +249,7 @@ class puppetboard(
   #$puppetdb_timeout
   #$unresponsive
   #$offline_mode
+  #$default_environment
   #$extra_settings
   file {"${basedir}/puppetboard/settings.py":
     ensure  => 'file',

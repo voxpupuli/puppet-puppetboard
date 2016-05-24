@@ -84,6 +84,26 @@ class { 'puppetboard':
 }
 ```
 
+Set Default Environment
+-----
+
+by default, puppetboard defaults to "production" environment. This can be
+set to default to a different environment.
+
+```puppet
+class { 'puppetboard':
+  default_environment => 'customers',
+}
+```
+
+or to default to "All environments":
+
+```puppet
+class { 'puppetboard':
+  default_environment => '*',
+}
+```
+
 ### Apache
 
 If you want puppetboard accessible through Apache and you're able to use the
