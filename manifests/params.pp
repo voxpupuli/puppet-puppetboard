@@ -58,5 +58,6 @@ class puppetboard::params {
   $virtualenv = 'python-virtualenv'
   $listen = 'private'
   $apache_override = 'None'
+  $default_environment = 'production'
   $extra_settings = {}
 }

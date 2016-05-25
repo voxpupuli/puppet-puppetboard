@@ -57,6 +57,9 @@ PUPPETDB_EXPERIMENTAL = True
 <% else -%>
 PUPPETDB_EXPERIMENTAL = False
 <% end -%>
+<% if @default_environment -%>
+DEFAULT_ENVIRONMENT = '<%= @default_environment %>'
+<% end -%>
 <% if @reports_count -%>
 REPORTS_COUNT = <%= @reports_count %>
 <% end -%>
