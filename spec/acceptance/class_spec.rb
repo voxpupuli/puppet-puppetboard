@@ -15,7 +15,7 @@ describe 'puppetboard class' do
       install_package host, 'git'
     end
 
-    it 'should work with no errors' do
+    it 'works with no errors' do
       pp = " class { 'puppetboard': } "
 
       # Run it twice and test for idempotency
@@ -45,7 +45,7 @@ describe 'puppetboard class' do
       install_package host, 'git'
     end
 
-    it 'should work with no errors' do
+    it 'works with no errors' do
       pp = <<-EOS
       # Configure Apache on this server
       class { 'apache':
@@ -68,7 +68,7 @@ describe 'puppetboard class' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    it 'should answer to localhost' do
+    it 'answers to localhost' do
       shell('/usr/bin/curl localhost:5000') do |r|
         r.stdout.should =~ /niele Sluijters/
         r.exit_code.should == 0
@@ -90,7 +90,7 @@ describe 'puppetboard class' do
       install_package host, 'git'
     end
 
-    it 'should work with no errors' do
+    it 'works with no errors' do
       pp = <<-EOS
       class { 'puppetboard':
         manage_virtualenv => true,
