@@ -8,11 +8,16 @@ class puppetboard::params {
 
   case $::osfamily {
     'Debian': {
-      if $::operatingsystem == ubuntu {
-        $apache_confd = '/etc/apache2/conf-enabled'
+      if ($::operatingsystem == ubuntu) {
+        if ($::operatingsystemrelease == '14.04') {
+          $apache_confd   = '/etc/apache2/conf.d'
+        } else {
+          $apache_confd = '/etc/apache2/conf-enabled'
+        }
       } else {
       $apache_confd   = '/etc/apache2/conf.d'
       }
+ 
       $apache_service = 'apache2'
     }
 
@@ -49,7 +54,6 @@ class puppetboard::params {
   $enable_catalog = false
   $enable_query = true
   $localise_timestamp = true
-  $offline_mode = false
   $python_loglevel = 'info'
   $python_proxy = false
   $reports_count = '10'
@@ -58,6 +62,5 @@ class puppetboard::params {
   $virtualenv = 'python-virtualenv'
   $listen = 'private'
   $apache_override = 'None'
-  $default_environment = 'production'
   $extra_settings = {}
 }
