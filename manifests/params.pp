@@ -54,6 +54,7 @@ class puppetboard::params {
   $enable_catalog = false
   $enable_query = true
   $localise_timestamp = true
+  $offline_mode = false
   $python_loglevel = 'info'
   $python_proxy = false
   $reports_count = '10'
@@ -62,5 +63,6 @@ class puppetboard::params {
   $virtualenv = 'python-virtualenv'
   $listen = 'private'
   $apache_override = 'None'
+  $default_environment = 'production'
   $extra_settings = {}
 }
