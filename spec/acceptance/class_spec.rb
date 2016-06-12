@@ -16,7 +16,12 @@ describe 'puppetboard class' do
     end
 
     it 'works with no errors' do
-      pp = " class { 'puppetboard': } "
+      pp = <<-EOS
+      class { '::puppetboard':
+        manage_git        => true,
+        manage_virtualenv => true,
+      }
+      EOS
 
       # Run it twice and test for idempotency
       apply_manifest(pp, catch_failures: true)
