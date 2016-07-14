@@ -13,4 +13,5 @@ RSpec.configure do |c|
     macaddress: 'AA:AA:AA:AA:AA:AA'
   }
 end
+
 # vim: syntax=ruby
