@@ -60,4 +60,8 @@ end
 ENV['PUPPET_VERSION'].nil? ? puppetversion = '~> 4.0' : puppetversion = ENV['PUPPET_VERSION'].to_s
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 
+if RUBY_VERSION >= '1.8.7' and RUBY_VERSION < '2.0'
+  gem 'json', '~> 1.0'
+end
+
 # vim: syntax=ruby
