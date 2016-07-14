@@ -15,7 +15,7 @@ group :test do
   gem 'rspec-puppet',                                               :require => false, :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem 'rspec-puppet-facts',                                         :require => false
   gem 'rspec-puppet-utils',                                         :require => false
-  gem 'puppet-lint',                                                :require => false, :git => 'https://github.com/rodjek/puppet-lint.git'
+  gem 'puppet-lint', '>= 1.0', '< 3.0'
   gem 'puppet-lint-absolute_classname-check',                       :require => false
   gem 'puppet-lint-leading_zero-check',                             :require => false
   gem 'puppet-lint-trailing_comma-check',                           :require => false
@@ -59,5 +59,9 @@ end
 
 ENV['PUPPET_VERSION'].nil? ? puppetversion = '~> 4.0' : puppetversion = ENV['PUPPET_VERSION'].to_s
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
+
+if RUBY_VERSION >= '1.8.7' and RUBY_VERSION < '2.0'
+  gem 'json', '~> 1.0'
+end
 
 # vim: syntax=ruby
