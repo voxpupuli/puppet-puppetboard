@@ -76,7 +76,7 @@ describe 'puppetboard class' do
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost:5000') do |r|
         r.stdout.should =~ %r{niele Sluijters}
-        r.exit_code.should == 0
+        r.exit_code.should.zero?
       end
     end
   end
