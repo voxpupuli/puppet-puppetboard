@@ -51,18 +51,44 @@
 #   (string) Sets the Apache AllowOverride value
 #   Defaults to 'None' ($::puppetboard::params::apache_override)
 #
+# [*enable_ldap_auth]
+#   (bool) Whether to enable LDAP auth
+#   Defaults to False ($::puppetboard::params::enable_ldap_auth)
+#
+# [*ldap_bind_dn]
+#   (string) LDAP Bind DN
+#   No default ($::puppetboard::params::ldap_bind_dn)
+#
+# [*ldap_bind_password]
+#   (string) LDAP password
+#   No default ($::puppetboard::params::ldap_bind_password)
+#
+# [*ldap_url]
+#   (string) LDAP connection string
+#   No default ($::puppetboard::params::ldap_url)
+#
+# [*ldap_bind_authoritative]
+#   (string) Determines if other authentication providers are used 
+#            when a user can be mapped to a DN but the server cannot bind with the credentials
+#   No default ($::puppetboard::params::ldap_bind_authoritative)
 class puppetboard::apache::vhost (
   $vhost_name,
-  $wsgi_alias  = '/',
-  $port        = 5000,
-  $ssl         = false,
-  $ssl_cert    = undef,
-  $ssl_key     = undef,
-  $threads     = 5,
-  $user        = $::puppetboard::params::user,
-  $group       = $::puppetboard::params::group,
-  $basedir     = $::puppetboard::params::basedir,
-  $override    = $::puppetboard::params::apache_override
+  $wsgi_alias               = '/',
+  $port                     = 5000,
+  $ssl                      = false,
+  $ssl_cert                 = undef,
+  $ssl_key                  = undef,
+  $threads                  = 5,
+  $user                     = $::puppetboard::params::user,
+  $group                    = $::puppetboard::params::group,
+  $basedir                  = $::puppetboard::params::basedir,
+  $override                 = $::puppetboard::params::apache_override,
+  $enable_ldap_auth         = $::puppetboard::params::enable_ldap_auth,
+  $ldap_bind_dn             = $::puppetboard::params::ldap_bind_dn,
+  $ldap_bind_password       = $::puppetboard::params::ldap_bind_password,
+  $ldap_url                 = $::puppetboard::params::ldap_url,
+  $ldap_bind_authoritative  = $::puppetboard::params::ldap_bind_authoritative
+
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -91,18 +117,35 @@ class puppetboard::apache::vhost (
     ],
   }
 
+  if $enable_ldap_auth {
+    $ldap_additional_includes = [ "${::puppetboard::params::apache_confd}/puppetboard-ldap.conf" ]
+    $ldap_require = File["${::puppetboard::params::apache_confd}/puppetboard-ldap.conf"]
+    file { "${::puppetboard::params::apache_confd}/puppetboard-ldap.conf":
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      content => template('puppetboard/apache/ldap.erb'),
+      require => File["${docroot}/wsgi.py"],
+      notify  => Service[$::puppetboard::params::apache_service],
+    } 
+  }
+  else {
+    $ldap_additional_includes = undef
+    $ldap_require = undef
+  }
   ::apache::vhost { $vhost_name:
     port                        => $port,
     docroot                     => $docroot,
     ssl                         => $ssl,
     ssl_cert                    => $ssl_cert,
     ssl_key                     => $ssl_key,
+    additional_includes         => $ldap_additional_includes,
     wsgi_daemon_process         => $user,
     wsgi_process_group          => $group,
     wsgi_script_aliases         => $wsgi_script_aliases,
     wsgi_daemon_process_options => $wsgi_daemon_process_options,
     override                    => $override,
-    require                     => File["${docroot}/wsgi.py"],
+    require                     => [ File["${docroot}/wsgi.py"], $ldap_require ],
     notify                      => Service[$::puppetboard::params::apache_service],
   }
 

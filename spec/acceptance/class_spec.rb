@@ -117,4 +117,53 @@ describe 'puppetboard class' do
       it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
   end
+<<<<<<< HEAD
+=======
+
+  context 'default parameters' do
+    hosts.each do |host|
+      if fact('osfamily') == 'RedHat'
+        if fact('architecture') == 'amd64'
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
+        else
+          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
+        end
+      end
+      on host, 'puppet module install puppetlabs/apache'
+      install_package host, 'python-virtualenv'
+      install_package host, 'git'
+    end
+
+    it 'works with no errors' do
+      pp = <<-EOS
+      class { 'puppetboard':
+        manage_virtualenv => true,
+        puppetdb_host => 'puppet.example.com',
+        puppetdb_port => '8081',
+        puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
+        puppetdb_ssl_verify => 'True',
+        puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
+        enable_ldap_auth => true,
+        ldap_bind_dn => 'cn=user,dc=puppet,dc=example,dc=com',
+        ldap_bind_password => 'password',
+        ldap_url     => 'ldap://puppet.example.com',
+      }
+      EOS
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_failures: true)
+    end
+
+    describe file('/etc/httpd/conf.d/puppetboard-ldap.conf') do
+      it { should contain 'AuthBasicProvider ldap' }
+      it { should contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
+      it { should contain 'AuthLDAPURL "ldap://puppet.example.com"' }
+    end
+    describe file('/srv/puppetboard/puppetboard/settings.py') do
+      it { should contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
+      it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+    end
+  end
+>>>>>>> 7e1f014... Changes
 end
