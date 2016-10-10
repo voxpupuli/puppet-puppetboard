@@ -1,12 +1,15 @@
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet_blacksmith/rake_tasks'
 require 'voxpupuli/release/rake_tasks'
-require 'rubocop/rake_task'
 require 'puppet-strings/rake_tasks'
 
-RuboCop::RakeTask.new(:rubocop) do |task|
-  # These make the rubocop experience maybe slightly less terrible
-  task.options = ['-D', '-S', '-E']
+if RUBY_VERSION >= '2.3.0'
+  require 'rubocop/rake_task'
+
+  RuboCop::RakeTask.new(:rubocop) do |task|
+    # These make the rubocop experience maybe slightly less terrible
+    task.options = ['-D', '-S', '-E']
+  end
 end
 
 PuppetLint.configuration.log_format = '%{path}:%{linenumber}:%{check}:%{KIND}:%{message}'
@@ -31,11 +34,9 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
-desc 'Run tests metadata_lint, lint, syntax, spec'
+desc 'Run tests metadata_lint, release_checks'
 task test: [
   :metadata_lint,
-  :lint,
-  :syntax,
-  :spec,
+  :release_checks,
 ]
 # vim: syntax=ruby

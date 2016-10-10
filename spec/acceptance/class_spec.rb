@@ -16,7 +16,12 @@ describe 'puppetboard class' do
     end
 
     it 'works with no errors' do
-      pp = " class { 'puppetboard': } "
+      pp = <<-EOS
+      class { '::puppetboard':
+        manage_git        => true,
+        manage_virtualenv => true,
+      }
+      EOS
 
       # Run it twice and test for idempotency
       apply_manifest(pp, catch_failures: true)
@@ -70,8 +75,8 @@ describe 'puppetboard class' do
 
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost:5000') do |r|
-        r.stdout.should =~ /niele Sluijters/
-        r.exit_code.should == 0
+        r.stdout.should =~ %r{niele Sluijters}
+        r.exit_code.should.zero?
       end
     end
   end
