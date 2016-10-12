@@ -117,8 +117,6 @@ describe 'puppetboard class' do
       it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
   end
-<<<<<<< HEAD
-=======
 
   context 'default parameters' do
     hosts.each do |host|
@@ -165,5 +163,4 @@ describe 'puppetboard class' do
       it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
   end
->>>>>>> 7e1f014... Changes
 end

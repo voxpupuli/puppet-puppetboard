@@ -127,7 +127,7 @@ class puppetboard::apache::vhost (
       content => template('puppetboard/apache/ldap.erb'),
       require => File["${docroot}/wsgi.py"],
       notify  => Service[$::puppetboard::params::apache_service],
-    } 
+    }
   }
   else {
     $ldap_additional_includes = undef
