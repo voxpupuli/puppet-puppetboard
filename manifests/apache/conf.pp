@@ -31,6 +31,26 @@
 #   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
+# [*enable_ldap_auth]
+#   (bool) Whether to enable LDAP auth
+#   Defaults to False ($::puppetboard::params::enable_ldap_auth)
+#
+# [*ldap_bind_dn]
+#   (string) LDAP Bind DN
+#   No default ($::puppetboard::params::ldap_bind_dn)
+#
+# [*ldap_bind_password]
+#   (string) LDAP password
+#   No default ($::puppetboard::params::ldap_bind_password)
+#
+# [*ldap_url]
+#   (string) LDAP connection string
+#   No default ($::puppetboard::params::ldap_url)
+#
+# [*ldap_bind_authoritative]
+#   (string) Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
+#   No default ($::puppetboard::params::ldap_bind_authoritative)
+#
 # === Notes:
 #
 # Make sure you have purge_configs set to false in your apache class!
@@ -39,12 +59,18 @@
 # a WSGIApplicationGroup of %{GLOBAL}.
 #
 class puppetboard::apache::conf (
-  $wsgi_alias = '/puppetboard',
-  $threads    = 5,
-  $max_reqs   = 0,
-  $user       = $::puppetboard::params::user,
-  $group      = $::puppetboard::params::group,
-  $basedir    = $::puppetboard::params::basedir,
+  $wsgi_alias               = '/puppetboard',
+  $threads                  = 5,
+  $max_reqs                 = 0,
+  $user                     = $::puppetboard::params::user,
+  $group                    = $::puppetboard::params::group,
+  $basedir                  = $::puppetboard::params::basedir,
+  $enable_ldap_auth         = $::puppetboard::params::enable_ldap_auth,
+  $ldap_bind_dn             = $::puppetboard::params::ldap_bind_dn,
+  $ldap_bind_password       = $::puppetboard::params::ldap_bind_password,
+  $ldap_url                 = $::puppetboard::params::ldap_url,
+  $ldap_bind_authoritative  = $::puppetboard::params::ldap_bind_authoritative
+
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"

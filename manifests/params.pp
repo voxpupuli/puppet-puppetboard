@@ -36,7 +36,6 @@ class puppetboard::params {
   $groups = undef
   $basedir = '/srv/puppetboard'
   $git_source = 'https://github.com/voxpupuli/puppetboard'
-
   $puppetdb_host = 'localhost'
   $puppetdb_port = 8080
   $puppetdb_key = undef
@@ -60,4 +59,9 @@ class puppetboard::params {
   $apache_override = 'None'
   $default_environment = 'production'
   $extra_settings = {}
+  $enable_ldap_auth = false
+  $ldap_bind_dn = undef
+  $ldap_bind_password = undef
+  $ldap_url = undef
+  $ldap_bind_authoritative = undef
 }
