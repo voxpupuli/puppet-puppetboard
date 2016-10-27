@@ -263,13 +263,13 @@ Note that both the above approaches only work if you have the Puppet CA root cer
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  groups            => 'puppet',
-  manage_virtualenv => true,
-  puppetdb_host     => 'puppetdb.example.com',
-  puppetdb_port     => '8081',
-  puppetdb_key      => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
+  groups              => 'puppet',
+  manage_virtualenv   => true,
+  puppetdb_host       => 'puppetdb.example.com',
+  puppetdb_port       => '8081',
+  puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
   puppetdb_ssl_verify => "${ssl_dir}/certs/ca.pem",
-  puppetdb_cert     => "${ssl_dir}/certs/${puppetboard_certname}.pem",
+  puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
 
