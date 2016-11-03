@@ -6,16 +6,16 @@ describe 'puppetboard', type: :class do
       facts
     end
     context "on #{os}" do
-      it { should compile.with_all_deps }
-      it { should contain_class('puppetboard') }
-      it { should contain_class('puppetboard::params') }
-      it { should contain_file('/srv/puppetboard/puppetboard/settings.py') }
-      it { should contain_file('/srv/puppetboard/puppetboard') }
-      it { should contain_file('/srv/puppetboard') }
-      it { should contain_group('puppetboard') }
-      it { should contain_user('puppetboard') }
-      it { should contain_python__virtualenv('/srv/puppetboard/virtenv-puppetboard') }
-      it { should contain_vcsrepo('/srv/puppetboard/puppetboard') }
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_class('puppetboard') }
+      it { is_expected.to contain_class('puppetboard::params') }
+      it { is_expected.to contain_file('/srv/puppetboard/puppetboard/settings.py') }
+      it { is_expected.to contain_file('/srv/puppetboard/puppetboard') }
+      it { is_expected.to contain_file('/srv/puppetboard') }
+      it { is_expected.to contain_group('puppetboard') }
+      it { is_expected.to contain_user('puppetboard') }
+      it { is_expected.to contain_python__virtualenv('/srv/puppetboard/virtenv-puppetboard') }
+      it { is_expected.to contain_vcsrepo('/srv/puppetboard/puppetboard') }
     end
   end
 end

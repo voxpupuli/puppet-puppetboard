@@ -113,8 +113,8 @@ describe 'puppetboard class' do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { should contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
+      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
   end
 
@@ -154,13 +154,13 @@ describe 'puppetboard class' do
     end
 
     describe file('/etc/httpd/conf.d/puppetboard-ldap.conf') do
-      it { should contain 'AuthBasicProvider ldap' }
-      it { should contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
-      it { should contain 'AuthLDAPURL "ldap://puppet.example.com"' }
+      it { is_expected.to contain 'AuthBasicProvider ldap' }
+      it { is_expected.to contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
+      it { is_expected.to contain 'AuthLDAPURL "ldap://puppet.example.com"' }
     end
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { should contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { should contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
+      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
     end
   end
 end
