@@ -91,6 +91,10 @@
 #   (string) HTTP proxy server to use for pip/virtualenv.
 #   Defaults to false ($::puppetboard::params::python_proxy)
 #
+# [*python_index*]
+#   (string) HTTP index server to use for pip/virtualenv.
+#   Defaults to false ($::puppetboard::params::python_index)
+#
 # [*default_environment*]
 #   (string) set the default environment
 #   Defaults to production ($::puppetboard::params::default_environment
@@ -168,6 +172,7 @@ class puppetboard(
   $localise_timestamp  = $::puppetboard::params::localise_timestamp,
   $python_loglevel     = $::puppetboard::params::python_loglevel,
   $python_proxy        = $::puppetboard::params::python_proxy,
+  $python_index        = $::puppetboard::params::python_index,
   $experimental        = $::puppetboard::params::experimental,
   $revision            = $::puppetboard::params::revision,
   $manage_selinux      = $::puppetboard::params::manage_selinux,
@@ -270,6 +275,7 @@ class puppetboard(
     cwd          => "${basedir}/puppetboard",
     require      => Vcsrepo["${basedir}/puppetboard"],
     proxy        => $python_proxy,
+    index        => $python_index,
   }
 
   if $listen == 'public' {

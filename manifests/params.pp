@@ -51,6 +51,7 @@ class puppetboard::params {
   $offline_mode = false
   $python_loglevel = 'info'
   $python_proxy = false
+  $python_index = false
   $reports_count = '10'
   $experimental = false
   $revision = undef
