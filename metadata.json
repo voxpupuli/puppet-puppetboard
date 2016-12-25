@@ -57,13 +57,13 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">=3.0.0 < 5.0.0"
+      "version_requirement": ">=3.8.7 < 5.0.0"
     }
   ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 3.0.0 < 5.0.0"
+      "version_requirement": ">= 4.6.0 < 5.0.0"
     },
     {
       "name": "stankevich/python",
@@ -71,7 +71,7 @@
     },
     {
       "name": "puppetlabs/vcsrepo",
-      "version_requirement": ">= 0.1.2 < 2.0.0"
+      "version_requirement": ">= 1.3.1 < 2.0.0"
     },
     {
       "name": "stahnma/epel",
