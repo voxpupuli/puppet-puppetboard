@@ -1,3 +1,13 @@
+# Changelog
+
+# Release 2.9.0
+
+This is the last release with Puppet 3 support!
+* Explicitly ensure python-dev is installed
+* Add offline mode
+* Add default_environment param
+* Bump minimum version dependencies (for Puppet 4)
+
 # Release 2.8.2
 
 * renamed the Repo from puppet-module-puppetboard -> puppet-puppetboard
