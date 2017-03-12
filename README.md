@@ -236,7 +236,7 @@ class { 'puppetboard':
   puppetdb_host       => 'puppetdb.example.com',
   puppetdb_port       => '8081',
   puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
-  puppetdb_ssl_verify => true,
+  puppetdb_ssl_verify => "${ssl_dir}/certs/ca.pem",
   puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
@@ -253,7 +253,7 @@ class { 'puppetboard':
   puppetdb_host       => 'puppetdb.example.com',
   puppetdb_port       => '8081',
   puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
-  puppetdb_ssl_verify => true,
+  puppetdb_ssl_verify => "${ssl_dir}/certs/ca.pem",
   puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
