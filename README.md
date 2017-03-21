@@ -107,6 +107,16 @@ class { 'puppetboard':
 }
 ```
 
+
+Disable SELinux
+-----
+```puppet
+class { 'puppetboard':
+  manage_selinux => false,
+}
+```
+
+
 ### Apache
 
 If you want puppetboard accessible through Apache and you're able to use the
