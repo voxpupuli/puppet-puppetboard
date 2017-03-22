@@ -24,6 +24,9 @@ Installation
 Dependencies
 ------------
 
+Note Oracle linux 5 on puppet versions 4.6.0 to 4.7.1 has pip package problem
+which will cause an error trying to install puppetboard.
+
 Note that this module no longer explicitly requires the puppetlabs apache module. If you want to use the apache functionality of this module you will have to specify that the apache module is installed with:
 
 
@@ -103,6 +106,16 @@ class { 'puppetboard':
   default_environment => '*',
 }
 ```
+
+
+Disable SELinux
+-----
+```puppet
+class { 'puppetboard':
+  manage_selinux => false,
+}
+```
+
 
 ### Apache
 
