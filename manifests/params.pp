@@ -65,4 +65,6 @@ class puppetboard::params {
   $ldap_bind_password = undef
   $ldap_url = undef
   $ldap_bind_authoritative = undef
+  $ldap_require_group = undef
+  $ldap_group_attribute = undef
 }
