@@ -148,5 +148,5 @@ class puppetboard::apache::vhost (
     require                     => [ File["${docroot}/wsgi.py"], $ldap_require ],
     notify                      => Service[$::puppetboard::params::apache_service],
   }
-
+  File["${basedir}/puppetboard/settings.py"] ~> Service['httpd']
 }
