@@ -6,6 +6,10 @@
 #
 class puppetboard::params {
 
+  # puppetlabs/apache names the apache service
+  # resource 'httpd', nevermind the actual os
+  $apache_service = 'httpd'
+
   case $::osfamily {
     'Debian': {
       if $::operatingsystem == ubuntu {
@@ -13,12 +17,10 @@ class puppetboard::params {
       } else {
       $apache_confd   = '/etc/apache2/conf.d'
       }
-      $apache_service = 'apache2'
     }
 
     'RedHat': {
       $apache_confd   = '/etc/httpd/conf.d'
-      $apache_service = 'httpd'
       File {
         seltype => 'httpd_sys_content_t',
       }
