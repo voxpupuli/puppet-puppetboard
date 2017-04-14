@@ -11,7 +11,8 @@ describe 'puppetboard::apache::vhost' do
     let(:pre_condition) do
       [
         'class { "apache": default_vhost => false, default_mods => false, vhost_enable_dir => "/etc/apache2/sites-enabled"}',
-        'class { "apache::mod::wsgi": }'
+        'class { "apache::mod::wsgi": }',
+        'class { "puppetboard": }'
       ]
     end
     on_supported_os.each do |os, facts|
