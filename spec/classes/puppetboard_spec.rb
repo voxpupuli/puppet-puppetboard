@@ -5,6 +5,7 @@ describe 'puppetboard', type: :class do
     let :facts do
       facts
     end
+
     context "on #{os}" do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('puppetboard') }
