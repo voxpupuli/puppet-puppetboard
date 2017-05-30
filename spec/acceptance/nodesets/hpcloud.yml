@@ -1,0 +1,16 @@
+HOSTS:
+  'precise':
+  roles:
+     - master
+  platform: ubuntu14.04-x86_64
+  hypervisor: openstack
+  template: centos-6-x86_64
+CONFIG:
+  type: foss
+  ssh:
+    keys: "~/.ssh/id_rsa"
+  openstack_auth_url: "https://identity.api.rackspacecloud.com/v2.0/"
+  openstack_api_key: "RfFSQA1BTOSjSwsIrHhU"
+  openstack_username: "spencer.krum"
+  openstack_tenant: "10724706841504"
+  openstack_network: "region-b.geo-1"
