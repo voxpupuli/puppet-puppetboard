@@ -13,6 +13,10 @@
 #   (string) Puppetboard system user.
 #   Defaults to 'puppetboard' ($::puppetboard::params::user)
 #
+# [*homedir*]
+#   (string) Puppetboard system user's home directory.
+#   Defaults to undef, which will make the default home directory /home/$user
+#
 # [*group*]
 #   (string) Puppetboard system group.
 #   Defaults to 'puppetboard' ($::puppetboard::params::group)
@@ -154,6 +158,7 @@
 #
 class puppetboard(
   $user                                                       = $::puppetboard::params::user,
+  Optional[String] $homedir                                   = undef,
   $group                                                      = $::puppetboard::params::group,
   $groups                                                     = $::puppetboard::params::groups,
   $basedir                                                    = $::puppetboard::params::basedir,
@@ -197,6 +202,7 @@ class puppetboard(
     user { $user:
       ensure     => present,
       shell      => '/bin/bash',
+      home       => $homedir,
       managehome => true,
       gid        => $group,
       system     => true,
