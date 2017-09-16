@@ -29,8 +29,9 @@ which will cause an error trying to install puppetboard.
 
 Note that this module no longer explicitly requires the puppetlabs apache module. If you want to use the apache functionality of this module you will have to specify that the apache module is installed with:
 
-
     puppet module install puppetlabs-apache
+
+On RedHat type systems, EPEL may also be a requirement.
 
 This module also requires the ``git`` and ``virtualenv`` packages. These can be enabled in the module by:
 
