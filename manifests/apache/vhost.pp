@@ -68,7 +68,7 @@
 #   No default ($::puppetboard::params::ldap_url)
 #
 # [*ldap_bind_authoritative]
-#   (string) Determines if other authentication providers are used
+#   (string) Determines if other authentication providers are used 
 #            when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 class puppetboard::apache::vhost (
@@ -87,15 +87,8 @@ class puppetboard::apache::vhost (
   $ldap_bind_dn             = $::puppetboard::params::ldap_bind_dn,
   $ldap_bind_password       = $::puppetboard::params::ldap_bind_password,
   $ldap_url                 = $::puppetboard::params::ldap_url,
-  $ldap_bind_authoritative  = $::puppetboard::params::ldap_bind_authoritative,
-  $enable_file_auth         = $::puppetboard::params::enable_file_auth,
-  $file_auth_allowoverride  = $::puppetboard::params::file_auth_allowoverride,
-  $file_auth_basic_provider = $::puppetboard::params::file_auth_basic_provider,
-  $file_auth_name           = $::puppetboard::params::file_auth_name,
-  $file_auth_options        = $::puppetboard::params::file_auth_options,
-  $file_auth_require        = $::puppetboard::params::file_auth_require,
-  $file_auth_type           = $::puppetboard::params::file_auth_type,
-  $file_auth_user_file      = $::puppetboard::params::file_auth_user_file,
+  $ldap_bind_authoritative  = $::puppetboard::params::ldap_bind_authoritative
+
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -140,24 +133,7 @@ class puppetboard::apache::vhost (
     $ldap_additional_includes = undef
     $ldap_require = undef
   }
-
-  if $enable_file_auth {
-    $directories = [
-      {
-        'allowoverride'       => $file_auth_allowoverride,
-        'auth_basic_provider' => $file_auth_basic_provider,
-        'auth_name'           => $file_auth_name,
-        'auth_require'        => $file_auth_require,
-        'auth_type'           => $file_auth_type,
-        'auth_user_file'      => $file_auth_user_file,
-        'options'             => $file_auth_options,
-        'path'                => $docroot,
-      },
-    ]
-  }
-
   ::apache::vhost { $vhost_name:
-    directories                 => $directories,
     port                        => $port,
     docroot                     => $docroot,
     ssl                         => $ssl,
