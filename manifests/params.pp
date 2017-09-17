@@ -67,4 +67,12 @@ class puppetboard::params {
   $ldap_bind_password = undef
   $ldap_url = undef
   $ldap_bind_authoritative = undef
+  $enable_file_auth = false
+  $file_auth_allowoverride = 'None'
+  $file_auth_basic_provider = 'file'
+  $file_auth_name = 'PuppetBoard'
+  $file_auth_options = 'Indexes FollowSymLinks MultiViews'
+  $file_auth_require = 'user puppetboard pboard puppet'
+  $file_auth_type = 'Basic'
+  $file_auth_user_file = "${basedir}/.htpasswd"
 }
