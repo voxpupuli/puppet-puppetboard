@@ -4,8 +4,13 @@ WSGIScriptAlias <%= @wsgi_alias -%> <%= @docroot -%>/wsgi.py
 <Directory <%= @docroot -%>>
     WSGIProcessGroup puppetboard
     WSGIApplicationGroup %{GLOBAL}
-    Order deny,allow
-    Allow from all
+    <IfVersion < 2.4>
+      Order allow,deny
+      Allow from all
+    </IfVersion>
+    <IfVersion >= 2.4>
+      Require all granted
+    </IfVersion>
 </Directory>
 ## Puppet data <%= @ldap_bind_dn -%>
 <% if @enable_ldap_auth != false %> 
