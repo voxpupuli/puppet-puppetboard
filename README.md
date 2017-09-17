@@ -67,6 +67,12 @@ class { 'puppetboard': }
 Number of Reports
 -----
 
+NOTE: In order to have reports present in the dashboard, report storage must be enabled on the Puppet master node.
+This is not the default behavior, so it mush be enabled.
+
+See https://docs.puppet.com/puppetdb/latest/connect_puppet_master.html#enabling-report-storage for instructions on
+report storage.
+
 By default, puppetboard displays only 10 reports. This number can be
 controlled to set the number of repports to show.
 
