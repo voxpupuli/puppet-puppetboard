@@ -1,12 +1,32 @@
-# Puppetboard
+# puppetboard
 
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-puppetboard.svg)](https://github.com/voxpupuli/puppet-puppetboard/blob/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/voxpupuli/puppet-puppetboard.svg)](https://travis-ci.org/voxpupuli/puppet-puppetboard)
 [![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
 [![Puppet Forge downloads](https://img.shields.io/puppetforge/dt/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
 [![Puppet Forge score](https://img.shields.io/puppetforge/f/puppet/puppetboard.svg)](https://forge.puppetlabs.com/puppet/puppetboard)
-[![Build Status](https://img.shields.io/travis/voxpupuli/puppet-puppetboard.svg)](https://travis-ci.org/voxpupuli/puppet-puppetboard)
 
-puppetboard
-===========
+#### Table of Contents
+
+1. [Overview](#overview)
+1. [Setup](#setup)
+    * [Installation](#installation)
+    * [Dependencies](#dependencies)
+1. [Usage](#usage)
+1. [Number of Reports](#number-of-reports)
+1. [Offline Mode](#offline-mode)
+1. [Set Default Environment](#set-default-environment)
+1. [Disable SELinux](#disable-selinux)
+    * [Apache](#apache)
+      - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
+    * [Redhat/CentOS](#redhatcentos)
+    * [Apache, RedHat/CentOS and a non-standard port](#apache-redhatcentos-and-a-non-standard-port)
+    * [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
+1. [Development](#development)
+    * [Authors](#authors)
+
+## Overview
 
 This is the puppetboard puppet module.
 
@@ -15,15 +35,13 @@ Puppetboard is an open source puppet dashboard
 https://github.com/voxpupuli/puppetboard
 
 
-Installation
-------------
+## Setup
+
+### Installation
 
     puppet module install puppet-puppetboard
 
-
-Dependencies
-------------
-
+### Dependencies
 Note Oracle linux 5 on puppet versions 4.6.0 to 4.7.1 has pip package problem
 which will cause an error trying to install puppetboard.
 
@@ -31,7 +49,9 @@ Note that this module no longer explicitly requires the puppetlabs apache module
 
     puppet module install puppetlabs-apache
 
-On RedHat type systems, EPEL may also be a requirement.
+On RedHat type systems, EPEL may also need to be configured; you can use the
+[stahnma/epel](https://forge.puppet.com/stahnma/epel) module if you don't
+already have it configured.
 
 This module also requires the ``git`` and ``virtualenv`` packages. These can be enabled in the module by:
 
@@ -54,9 +74,7 @@ class { 'puppetboard':
 
 ```
 
-
-Usage
------
+## Usage
 
 Declare the base puppetboard manifest:
 
@@ -122,7 +140,6 @@ class { 'puppetboard':
   manage_selinux => false,
 }
 ```
-
 
 ### Apache
 
@@ -293,26 +310,17 @@ class { 'puppetboard':
 }
 ```
 
+## Development
 
-License
--------
+This module is maintained by [Vox Pupuli](https://voxpupuli.org/). Voxpupuli
+welcomes new contributions to this module, especially those that include
+documentation and rspec tests. We are happy to provide guidance if necessary.
 
-Apache 2
-
-
-Contact
--------
-
-Email: krum.spencer@gmail.com
-IRC: #voxpupuli, #puppetboard and #puppet on freenode
-
-Attribution
------------
-
-The core of this module was based on Hunter Haugen's puppetboard-vagrant repo.
-
-
-Support
--------
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for more details.
 
 Please log tickets and issues on github.
+
+### Authors
+* Spencer Krum <krum.spencer@gmail.com>
+* Voxpupuli Team
+* The core of this module was based on Hunter Haugen's puppetboard-vagrant repo.
