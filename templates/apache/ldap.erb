@@ -5,17 +5,17 @@
    Allow from All
 
    AuthBasicProvider ldap
-   <% if @ldap_bind_dn != false %>
-   AuthLDAPBindDN <%= @ldap_bind_dn -%>
-   <% end %>
-   <% if @ldap_bind_password != false %>
-   AuthLDAPBindPassword <%= @ldap_bind_password -%>
-   <% end %>
-   <% if @ldap_url != false %>
-   AuthLDAPURL <%= @ldap_url -%>
-   <% end %>
-   <% if @ldap_bind_authoritative != false %>
+   <%- if @ldap_bind_dn -%>
+   AuthLDAPBindDN "<%= @ldap_bind_dn -%>"
+   <%- end -%>
+   <%- if @ldap_bind_password -%>
+   AuthLDAPBindPassword "<%= @ldap_bind_password -%>"
+   <%- end -%>
+   <%- if @ldap_url -%> 
+   AuthLDAPURL "<%= @ldap_url -%>"
+   <%- end -%>
+   <%- if @ldap_bind_authoritative -%>
    AuthLDAPBindAuthoritative <%= @ldap_bind_authoritative -%>
-   <% end %>
+   <%- end -%>
    Require valid-user
 </LocationMatch>
