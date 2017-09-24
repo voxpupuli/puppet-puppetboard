@@ -1,23 +1,16 @@
 require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
+require 'beaker/module_install_helper'
 
 run_puppet_install_helper
+install_module
+install_module_dependencies
+
+# Install additional modules for soft deps
+install_module_from_forge('puppetlabs-apache', '>= 2.1.0 < 3.0.0')
+install_module_from_forge('stahnma-epel', '>= 1.2.2 < 2.0.0')
 
 RSpec.configure do |c|
-  # Project root
-  proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-
   # Readable test descriptions
   c.formatter = :documentation
-
-  # Configure all nodes in nodeset
-  c.before :suite do
-    # Install module
-    puppet_module_install(source: proj_root, module_name: 'puppetboard')
-    hosts.each do |host|
-      on host, puppet('module', 'install', 'puppetlabs-stdlib'), acceptable_exit_codes: [0, 1]
-      on host, puppet('module', 'install', 'stankevich-python'), acceptable_exit_codes: [0, 1]
-      on host, puppet('module', 'install', 'puppetlabs-vcsrepo'), acceptable_exit_codes: [0, 1]
-    end
-  end
 end

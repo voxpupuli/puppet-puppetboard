@@ -1,22 +1,19 @@
 require 'spec_helper_acceptance'
 
 describe 'puppetboard class' do
-  context 'default parameters' do
-    hosts.each do |host|
-      if fact('osfamily') == 'RedHat'
-        if fact('architecture') == 'amd64'
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        else
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        end
-      end
-      on host, 'puppet module install puppetlabs/apache'
-      install_package host, 'python-virtualenv'
-      install_package host, 'git'
-    end
+  case fact('os.family')
+  when 'RedHat'
+    apache_conf_file = '/etc/httpd/conf.d/puppetboard.conf'
+  when 'Debian'
+    apache_conf_file = '/etc/apache2/conf.d/puppetboard.conf'
+  end
 
+  context 'default parameters' do
     it 'works with no errors' do
       pp = <<-EOS
+      if $facts['os']['family'] == 'RedHat' {
+        include epel
+      }
       class { '::puppetboard':
         manage_git        => true,
         manage_virtualenv => true,
@@ -36,20 +33,7 @@ describe 'puppetboard class' do
     # end
   end
 
-  context 'default parameters' do
-    hosts.each do |host|
-      if fact('osfamily') == 'RedHat'
-        if fact('architecture') == 'amd64'
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        else
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        end
-      end
-      on host, 'puppet module install puppetlabs/apache'
-      install_package host, 'python-virtualenv'
-      install_package host, 'git'
-    end
-
+  context 'configuring Apache / mod_wsgi' do
     it 'works with no errors' do
       pp = <<-EOS
       # Configure Apache on this server
@@ -57,7 +41,12 @@ describe 'puppetboard class' do
         default_vhost => false,
         purge_configs => true,
       }
-      class { 'apache::mod::wsgi': }
+      if $facts['os']['family'] == 'RedHat' {
+        include epel
+        class { 'apache::mod::wsgi': wsgi_socket_prefix => '/var/run/wsgi' }
+      } else {
+        class { 'apache::mod::wsgi': }
+      }
 
       # Configure Puppetboard
       class { 'puppetboard': }
@@ -65,6 +54,7 @@ describe 'puppetboard class' do
       # Access Puppetboard through pboard.example.com
       class { 'puppetboard::apache::vhost':
         vhost_name => 'pboard.example.com',
+        port       => 80,
       }
       EOS
 
@@ -73,37 +63,32 @@ describe 'puppetboard class' do
       apply_manifest(pp, catch_failures: true)
     end
 
+    # rubocop:disable RSpec/MultipleExpectations
     it 'answers to localhost' do
-      shell('/usr/bin/curl localhost:5000') do |r|
-        r.stdout.should =~ %r{niele Sluijters}
-        r.exit_code.should.zero?
+      shell('/usr/bin/curl localhost') do |r|
+        expect(r.stdout).to match(%r{Live from PuppetDB.})
+        expect(r.exit_code).to be_zero
       end
     end
+    # rubocop:enable RSpec/MultipleExpectations
   end
 
-  context 'default parameters' do
-    hosts.each do |host|
-      if fact('osfamily') == 'RedHat'
-        if fact('architecture') == 'amd64'
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        else
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        end
-      end
-      on host, 'puppet module install puppetlabs/apache'
-      install_package host, 'python-virtualenv'
-      install_package host, 'git'
-    end
-
+  context 'with SSL' do
     it 'works with no errors' do
       pp = <<-EOS
+      if $facts['os']['family'] == 'RedHat' {
+        include epel
+      }
+      # Configure Apache on this server
+      class { 'apache': }
+      class { 'apache::mod::wsgi': }
       class { 'puppetboard':
         manage_virtualenv => true,
         puppetdb_host => 'puppet.example.com',
         puppetdb_port => '8081',
-        puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
-        puppetdb_ssl_verify => 'True',
-        puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
+        puppetdb_key  => '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem',
+        puppetdb_ssl_verify => true,
+        puppetdb_cert => '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem',
       }
       EOS
 
@@ -118,29 +103,25 @@ describe 'puppetboard class' do
     end
   end
 
-  context 'default parameters' do
-    hosts.each do |host|
-      if fact('osfamily') == 'RedHat'
-        if fact('architecture') == 'amd64'
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        else
-          on host, 'wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm; rpm -ivh epel-release-6-8.noarch.rpm'
-        end
-      end
-      on host, 'puppet module install puppetlabs/apache'
-      install_package host, 'python-virtualenv'
-      install_package host, 'git'
-    end
-
+  context 'LDAP auth' do
     it 'works with no errors' do
       pp = <<-EOS
-      class { 'puppetboard':
+      if $facts['os']['family'] == 'RedHat' {
+        include epel
+      }
+      # Configure Apache on this server
+      class { 'apache': }
+      class { 'apache::mod::wsgi': }
+      class { 'apache::mod::authnz_ldap': }
+      -> class { 'puppetboard':
         manage_virtualenv => true,
         puppetdb_host => 'puppet.example.com',
         puppetdb_port => '8081',
         puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
-        puppetdb_ssl_verify => 'True',
+        puppetdb_ssl_verify => true,
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
+      }
+      class { 'puppetboard::apache::conf':
         enable_ldap_auth => true,
         ldap_bind_dn => 'cn=user,dc=puppet,dc=example,dc=com',
         ldap_bind_password => 'password',
@@ -153,7 +134,7 @@ describe 'puppetboard class' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file('/etc/httpd/conf.d/puppetboard-ldap.conf') do
+    describe file(apache_conf_file) do
       it { is_expected.to contain 'AuthBasicProvider ldap' }
       it { is_expected.to contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
       it { is_expected.to contain 'AuthLDAPURL "ldap://puppet.example.com"' }
