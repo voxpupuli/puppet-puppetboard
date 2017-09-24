@@ -6,10 +6,10 @@
 #
 class puppetboard::params {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
-      if ($::operatingsystem == 'ubuntu') {
-        if (versioncmp($::operatingsystemrelease,'14.04')) {
+      if ($facts['os']['name'] == 'ubuntu') {
+        if (versioncmp($facts['os']['release']['full'],'14.04')) {
           $apache_confd   = '/etc/apache2/conf.d'
         } else {
           $apache_confd = '/etc/apache2/conf-enabled'
@@ -27,7 +27,7 @@ class puppetboard::params {
         seltype => 'httpd_sys_content_t',
       }
     }
-    default: { fail("The ${::osfamily} operating system is not supported with the puppetboard module") }
+    default: { fail("The ${facts['os']['family']} operating system is not supported with the puppetboard module") }
   }
 
   $manage_selinux = $::selinux ? {
