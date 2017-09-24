@@ -6,26 +6,28 @@
 #
 class puppetboard::params {
 
-  # puppetlabs/apache names the apache service
-  # resource 'httpd', nevermind the actual os
-  $apache_service = 'httpd'
-
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
-      if $::operatingsystem == ubuntu {
-        $apache_confd = '/etc/apache2/conf-enabled'
+      if ($facts['os']['name'] == 'ubuntu') {
+        if (versioncmp($facts['os']['release']['full'],'14.04')) {
+          $apache_confd   = '/etc/apache2/conf.d'
+        } else {
+          $apache_confd = '/etc/apache2/conf-enabled'
+        }
       } else {
-      $apache_confd   = '/etc/apache2/conf.d'
+        $apache_confd   = '/etc/apache2/conf.d'
       }
+      $apache_service = 'apache2'
     }
 
     'RedHat': {
       $apache_confd   = '/etc/httpd/conf.d'
+      $apache_service = 'httpd'
       File {
         seltype => 'httpd_sys_content_t',
       }
     }
-    default: { fail("The ${::osfamily} operating system is not supported with the puppetboard module") }
+    default: { fail("The ${facts['os']['family']} operating system is not supported with the puppetboard module") }
   }
 
   $manage_selinux = $::selinux ? {
