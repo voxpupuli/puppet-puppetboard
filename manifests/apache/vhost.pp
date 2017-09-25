@@ -72,23 +72,22 @@
 #            when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 class puppetboard::apache::vhost (
-  $vhost_name,
-  $wsgi_alias               = '/',
-  $port                     = 5000,
-  $ssl                      = false,
-  $ssl_cert                 = undef,
-  $ssl_key                  = undef,
-  $threads                  = 5,
-  $user                     = $::puppetboard::params::user,
-  $group                    = $::puppetboard::params::group,
-  $basedir                  = $::puppetboard::params::basedir,
-  $override                 = $::puppetboard::params::apache_override,
-  $enable_ldap_auth         = $::puppetboard::params::enable_ldap_auth,
-  $ldap_bind_dn             = $::puppetboard::params::ldap_bind_dn,
-  $ldap_bind_password       = $::puppetboard::params::ldap_bind_password,
-  $ldap_url                 = $::puppetboard::params::ldap_url,
-  $ldap_bind_authoritative  = $::puppetboard::params::ldap_bind_authoritative
-
+  String $vhost_name,
+  String $wsgi_alias                        = '/',
+  Integer $port                             = 5000,
+  Boolean $ssl                              = false,
+  Optional[Stdlib::AbsolutePath] $ssl_cert  = undef,
+  Optional[Stdlib::AbsolutePath] $ssl_key   = undef,
+  Integer $threads                          = 5,
+  String $user                              = $::puppetboard::params::user,
+  String $group                             = $::puppetboard::params::group,
+  Stdlib::AbsolutePath $basedir             = $::puppetboard::params::basedir,
+  String $override                          = $::puppetboard::params::apache_override,
+  Boolean $enable_ldap_auth                 = $::puppetboard::params::enable_ldap_auth,
+  Optional[String] $ldap_bind_dn            = undef,
+  Optional[String] $ldap_bind_password      = undef,
+  Optional[String] $ldap_url                = undef,
+  Optional[String] $ldap_bind_authoritative = undef
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -103,9 +102,6 @@ class puppetboard::apache::vhost (
     user    => $user,
   }
 
-  # Template Uses:
-  # - $basedir
-  #
   file { "${docroot}/wsgi.py":
     ensure  => present,
     content => template('puppetboard/wsgi.py.erb'),

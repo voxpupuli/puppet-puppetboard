@@ -28,7 +28,7 @@
 #   Defaults to undef ($::puppetboard::params::groups)
 #
 # [*basedir*]
-#   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
+#   (string, absolute path) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
 # [*git_source*]
@@ -157,37 +157,37 @@
 #  }
 #
 class puppetboard(
-  $user                                                       = $::puppetboard::params::user,
+  String $user                                                = $::puppetboard::params::user,
   Optional[String] $homedir                                   = undef,
-  $group                                                      = $::puppetboard::params::group,
-  $groups                                                     = $::puppetboard::params::groups,
-  $basedir                                                    = $::puppetboard::params::basedir,
-  $git_source                                                 = $::puppetboard::params::git_source,
-  $dev_listen_host                                            = $::puppetboard::params::dev_listen_host,
-  $dev_listen_port                                            = $::puppetboard::params::dev_listen_port,
-  $puppetdb_host                                              = $::puppetboard::params::puppetdb_host,
-  $puppetdb_port                                              = $::puppetboard::params::puppetdb_port,
-  $puppetdb_key                                               = $::puppetboard::params::puppetdb_key,
+  String $group                                               = $::puppetboard::params::group,
+  Optional[Variant[String, Array[String]]] $groups            = undef,
+  Stdlib::AbsolutePath $basedir                               = $::puppetboard::params::basedir,
+  String $git_source                                          = $::puppetboard::params::git_source,
+  String $dev_listen_host                                     = $::puppetboard::params::dev_listen_host,
+  Integer $dev_listen_port                                    = $::puppetboard::params::dev_listen_port,
+  String $puppetdb_host                                       = $::puppetboard::params::puppetdb_host,
+  Integer $puppetdb_port                                      = $::puppetboard::params::puppetdb_port,
+  Optional[Stdlib::AbsolutePath] $puppetdb_key                = undef,
   Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = $::puppetboard::params::puppetdb_ssl_verify,
-  $puppetdb_cert                                              = $::puppetboard::params::puppetdb_cert,
-  $puppetdb_timeout                                           = $::puppetboard::params::puppetdb_timeout,
-  $unresponsive                                               = $::puppetboard::params::unresponsive,
+  Optional[Stdlib::AbsolutePath] $puppetdb_cert               = undef,
+  Integer $puppetdb_timeout                                   = $::puppetboard::params::puppetdb_timeout,
+  Integer $unresponsive                                       = $::puppetboard::params::unresponsive,
   Boolean $enable_catalog                                     = $::puppetboard::params::enable_catalog,
   Boolean $enable_query                                       = $::puppetboard::params::enable_query,
   Boolean $localise_timestamp                                 = $::puppetboard::params::localise_timestamp,
-  $python_loglevel                                            = $::puppetboard::params::python_loglevel,
-  $python_proxy                                               = $::puppetboard::params::python_proxy,
-  $python_index                                               = $::puppetboard::params::python_index,
+  Puppetboard::Syslogpriority $python_loglevel                = $::puppetboard::params::python_loglevel,
+  Optional[String] $python_proxy                              = undef,
+  Optional[String] $python_index                              = undef,
   Boolean $experimental                                       = $::puppetboard::params::experimental,
-  $revision                                                   = $::puppetboard::params::revision,
-  $manage_selinux                                             = $::puppetboard::params::manage_selinux,
+  Optional[String] $revision                                  = undef,
+  Boolean $manage_selinux                                     = $::puppetboard::params::manage_selinux,
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
-  $reports_count                                              = $::puppetboard::params::reports_count,
-  $default_environment                                        = $::puppetboard::params::default_environment,
-  $listen                                                     = $::puppetboard::params::listen,
+  Integer $reports_count                                      = $::puppetboard::params::reports_count,
+  String $default_environment                                 = $::puppetboard::params::default_environment,
+  String $listen                                              = $::puppetboard::params::listen,
   Boolean $offline_mode                                       = $::puppetboard::params::offline_mode,
   Hash $extra_settings                                        = $::puppetboard::params::extra_settings,
 ) inherits ::puppetboard::params {
@@ -233,24 +233,6 @@ class puppetboard(
     require => Vcsrepo["${basedir}/puppetboard"],
   }
 
-  #Template consumes:
-  #$dev_listen_host
-  #$dev_listen_port
-  #$enable_catalog
-  #$enable_query
-  #$experimental
-  #$localise_timestamp
-  #$python_loglevel
-  #$puppetdb_cert
-  #$puppetdb_host
-  #$puppetdb_key
-  #$puppetdb_port
-  #$puppetdb_ssl_verify
-  #$puppetdb_timeout
-  #$unresponsive
-  #$offline_mode
-  #$default_environment
-  #$extra_settings
   file {"${basedir}/puppetboard/settings.py":
     ensure  => 'file',
     group   => $group,
