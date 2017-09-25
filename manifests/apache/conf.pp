@@ -59,25 +59,21 @@
 # a WSGIApplicationGroup of %{GLOBAL}.
 #
 class puppetboard::apache::conf (
-  $wsgi_alias               = '/puppetboard',
-  $threads                  = 5,
-  $max_reqs                 = 0,
-  $user                     = $::puppetboard::params::user,
-  $group                    = $::puppetboard::params::group,
-  $basedir                  = $::puppetboard::params::basedir,
-  $enable_ldap_auth         = $::puppetboard::params::enable_ldap_auth,
-  $ldap_bind_dn             = $::puppetboard::params::ldap_bind_dn,
-  $ldap_bind_password       = $::puppetboard::params::ldap_bind_password,
-  $ldap_url                 = $::puppetboard::params::ldap_url,
-  $ldap_bind_authoritative  = $::puppetboard::params::ldap_bind_authoritative
-
+  String $wsgi_alias                        = '/puppetboard',
+  Integer $threads                          = 5,
+  Integer $max_reqs                         = 0,
+  String $user                              = $::puppetboard::params::user,
+  String $group                             = $::puppetboard::params::group,
+  Stdlib::AbsolutePath $basedir             = $::puppetboard::params::basedir,
+  Boolean $enable_ldap_auth                 = $::puppetboard::params::enable_ldap_auth,
+  Optional[String] $ldap_bind_dn            = undef,
+  Optional[String] $ldap_bind_password      = undef,
+  Optional[String] $ldap_url                = undef,
+  Optional[String] $ldap_bind_authoritative = undef
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
 
-  # Template Uses:
-  # - $basedir
-  #
   file { "${docroot}/wsgi.py":
     ensure  => present,
     content => template('puppetboard/wsgi.py.erb'),
@@ -89,13 +85,6 @@ class puppetboard::apache::conf (
     ],
   }
 
-  # Template Uses:
-  # - $user
-  # - $group
-  # - $threads
-  # - $wsgi_alias
-  # - $docroot
-  #
   file { "${::puppetboard::params::apache_confd}/puppetboard.conf":
     ensure  => present,
     owner   => 'root',

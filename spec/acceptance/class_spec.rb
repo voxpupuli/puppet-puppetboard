@@ -85,7 +85,7 @@ describe 'puppetboard class' do
       class { 'puppetboard':
         manage_virtualenv => true,
         puppetdb_host => 'puppet.example.com',
-        puppetdb_port => '8081',
+        puppetdb_port => 8081,
         puppetdb_key  => '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem',
         puppetdb_ssl_verify => true,
         puppetdb_cert => '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem',
@@ -116,7 +116,7 @@ describe 'puppetboard class' do
       -> class { 'puppetboard':
         manage_virtualenv => true,
         puppetdb_host => 'puppet.example.com',
-        puppetdb_port => '8081',
+        puppetdb_port => 8081,
         puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
         puppetdb_ssl_verify => true,
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
