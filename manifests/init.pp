@@ -99,6 +99,10 @@
 #   (string) HTTP index server to use for pip/virtualenv.
 #   Defaults to false ($::puppetboard::params::python_index)
 #
+# [*python_use_epel*]
+#   (bool) Whether the Python class will use attempt to manage EPEL or not.
+#   Defaults to undef.
+#
 # [*default_environment*]
 #   (string) set the default environment
 #   Defaults to production ($::puppetboard::params::default_environment
@@ -178,6 +182,7 @@ class puppetboard(
   Puppetboard::Syslogpriority $python_loglevel                = $::puppetboard::params::python_loglevel,
   Optional[String] $python_proxy                              = undef,
   Optional[String] $python_index                              = undef,
+  Optional[Boolean] $python_use_epel                          = undef,
   Boolean $experimental                                       = $::puppetboard::params::experimental,
   Optional[String] $revision                                  = undef,
   Boolean $manage_selinux                                     = $::puppetboard::params::manage_selinux,
@@ -277,6 +282,7 @@ class puppetboard(
     class { '::python':
       virtualenv => 'present',
       dev        => 'present',
+      use_epel   => $python_use_epel,
     }
   }
 

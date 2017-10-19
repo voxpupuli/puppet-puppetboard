@@ -17,6 +17,13 @@ describe 'puppetboard', type: :class do
       it { is_expected.to contain_user('puppetboard') }
       it { is_expected.to contain_python__virtualenv('/srv/puppetboard/virtenv-puppetboard') }
       it { is_expected.to contain_vcsrepo('/srv/puppetboard/puppetboard') }
+      context 'with python_use_epel=>false' do
+        let :params do
+          { python_use_epel: false, manage_virtualenv: true }
+        end
+
+        it { is_expected.to contain_class('python').with_use_epel(false) }
+      end
     end
   end
 end
