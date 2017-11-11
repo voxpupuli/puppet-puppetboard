@@ -4,7 +4,32 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v4.0.0) (2017-11-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v3.0.0...v4.0.0)
+
+**Breaking changes:**
+
+- BREAKING: Switch remaining params to Puppet data types [\#191](https://github.com/voxpupuli/puppet-puppetboard/pull/191) ([wyardley](https://github.com/wyardley))
+
+**Implemented enhancements:**
+
+- Update to support Apache 2.4 - rework of \#136 [\#189](https://github.com/voxpupuli/puppet-puppetboard/pull/189) ([wyardley](https://github.com/wyardley))
+- Add boolean to control EPEL [\#181](https://github.com/voxpupuli/puppet-puppetboard/pull/181) ([lukebigum](https://github.com/lukebigum))
+
+**Closed issues:**
+
+- Puppet CA certificate not configured correctly [\#142](https://github.com/voxpupuli/puppet-puppetboard/issues/142)
+
+**Merged pull requests:**
+
+- Update \(and run in Travis\) acceptance tests, fix formatting in LDAP templates [\#190](https://github.com/voxpupuli/puppet-puppetboard/pull/190) ([wyardley](https://github.com/wyardley))
+- Revert "Add apache file auth support" [\#188](https://github.com/voxpupuli/puppet-puppetboard/pull/188) ([wyardley](https://github.com/wyardley))
+- Sort extra\_settings to prevent churn [\#175](https://github.com/voxpupuli/puppet-puppetboard/pull/175) ([barneycg](https://github.com/barneycg))
+- Add apache file auth support [\#149](https://github.com/voxpupuli/puppet-puppetboard/pull/149) ([arioch](https://github.com/arioch))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v3.0.0) (2017-09-17)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v2.9.0...v3.0.0)
 
 **Implemented enhancements:**
@@ -31,10 +56,11 @@ These should not affect the functionality of the module.
 - Switch to puppet\_install\_helper \(and fix rubocop warning in process\) [\#184](https://github.com/voxpupuli/puppet-puppetboard/pull/184) ([wyardley](https://github.com/wyardley))
 - add instructions on how to enable report storage to be able to view i… [\#182](https://github.com/voxpupuli/puppet-puppetboard/pull/182) ([jonmosco](https://github.com/jonmosco))
 - Fix github license detection [\#179](https://github.com/voxpupuli/puppet-puppetboard/pull/179) ([alexjfisher](https://github.com/alexjfisher))
-- Modulesync 0.19.0 [\#161](https://github.com/voxpupuli/puppet-puppetboard/pull/161) ([bastelfreak](https://github.com/bastelfreak))
+- release 2.9.0 [\#160](https://github.com/voxpupuli/puppet-puppetboard/pull/160) ([bastelfreak](https://github.com/bastelfreak))
 - 	Document usage of Puppet CA via puppetdb\_ssl\_verify [\#150](https://github.com/voxpupuli/puppet-puppetboard/pull/150) ([apeeters](https://github.com/apeeters))
 
 ## [v2.9.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v2.9.0) (2017-01-13)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v2.8.2...v2.9.0)
 
 **Implemented enhancements:**
@@ -50,24 +76,15 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 2.9.0 [\#160](https://github.com/voxpupuli/puppet-puppetboard/pull/160) ([bastelfreak](https://github.com/bastelfreak))
-- modulesync 0.16.7 [\#158](https://github.com/voxpupuli/puppet-puppetboard/pull/158) ([bastelfreak](https://github.com/bastelfreak))
 - Bump minimum version dependencies \(for Puppet 4\) [\#157](https://github.com/voxpupuli/puppet-puppetboard/pull/157) ([juniorsysadmin](https://github.com/juniorsysadmin))
-- modulesync 0.16.6 [\#156](https://github.com/voxpupuli/puppet-puppetboard/pull/156) ([bastelfreak](https://github.com/bastelfreak))
-- modulesync 0.16.4 [\#155](https://github.com/voxpupuli/puppet-puppetboard/pull/155) ([bastelfreak](https://github.com/bastelfreak))
-- modulesync 0.16.3 [\#154](https://github.com/voxpupuli/puppet-puppetboard/pull/154) ([bastelfreak](https://github.com/bastelfreak))
-- modulesync 0.15.0 [\#152](https://github.com/voxpupuli/puppet-puppetboard/pull/152) ([bastelfreak](https://github.com/bastelfreak))
-- Update based on voxpupuli/modulesync\_config 0.14.1 [\#148](https://github.com/voxpupuli/puppet-puppetboard/pull/148) ([dhoppe](https://github.com/dhoppe))
-- modulesync 0.13.0 [\#146](https://github.com/voxpupuli/puppet-puppetboard/pull/146) ([bbriggs](https://github.com/bbriggs))
 - Remove unknown parameter from documentation [\#145](https://github.com/voxpupuli/puppet-puppetboard/pull/145) ([ghoneycutt](https://github.com/ghoneycutt))
 - Add ldap support [\#144](https://github.com/voxpupuli/puppet-puppetboard/pull/144) ([elmobp](https://github.com/elmobp))
-- modulesync 0.12.8 [\#138](https://github.com/voxpupuli/puppet-puppetboard/pull/138) ([bastelfreak](https://github.com/bastelfreak))
-- Update from voxpupuli modulesync\_config [\#134](https://github.com/voxpupuli/puppet-puppetboard/pull/134) ([jyaworski](https://github.com/jyaworski))
 - adding default\_environment param [\#133](https://github.com/voxpupuli/puppet-puppetboard/pull/133) ([james-powis](https://github.com/james-powis))
 - added offline mode [\#131](https://github.com/voxpupuli/puppet-puppetboard/pull/131) ([james-powis](https://github.com/james-powis))
 - Explicitly ensure python-dev is installed [\#129](https://github.com/voxpupuli/puppet-puppetboard/pull/129) ([dskad](https://github.com/dskad))
 
 ## [v2.8.2](https://github.com/voxpupuli/puppet-puppetboard/tree/v2.8.2) (2016-05-05)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v2.8.1...v2.8.2)
 
 **Merged pull requests:**
@@ -77,6 +94,7 @@ These should not affect the functionality of the module.
 - rename to puppet-puppetboard [\#124](https://github.com/voxpupuli/puppet-puppetboard/pull/124) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.8.1](https://github.com/voxpupuli/puppet-puppetboard/tree/v2.8.1) (2016-05-05)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v2.7.5...v2.8.1)
 
 **Merged pull requests:**
@@ -84,6 +102,7 @@ These should not affect the functionality of the module.
 - Release 2.8.1 [\#123](https://github.com/voxpupuli/puppet-puppetboard/pull/123) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.7.5](https://github.com/voxpupuli/puppet-puppetboard/tree/v2.7.5) (2016-05-05)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2.7.3...v2.7.5)
 
 **Closed issues:**
@@ -101,7 +120,6 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - release 2.8.0 [\#122](https://github.com/voxpupuli/puppet-puppetboard/pull/122) ([bastelfreak](https://github.com/bastelfreak))
-- modulesync 0.5.1 [\#121](https://github.com/voxpupuli/puppet-puppetboard/pull/121) ([bastelfreak](https://github.com/bastelfreak))
 - Update CHANGELONG.md [\#120](https://github.com/voxpupuli/puppet-puppetboard/pull/120) ([bastelfreak](https://github.com/bastelfreak))
 - Release 2.7.5 [\#117](https://github.com/voxpupuli/puppet-puppetboard/pull/117) ([jyaworski](https://github.com/jyaworski))
 - Changelog md [\#116](https://github.com/voxpupuli/puppet-puppetboard/pull/116) ([jyaworski](https://github.com/jyaworski))
@@ -111,7 +129,6 @@ These should not affect the functionality of the module.
 - Move to voxpupuli [\#109](https://github.com/voxpupuli/puppet-puppetboard/pull/109) ([jyaworski](https://github.com/jyaworski))
 - add ssl parameter to puppetboard::apache::vhost [\#108](https://github.com/voxpupuli/puppet-puppetboard/pull/108) ([brandonweeks](https://github.com/brandonweeks))
 - Update README and metadata.json to reflect org changes [\#106](https://github.com/voxpupuli/puppet-puppetboard/pull/106) ([jyaworski](https://github.com/jyaworski))
-- Update from voxpupuli modulesync\_config [\#105](https://github.com/voxpupuli/puppet-puppetboard/pull/105) ([jyaworski](https://github.com/jyaworski))
 - Ubuntu exceptions  [\#104](https://github.com/voxpupuli/puppet-puppetboard/pull/104) ([dalesit](https://github.com/dalesit))
 - Fix duplicate virtualenv declaration [\#102](https://github.com/voxpupuli/puppet-puppetboard/pull/102) ([ogdensan](https://github.com/ogdensan))
 - Feature/catalog [\#100](https://github.com/voxpupuli/puppet-puppetboard/pull/100) ([bahner](https://github.com/bahner))
@@ -129,18 +146,20 @@ These should not affect the functionality of the module.
 - Add bounds to dependency versions in metadata [\#79](https://github.com/voxpupuli/puppet-puppetboard/pull/79) ([ghoneycutt](https://github.com/ghoneycutt))
 
 ## [2.7.3](https://github.com/voxpupuli/puppet-puppetboard/tree/2.7.3) (2015-07-20)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2.7.2...2.7.3)
 
 **Merged pull requests:**
 
 - "PC dotfiles" [\#83](https://github.com/voxpupuli/puppet-puppetboard/pull/83) ([nibalizer](https://github.com/nibalizer))
+- "Release 2.7.2" [\#82](https://github.com/voxpupuli/puppet-puppetboard/pull/82) ([nibalizer](https://github.com/nibalizer))
 
 ## [2.7.2](https://github.com/voxpupuli/puppet-puppetboard/tree/2.7.2) (2015-07-15)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2.7.1...2.7.2)
 
 **Merged pull requests:**
 
-- "Release 2.7.2" [\#82](https://github.com/voxpupuli/puppet-puppetboard/pull/82) ([nibalizer](https://github.com/nibalizer))
 - "remove pry" [\#81](https://github.com/voxpupuli/puppet-puppetboard/pull/81) ([nibalizer](https://github.com/nibalizer))
 - "Puppetboard now lives in puppet-community" [\#74](https://github.com/voxpupuli/puppet-puppetboard/pull/74) ([nibalizer](https://github.com/nibalizer))
 - Adding ability to specify limit on number of requests to the daemon [\#73](https://github.com/voxpupuli/puppet-puppetboard/pull/73) ([holtwilkins](https://github.com/holtwilkins))
@@ -149,9 +168,11 @@ These should not affect the functionality of the module.
 - fixup tests for trusty, add docker nodeset [\#69](https://github.com/voxpupuli/puppet-puppetboard/pull/69) ([nibalizer](https://github.com/nibalizer))
 
 ## [2.7.1](https://github.com/voxpupuli/puppet-puppetboard/tree/2.7.1) (2015-02-04)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2.7.0...2.7.1)
 
 ## [2.7.0](https://github.com/voxpupuli/puppet-puppetboard/tree/2.7.0) (2015-02-04)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2.5.0...2.7.0)
 
 **Closed issues:**
@@ -177,6 +198,7 @@ These should not affect the functionality of the module.
 - Adding the ability to control the number of reports that you want to add... [\#40](https://github.com/voxpupuli/puppet-puppetboard/pull/40) ([stack72](https://github.com/stack72))
 
 ## [2.5.0](https://github.com/voxpupuli/puppet-puppetboard/tree/2.5.0) (2014-06-23)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2.4.0...2.5.0)
 
 **Closed issues:**
@@ -201,6 +223,7 @@ These should not affect the functionality of the module.
 - make managing of user/group optional [\#29](https://github.com/voxpupuli/puppet-puppetboard/pull/29) ([igalic](https://github.com/igalic))
 
 ## [2.4.0](https://github.com/voxpupuli/puppet-puppetboard/tree/2.4.0) (2014-05-29)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/1.3.0...2.4.0)
 
 **Closed issues:**
@@ -223,6 +246,7 @@ These should not affect the functionality of the module.
 - Users can specify Puppetboard Git SHA to use [\#14](https://github.com/voxpupuli/puppet-puppetboard/pull/14) ([bderickson](https://github.com/bderickson))
 
 ## [1.3.0](https://github.com/voxpupuli/puppet-puppetboard/tree/1.3.0) (2014-01-23)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/1.1.0...1.3.0)
 
 **Merged pull requests:**
@@ -232,6 +256,9 @@ These should not affect the functionality of the module.
 - Fix problem with pip install git requirement [\#11](https://github.com/voxpupuli/puppet-puppetboard/pull/11) ([pavel-drobushevich](https://github.com/pavel-drobushevich))
 
 ## [1.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/1.1.0) (2013-11-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/2fbb0ba870b8608cabbf1e31b6fe7ed4c647cc94...1.1.0)
+
 **Closed issues:**
 
 - Release to forge [\#7](https://github.com/voxpupuli/puppet-puppetboard/issues/7)
