@@ -87,7 +87,8 @@ class puppetboard::apache::vhost (
   Optional[String] $ldap_bind_dn            = undef,
   Optional[String] $ldap_bind_password      = undef,
   Optional[String] $ldap_url                = undef,
-  Optional[String] $ldap_bind_authoritative = undef
+  Optional[String] $ldap_bind_authoritative = undef,
+  Optional[Hash] $custom_apache_parameters  = {},
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
@@ -143,6 +144,7 @@ class puppetboard::apache::vhost (
     override                    => $override,
     require                     => [ File["${docroot}/wsgi.py"], $ldap_require ],
     notify                      => Service[$::puppetboard::params::apache_service],
+    *                           => $custom_apache_parameters,
   }
   File["${basedir}/puppetboard/settings.py"] ~> Service['httpd']
 }
