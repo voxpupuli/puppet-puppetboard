@@ -88,7 +88,7 @@ class puppetboard::apache::vhost (
   Optional[String] $ldap_bind_password      = undef,
   Optional[String] $ldap_url                = undef,
   Optional[String] $ldap_bind_authoritative = undef,
-  Optional[Hash] $custom_apache_parameters  = {},
+  Hash $custom_apache_parameters            = {},
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
