@@ -92,7 +92,7 @@ See https://docs.puppet.com/puppetdb/latest/connect_puppet_master.html#enabling-
 report storage.
 
 By default, puppetboard displays only 10 reports. This number can be
-controlled to set the number of repports to show.
+controlled to set the number of reports to show.
 
 ```puppet
 class { 'puppetboard':
@@ -262,7 +262,7 @@ sudo puppet cert generate puppetboard.example.com
 ```
 Note: this name cannot conflict with an existing certificate name.
 
-The new certificate and private key can be found in $certdir/<NAME>.pem and $privatekeydir/<NAME>.pem on the CA puppet master. If you are not running puppetboard on the CA puppet master you will need to copy the certificate and key to the node runing puppetboard.
+The new certificate and private key can be found in $certdir/<NAME>.pem and $privatekeydir/<NAME>.pem on the CA puppet master. If you are not running puppetboard on the CA puppet master you will need to copy the certificate and key to the node running puppetboard.
 
 Here's an example, using new certificates:
 ```puppet
