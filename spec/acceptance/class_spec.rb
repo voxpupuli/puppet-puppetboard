@@ -5,7 +5,7 @@ describe 'puppetboard class' do
   when 'RedHat'
     apache_conf_file = '/etc/httpd/conf.d/puppetboard.conf'
   when 'Debian'
-    apache_conf_file = '/etc/apache2/conf.d/puppetboard.conf'
+    apache_conf_file = '/etc/apache2/conf-enabled/puppetboard.conf'
   end
 
   context 'default parameters' do
