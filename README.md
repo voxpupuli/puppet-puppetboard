@@ -213,6 +213,23 @@ ProxyPass /pboard/ http://dashes.acme:5000/pboard/
 ProxyPassReverse /pboard/ http://dashes.acme:5000/pboard/
 ```
 
+Using the puppetlabs/apache module:
+
+```puppet
+apache::vhost { 'example.acme':
+  port            => '80',
+  docroot         => '/var/www/html',
+  redirect_source => [ '/pboard' ],
+  redirect_dest   => [ '/pboard/' ],
+  proxy_pass      => [
+    {
+      'path' => '/pboard/',
+      'url'  => 'http://dashes.acme:5000/pboard/',
+    },
+  ],
+}
+```
+
 ### Redhat/CentOS
 
 RedHat/CentOS has restrictions on the /etc/apache directory that require wsgi to be configured to use /var/run.
