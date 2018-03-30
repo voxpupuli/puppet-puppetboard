@@ -209,7 +209,7 @@ http://dashes.acme:5000/pboard. You can then reverse-proxy to it like so:
 
 ```apache
 Redirect /pboard /pboard/
-ReverseProxy /pboard/ http://dashes.acme:5000/pboard/
+ProxyPass /pboard/ http://dashes.acme:5000/pboard/
 ProxyPassReverse /pboard/ http://dashes.acme:5000/pboard/
 ```
 
