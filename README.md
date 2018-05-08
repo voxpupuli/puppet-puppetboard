@@ -249,6 +249,7 @@ RedHat/CentOS has restrictions on the /etc/apache directory that require wsgi to
 
 # Configure Apache on this server
 class { 'apache': }
+class { 'apache::mod::version': }
 class { 'apache::mod::wsgi':
   wsgi_socket_prefix => "/var/run/wsgi",
 }
