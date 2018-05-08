@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v4.1.0) (2018-05-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v4.0.0...v4.1.0)
+
+**Fixed bugs:**
+
+- apache config dir wrong in Ubuntu [\#204](https://github.com/voxpupuli/puppet-puppetboard/issues/204)
+- Fix apache conf dir for Ubuntu [\#205](https://github.com/voxpupuli/puppet-puppetboard/pull/205) ([waipeng](https://github.com/waipeng))
+
+**Closed issues:**
+
+- Default vhost configuration causes Apache to fail to start [\#192](https://github.com/voxpupuli/puppet-puppetboard/issues/192)
+
+**Merged pull requests:**
+
+- Document that apache::mod::version should be included [\#211](https://github.com/voxpupuli/puppet-puppetboard/pull/211) ([mattock](https://github.com/mattock))
+- bump puppet to latest supported version 4.10.0 [\#209](https://github.com/voxpupuli/puppet-puppetboard/pull/209) ([bastelfreak](https://github.com/bastelfreak))
+- add reverseproxy example using puppetlabs/apache module [\#207](https://github.com/voxpupuli/puppet-puppetboard/pull/207) ([kpankonen](https://github.com/kpankonen))
+- fix ProxyPass example [\#206](https://github.com/voxpupuli/puppet-puppetboard/pull/206) ([kpankonen](https://github.com/kpankonen))
+- Group should be a system group. [\#203](https://github.com/voxpupuli/puppet-puppetboard/pull/203) ([ryanc](https://github.com/ryanc))
+- Propose small spelling change [\#201](https://github.com/voxpupuli/puppet-puppetboard/pull/201) ([jeis2497052](https://github.com/jeis2497052))
+- update minimal vcsrepo version [\#198](https://github.com/voxpupuli/puppet-puppetboard/pull/198) ([pgassmann](https://github.com/pgassmann))
+- Set custom vhost parameters. for example Basic Auth [\#196](https://github.com/voxpupuli/puppet-puppetboard/pull/196) ([c33s](https://github.com/c33s))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v4.0.0) (2017-11-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v3.0.0...v4.0.0)
@@ -56,7 +80,6 @@ These should not affect the functionality of the module.
 - Switch to puppet\_install\_helper \(and fix rubocop warning in process\) [\#184](https://github.com/voxpupuli/puppet-puppetboard/pull/184) ([wyardley](https://github.com/wyardley))
 - add instructions on how to enable report storage to be able to view i… [\#182](https://github.com/voxpupuli/puppet-puppetboard/pull/182) ([jonmosco](https://github.com/jonmosco))
 - Fix github license detection [\#179](https://github.com/voxpupuli/puppet-puppetboard/pull/179) ([alexjfisher](https://github.com/alexjfisher))
-- release 2.9.0 [\#160](https://github.com/voxpupuli/puppet-puppetboard/pull/160) ([bastelfreak](https://github.com/bastelfreak))
 - 	Document usage of Puppet CA via puppetdb\_ssl\_verify [\#150](https://github.com/voxpupuli/puppet-puppetboard/pull/150) ([apeeters](https://github.com/apeeters))
 
 ## [v2.9.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v2.9.0) (2017-01-13)
@@ -119,7 +142,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 2.8.0 [\#122](https://github.com/voxpupuli/puppet-puppetboard/pull/122) ([bastelfreak](https://github.com/bastelfreak))
 - Update CHANGELONG.md [\#120](https://github.com/voxpupuli/puppet-puppetboard/pull/120) ([bastelfreak](https://github.com/bastelfreak))
 - Release 2.7.5 [\#117](https://github.com/voxpupuli/puppet-puppetboard/pull/117) ([jyaworski](https://github.com/jyaworski))
 - Changelog md [\#116](https://github.com/voxpupuli/puppet-puppetboard/pull/116) ([jyaworski](https://github.com/jyaworski))
@@ -152,7 +174,6 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - "PC dotfiles" [\#83](https://github.com/voxpupuli/puppet-puppetboard/pull/83) ([nibalizer](https://github.com/nibalizer))
-- "Release 2.7.2" [\#82](https://github.com/voxpupuli/puppet-puppetboard/pull/82) ([nibalizer](https://github.com/nibalizer))
 
 ## [2.7.2](https://github.com/voxpupuli/puppet-puppetboard/tree/2.7.2) (2015-07-15)
 
@@ -216,7 +237,6 @@ These should not affect the functionality of the module.
 - Update Rakefile to ignore vendor gems in syntax task [\#38](https://github.com/voxpupuli/puppet-puppetboard/pull/38) ([cmurphy](https://github.com/cmurphy))
 - Quotes in conf file [\#37](https://github.com/voxpupuli/puppet-puppetboard/pull/37) ([nibalizer](https://github.com/nibalizer))
 - Beaker2 [\#36](https://github.com/voxpupuli/puppet-puppetboard/pull/36) ([nibalizer](https://github.com/nibalizer))
-- Add basic beaker test and nodesets [\#33](https://github.com/voxpupuli/puppet-puppetboard/pull/33) ([cmurphy](https://github.com/cmurphy))
 - Adding lint and syntax testing [\#32](https://github.com/voxpupuli/puppet-puppetboard/pull/32) ([nibalizer](https://github.com/nibalizer))
 - introduce a prefix \(wsgi\_alias\) into ::vhost [\#31](https://github.com/voxpupuli/puppet-puppetboard/pull/31) ([igalic](https://github.com/igalic))
 - Add the 'localise\_timestamp' configuration option [\#30](https://github.com/voxpupuli/puppet-puppetboard/pull/30) ([tomtheun](https://github.com/tomtheun))
@@ -276,4 +296,4 @@ These should not affect the functionality of the module.
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
