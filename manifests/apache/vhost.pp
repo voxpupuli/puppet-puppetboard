@@ -19,6 +19,10 @@
 #   (int) Port for the vhost to listen on.
 #   Defaults to 5000.
 #
+# [*listen*]
+#   (host) Listen host which can be a valid ipv4, ipv6 or fqdn.
+#   No default.
+#
 # [*ssl*]
 #   (bool) If vhost should be configured with ssl
 #   Defaults to false
@@ -68,13 +72,14 @@
 #   No default ($::puppetboard::params::ldap_url)
 #
 # [*ldap_bind_authoritative]
-#   (string) Determines if other authentication providers are used 
+#   (string) Determines if other authentication providers are used
 #            when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 class puppetboard::apache::vhost (
   String $vhost_name,
   String $wsgi_alias                        = '/',
   Integer $port                             = 5000,
+  Optional[Stdlib::Host] $listen            = undef,
   Boolean $ssl                              = false,
   Optional[Stdlib::AbsolutePath] $ssl_cert  = undef,
   Optional[Stdlib::AbsolutePath] $ssl_key   = undef,
@@ -132,6 +137,7 @@ class puppetboard::apache::vhost (
   }
   ::apache::vhost { $vhost_name:
     port                        => $port,
+    ip                          => $listen,
     docroot                     => $docroot,
     ssl                         => $ssl,
     ssl_cert                    => $ssl_cert,
