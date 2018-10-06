@@ -23,6 +23,10 @@ class puppetboard::params {
         seltype => 'httpd_sys_content_t',
       }
     }
+    'Suse': {
+      $apache_confd   = '/etc/apache2/conf.d'
+      $apache_service = 'apache2'
+    }
     default: { fail("The ${facts['os']['family']} operating system is not supported with the puppetboard module") }
   }
 
