@@ -1,6 +1,6 @@
 {
   "name": "puppet-puppetboard",
-  "version": "5.0.0",
+  "version": "5.0.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Install and configure PuppetBoard",
   "license": "Apache-2.0",
