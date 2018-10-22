@@ -71,6 +71,14 @@
 #   (string) Determines if other authentication providers are used 
 #            when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
+#
+# [*ldap_require_group]
+#   (string) LDAP group to require on login
+#   No default ($::puppetboard::params::ldap_require_group)
+#
+# [*ldap_group_attribute]
+#   (string) LDAP group attribute for LDAP group
+#   No default ($::puppetboard::params::ldap_group_attribute)
 class puppetboard::apache::vhost (
   String $vhost_name,
   String $wsgi_alias                        = '/',
@@ -88,6 +96,8 @@ class puppetboard::apache::vhost (
   Optional[String] $ldap_bind_password      = undef,
   Optional[String] $ldap_url                = undef,
   Optional[String] $ldap_bind_authoritative = undef,
+  Optional[String] $ldap_require_group      = undef,
+  Optional[String] $ldap_group_attribute    = undef,
   Hash $custom_apache_parameters            = {},
 ) inherits ::puppetboard::params {
 
