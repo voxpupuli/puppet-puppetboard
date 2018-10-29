@@ -96,7 +96,6 @@ class puppetboard::apache::vhost (
   Optional[String] $ldap_bind_password      = undef,
   Optional[String] $ldap_url                = undef,
   Optional[String] $ldap_bind_authoritative = undef,
-  Optional[String] $ldap_require_group      = undef,
   Boolean $ldap_require_group               = $::puppetboard::params::ldap_require_group,
   Optional[String] $ldap_group_attribute    = undef,
   Hash $custom_apache_parameters            = {},
