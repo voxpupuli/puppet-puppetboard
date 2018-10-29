@@ -52,8 +52,8 @@
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 #
 # [*ldap_require_group]
-#   (string) LDAP group to require on login
-#   No default ($::puppetboard::params::ldap_require_group)
+#   (bool) LDAP group to require on login
+#   Default to False ($::puppetboard::params::ldap_require_group)
 #
 # [*ldap_group_attribute]
 #   (string) LDAP group attribute for LDAP group
@@ -79,6 +79,7 @@ class puppetboard::apache::conf (
   Optional[String] $ldap_url                = undef,
   Optional[String] $ldap_bind_authoritative = undef,
   Optional[String] $ldap_require_group      = undef,
+  Boolean $ldap_require_group               = $::puppetboard::params::ldap_require_group,
   Optional[String] $ldap_group_attribute    = undef,
 ) inherits ::puppetboard::params {
 
