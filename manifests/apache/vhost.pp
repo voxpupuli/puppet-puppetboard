@@ -76,9 +76,9 @@
 #   (bool) LDAP group to require on login
 #   Default to False ($::puppetboard::params::ldap_require_group)
 #
-# [*ldap_group_attribute]
-#   (string) LDAP group attribute for LDAP group
-#   No default ($::puppetboard::params::ldap_group_attribute)
+# [*$ldap_require_group_dn]
+#   (string) LDAP group DN for LDAP group
+#   No default
 class puppetboard::apache::vhost (
   String $vhost_name,
   String $wsgi_alias                        = '/',
@@ -97,7 +97,7 @@ class puppetboard::apache::vhost (
   Optional[String] $ldap_url                = undef,
   Optional[String] $ldap_bind_authoritative = undef,
   Boolean $ldap_require_group               = $::puppetboard::params::ldap_require_group,
-  Optional[String] $ldap_group_attribute    = undef,
+  Optional[String] $ldap_require_group_dn   = undef,
   Hash $custom_apache_parameters            = {},
 ) inherits ::puppetboard::params {
 

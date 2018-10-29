@@ -55,9 +55,9 @@
 #   (bool) LDAP group to require on login
 #   Default to False ($::puppetboard::params::ldap_require_group)
 #
-# [*ldap_group_attribute]
-#   (string) LDAP group attribute for LDAP group
-#   No default ($::puppetboard::params::ldap_group_attribute)
+# [*$ldap_require_group_dn]
+#   (string) LDAP group DN for LDAP group
+#   No default
 #
 # === Notes:
 #
@@ -79,7 +79,7 @@ class puppetboard::apache::conf (
   Optional[String] $ldap_url                = undef,
   Optional[String] $ldap_bind_authoritative = undef,
   Boolean $ldap_require_group               = $::puppetboard::params::ldap_require_group,
-  Optional[String] $ldap_group_attribute    = undef,
+  Optional[String] $ldap_require_group_dn   = undef,
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
