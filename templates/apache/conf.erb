@@ -32,11 +32,11 @@ WSGIScriptAlias <%= @wsgi_alias -%> <%= @docroot -%>/wsgi.py
    <%- if @ldap_bind_authoritative -%>
    AuthLDAPBindAuthoritative <%= @ldap_bind_authoritative -%>
    <%- end -%>
-   <% if @ldap_require_group != false %>
-   <% if @ldap_group_attribute %>
-   AuthLDAPGroupAttribute <%= @ldap_group_attribute -%>
+   <% if @ldap_require_group -%>
+   <% if @ldap_group_attribute -%>
+   AuthLDAPGroupAttribute "<%= @ldap_group_attribute -%>"
    <% end %>
-   Require ldap-group <%= @ldap_require_group -%>
+   Require ldap-group "<%= @ldap_require_group -%>"
    <% else %>
    Require valid-user
    <% end %>
