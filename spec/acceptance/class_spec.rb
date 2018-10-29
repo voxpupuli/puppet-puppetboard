@@ -127,7 +127,7 @@ describe 'puppetboard class' do
         ldap_bind_password => 'password',
         ldap_url     => 'ldap://puppet.example.com',
         ldap_require_group => true,
-        ldap_group_attribute => 'cn=admins=cn=groups,dc=puppet,dc=example,dc=com',
+        ldap_require_group_dn => 'cn=admins,=cn=groups,dc=puppet,dc=example,dc=com',
       }
       EOS
 
@@ -140,7 +140,7 @@ describe 'puppetboard class' do
       it { is_expected.to contain 'AuthBasicProvider ldap' }
       it { is_expected.to contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
       it { is_expected.to contain 'AuthLDAPURL "ldap://puppet.example.com"' }
-      it { is_expected.to contain 'Require ldap-group "cn=admins=cn=groups,dc=puppet,dc=example,dc=com"' }
+      it { is_expected.to contain 'Require ldap-group "cn=admins,=cn=groups,dc=puppet,dc=example,dc=com"' }
     end
     describe file('/srv/puppetboard/puppetboard/settings.py') do
       it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
