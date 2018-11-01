@@ -246,6 +246,7 @@ class puppetboard(
     owner   => $user,
     content => template('puppetboard/settings.py.erb'),
     require => Vcsrepo["${basedir}/puppetboard"],
+    notify  => Service[$::puppetboard::params::apache_service],
   }
 
   python::virtualenv { "${basedir}/virtenv-puppetboard":
