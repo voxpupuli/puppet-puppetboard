@@ -18,7 +18,7 @@
    AuthLDAPBindAuthoritative <%= @ldap_bind_authoritative -%>
    <%- end -%>
    <% if @ldap_require_group -%>
-   Require ldap-group "<%= ldap_require_group_dn -%>"
+   Require ldap-group "<%= @ldap_require_group_dn -%>"
    <% else %>
    Require valid-user
    <% end %>
