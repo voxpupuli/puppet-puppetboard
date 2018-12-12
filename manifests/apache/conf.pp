@@ -51,6 +51,14 @@
 #   (string) Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 #
+# [*ldap_require_group]
+#   (bool) LDAP group to require on login
+#   Default to False ($::puppetboard::params::ldap_require_group)
+#
+# [*$ldap_require_group_dn]
+#   (string) LDAP group DN for LDAP group
+#   No default
+#
 # === Notes:
 #
 # Make sure you have purge_configs set to false in your apache class!
@@ -62,14 +70,16 @@ class puppetboard::apache::conf (
   String $wsgi_alias                        = '/puppetboard',
   Integer $threads                          = 5,
   Integer $max_reqs                         = 0,
-  String $user                              = $::puppetboard::params::user,
-  String $group                             = $::puppetboard::params::group,
-  Stdlib::AbsolutePath $basedir             = $::puppetboard::params::basedir,
-  Boolean $enable_ldap_auth                 = $::puppetboard::params::enable_ldap_auth,
+  String $user                              = $puppetboard::params::user,
+  String $group                             = $puppetboard::params::group,
+  Stdlib::AbsolutePath $basedir             = $puppetboard::params::basedir,
+  Boolean $enable_ldap_auth                 = $puppetboard::params::enable_ldap_auth,
   Optional[String] $ldap_bind_dn            = undef,
   Optional[String] $ldap_bind_password      = undef,
   Optional[String] $ldap_url                = undef,
-  Optional[String] $ldap_bind_authoritative = undef
+  Optional[String] $ldap_bind_authoritative = undef,
+  Boolean $ldap_require_group               = $puppetboard::params::ldap_require_group,
+  Optional[String] $ldap_require_group_dn   = undef,
 ) inherits ::puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
