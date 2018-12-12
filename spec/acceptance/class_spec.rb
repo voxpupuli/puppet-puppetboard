@@ -126,6 +126,48 @@ describe 'puppetboard class' do
         ldap_bind_dn => 'cn=user,dc=puppet,dc=example,dc=com',
         ldap_bind_password => 'password',
         ldap_url     => 'ldap://puppet.example.com',
+      }
+      EOS
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_failures: true)
+    end
+
+    describe file(apache_conf_file) do
+      it { is_expected.to contain 'AuthBasicProvider ldap' }
+      it { is_expected.to contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
+      it { is_expected.to contain 'AuthLDAPURL "ldap://puppet.example.com"' }
+    end
+    describe file('/srv/puppetboard/puppetboard/settings.py') do
+      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
+      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+    end
+  end
+
+  context 'AUTH ldap-group' do
+    it 'works with no errors' do
+      pp = <<-EOS
+      if $facts['os']['family'] == 'RedHat' {
+        include epel
+      }
+      # Configure Apache on this server
+      class { 'apache': }
+      class { 'apache::mod::wsgi': }
+      class { 'apache::mod::authnz_ldap': }
+      -> class { 'puppetboard':
+        manage_virtualenv => true,
+        puppetdb_host => 'puppet.example.com',
+        puppetdb_port => 8081,
+        puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
+        puppetdb_ssl_verify => true,
+        puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
+      }
+      class { 'puppetboard::apache::conf':
+        enable_ldap_auth => true,
+        ldap_bind_dn => 'cn=user,dc=puppet,dc=example,dc=com',
+        ldap_bind_password => 'password',
+        ldap_url     => 'ldap://puppet.example.com',
         ldap_require_group => true,
         ldap_require_group_dn => 'cn=admins,=cn=groups,dc=puppet,dc=example,dc=com',
       }
