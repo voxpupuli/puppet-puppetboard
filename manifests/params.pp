@@ -59,4 +59,5 @@ class puppetboard::params {
   $default_environment = 'production'
   $extra_settings = {}
   $enable_ldap_auth = false
+  $ldap_require_group = false
 }
