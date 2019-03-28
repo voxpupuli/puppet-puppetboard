@@ -68,7 +68,7 @@
 #   No default ($::puppetboard::params::ldap_url)
 #
 # [*ldap_bind_authoritative]
-#   (string) Determines if other authentication providers are used 
+#   (string) Determines if other authentication providers are used
 #            when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 #
@@ -125,10 +125,11 @@ class puppetboard::apache::vhost (
   }
 
   if $enable_ldap_auth {
-    $ldap_additional_includes = [ "${puppetboard::params::apache_confd}/puppetboard-ldap.conf" ]
-    $ldap_require = File["${puppetboard::params::apache_confd}/puppetboard-ldap.conf"]
-    file { "${puppetboard::params::apache_confd}/puppetboard-ldap.conf":
+    $ldap_additional_includes = [ "${puppetboard::params::apache_confd}/puppetboard-ldap.part" ]
+    $ldap_require = File["${puppetboard::params::apache_confd}/puppetboard-ldap.part"]
+    file { 'puppetboard-ldap.part':
       ensure  => present,
+      path    => "${puppetboard::params::apache_confd}/puppetboard-ldap.part",
       owner   => 'root',
       group   => 'root',
       content => template('puppetboard/apache/ldap.erb'),
