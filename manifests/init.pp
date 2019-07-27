@@ -161,40 +161,40 @@
 #  }
 #
 class puppetboard(
-  String $user                                                = $::puppetboard::params::user,
+  String $user                                                = $puppetboard::params::user,
   Optional[String] $homedir                                   = undef,
-  String $group                                               = $::puppetboard::params::group,
+  String $group                                               = $puppetboard::params::group,
   Optional[Variant[String, Array[String]]] $groups            = undef,
-  Stdlib::AbsolutePath $basedir                               = $::puppetboard::params::basedir,
-  String $git_source                                          = $::puppetboard::params::git_source,
-  String $dev_listen_host                                     = $::puppetboard::params::dev_listen_host,
-  Integer $dev_listen_port                                    = $::puppetboard::params::dev_listen_port,
-  String $puppetdb_host                                       = $::puppetboard::params::puppetdb_host,
-  Integer $puppetdb_port                                      = $::puppetboard::params::puppetdb_port,
+  Stdlib::AbsolutePath $basedir                               = $puppetboard::params::basedir,
+  String $git_source                                          = $puppetboard::params::git_source,
+  String $dev_listen_host                                     = $puppetboard::params::dev_listen_host,
+  Integer $dev_listen_port                                    = $puppetboard::params::dev_listen_port,
+  String $puppetdb_host                                       = $puppetboard::params::puppetdb_host,
+  Integer $puppetdb_port                                      = $puppetboard::params::puppetdb_port,
   Optional[Stdlib::AbsolutePath] $puppetdb_key                = undef,
-  Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = $::puppetboard::params::puppetdb_ssl_verify,
+  Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = $puppetboard::params::puppetdb_ssl_verify,
   Optional[Stdlib::AbsolutePath] $puppetdb_cert               = undef,
-  Integer $puppetdb_timeout                                   = $::puppetboard::params::puppetdb_timeout,
-  Integer $unresponsive                                       = $::puppetboard::params::unresponsive,
-  Boolean $enable_catalog                                     = $::puppetboard::params::enable_catalog,
-  Boolean $enable_query                                       = $::puppetboard::params::enable_query,
-  Boolean $localise_timestamp                                 = $::puppetboard::params::localise_timestamp,
-  Puppetboard::Syslogpriority $python_loglevel                = $::puppetboard::params::python_loglevel,
+  Integer $puppetdb_timeout                                   = $puppetboard::params::puppetdb_timeout,
+  Integer $unresponsive                                       = $puppetboard::params::unresponsive,
+  Boolean $enable_catalog                                     = $puppetboard::params::enable_catalog,
+  Boolean $enable_query                                       = $puppetboard::params::enable_query,
+  Boolean $localise_timestamp                                 = $puppetboard::params::localise_timestamp,
+  Puppetboard::Syslogpriority $python_loglevel                = $puppetboard::params::python_loglevel,
   Optional[String] $python_proxy                              = undef,
   Optional[String] $python_index                              = undef,
   Optional[Boolean] $python_use_epel                          = undef,
-  Boolean $experimental                                       = $::puppetboard::params::experimental,
+  Boolean $experimental                                       = $puppetboard::params::experimental,
   Optional[String] $revision                                  = undef,
-  Boolean $manage_selinux                                     = $::puppetboard::params::manage_selinux,
+  Boolean $manage_selinux                                     = $puppetboard::params::manage_selinux,
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
-  Integer $reports_count                                      = $::puppetboard::params::reports_count,
-  String $default_environment                                 = $::puppetboard::params::default_environment,
-  String $listen                                              = $::puppetboard::params::listen,
-  Boolean $offline_mode                                       = $::puppetboard::params::offline_mode,
-  Hash $extra_settings                                        = $::puppetboard::params::extra_settings,
+  Integer $reports_count                                      = $puppetboard::params::reports_count,
+  String $default_environment                                 = $puppetboard::params::default_environment,
+  String $listen                                              = $puppetboard::params::listen,
+  Boolean $offline_mode                                       = $puppetboard::params::offline_mode,
+  Hash $extra_settings                                        = $puppetboard::params::extra_settings,
 ) inherits ::puppetboard::params {
 
   if $manage_group {
@@ -279,7 +279,7 @@ class puppetboard(
     }
   }
 
-  if $manage_virtualenv and !defined(Package[$::puppetboard::params::virtualenv]) {
+  if $manage_virtualenv and !defined(Package[$puppetboard::params::virtualenv]) {
     class { 'python':
       virtualenv => 'present',
       dev        => 'present',

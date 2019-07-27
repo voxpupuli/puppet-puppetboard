@@ -95,12 +95,12 @@ class puppetboard::apache::conf (
     ],
   }
 
-  file { "${::puppetboard::params::apache_confd}/puppetboard.conf":
+  file { "${puppetboard::params::apache_confd}/puppetboard.conf":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     content => template('puppetboard/apache/conf.erb'),
     require => File["${docroot}/wsgi.py"],
-    notify  => Service[$::puppetboard::params::apache_service],
+    notify  => Service[$puppetboard::params::apache_service],
   }
 }
