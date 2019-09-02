@@ -123,6 +123,10 @@
 #   (bool) If true, require the virtualenv package. If false do nothing.
 #   Defaults to false
 #
+# [*virtualenv_version*]
+#   (string) Python version to use in virtualenv if manage_virtualenv is true.
+#   Defaults to 'system'
+#
 # [*manage_user*]
 #   (bool) If true, manage (create) this group. If false do nothing.
 #   Defaults to true
@@ -190,6 +194,7 @@ class puppetboard(
   Boolean $manage_group                                       = true,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
+  String[1]  $virtualenv_version                              = $puppetboard::params::virtualenv_version,
   Integer $reports_count                                      = $puppetboard::params::reports_count,
   String $default_environment                                 = $puppetboard::params::default_environment,
   String $listen                                              = $puppetboard::params::listen,
@@ -250,7 +255,7 @@ class puppetboard(
 
   python::virtualenv { "${basedir}/virtenv-puppetboard":
     ensure       => present,
-    version      => 'system',
+    version      => $virtualenv_version,
     requirements => "${basedir}/puppetboard/requirements.txt",
     systempkgs   => true,
     distribute   => false,
