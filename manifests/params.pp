@@ -54,6 +54,7 @@ class puppetboard::params {
   $reports_count = 10
   $experimental = false
   $virtualenv = 'python-virtualenv'
+  $virtualenv_version = 'system'
   $listen = 'private'
   $apache_override = 'None'
   $default_environment = 'production'
