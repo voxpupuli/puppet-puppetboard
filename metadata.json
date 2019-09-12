@@ -63,15 +63,15 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.13.1 < 6.0.0"
+      "version_requirement": ">= 4.13.1 < 6.0.1"
     },
     {
       "name": "puppet/python",
-      "version_requirement": ">= 1.12.0 < 3.0.0"
+      "version_requirement": ">= 1.12.0 < 3.0.2"
     },
     {
       "name": "puppetlabs/vcsrepo",
-      "version_requirement": ">= 1.3.1 < 3.0.0"
+      "version_requirement": ">= 1.3.1 < 3.0.1"
     }
   ]
 }
