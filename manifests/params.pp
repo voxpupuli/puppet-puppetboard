@@ -30,9 +30,9 @@ class puppetboard::params {
     default: { fail("The ${facts['os']['family']} operating system is not supported with the puppetboard module") }
   }
 
-  $manage_selinux = $::selinux ? {
-    false   => false,
-    default => true,
+  $manage_selinux = fact('os.selinux.enabled') ? {
+    true   => true,
+    default => false,
   }
 
   $user  = 'puppetboard'
