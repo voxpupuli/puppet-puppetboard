@@ -4,8 +4,9 @@ describe 'puppetboard::apache::vhost' do
   describe 'default params' do
     let :params do
       {
-        'vhost_name' => 'puppetboard.local',
-        'port'       => 80
+        'vhost_name'       => 'puppetboard.local',
+        'port'             => 80,
+        'enable_ldap_auth' => true
       }
     end
     let(:pre_condition) do
@@ -32,9 +33,8 @@ describe 'puppetboard::apache::vhost' do
           ).that_requires('File[/srv/puppetboard/puppetboard/wsgi.py]')
         end
         it do
-          is_expected.to contain_concat('25-puppetboard.local.conf').with(
-            'ensure' => 'present',
-            'path'   => '/etc/apache2/sites-available/25-puppetboard.local.conf'
+          is_expected.to contain_file('puppetboard-ldap.part').with(
+            'ensure' => 'present'
           )
         end
       end
