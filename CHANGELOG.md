@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v6.0.0) (2019-10-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v5.0.0...v6.0.0)
+
+**Breaking changes:**
+
+- modulesync 2.7.0 and drop puppet 4 [\#242](https://github.com/voxpupuli/puppet-puppetboard/pull/242) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- add virtualenv\_version parameter [\#255](https://github.com/voxpupuli/puppet-puppetboard/pull/255) ([bastelfreak](https://github.com/bastelfreak))
+- add support for require ldap-group [\#236](https://github.com/voxpupuli/puppet-puppetboard/pull/236) ([swenske](https://github.com/swenske))
+
+**Fixed bugs:**
+
+- fix missing @ in the apache templates [\#237](https://github.com/voxpupuli/puppet-puppetboard/pull/237) ([swenske](https://github.com/swenske))
+
+**Closed issues:**
+
+- Feature Request: Show changes of noop run [\#246](https://github.com/voxpupuli/puppet-puppetboard/issues/246)
+
+**Merged pull requests:**
+
+- Updating dependencies [\#251](https://github.com/voxpupuli/puppet-puppetboard/pull/251) ([pjonesIDBS](https://github.com/pjonesIDBS))
+
 ## [v5.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v5.0.0) (2018-10-14)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v4.1.0...v5.0.0)
@@ -240,7 +265,7 @@ These should not affect the functionality of the module.
 - Moving to metadata.json [\#53](https://github.com/voxpupuli/puppet-puppetboard/pull/53) ([nibalizer](https://github.com/nibalizer))
 - Feature/set supplementary groups [\#52](https://github.com/voxpupuli/puppet-puppetboard/pull/52) ([robinbowes](https://github.com/robinbowes))
 - puppetdb\_ssl renamed to puppetdb\_ssl\_verify [\#51](https://github.com/voxpupuli/puppet-puppetboard/pull/51) ([robinbowes](https://github.com/robinbowes))
-- Add CentOS caveats [\#50](https://github.com/voxpupuli/puppet-puppetboard/pull/50) ([Paulche](https://github.com/Paulche))
+- Add CentOS caveats [\#50](https://github.com/voxpupuli/puppet-puppetboard/pull/50) ([pbrit](https://github.com/pbrit))
 - Adding the ability to control the number of reports that you want to add... [\#40](https://github.com/voxpupuli/puppet-puppetboard/pull/40) ([stack72](https://github.com/stack72))
 
 ## [2.5.0](https://github.com/voxpupuli/puppet-puppetboard/tree/2.5.0) (2014-06-23)
@@ -298,7 +323,7 @@ These should not affect the functionality of the module.
 
 - PUPPETDB\_SSL setting is now PUPPETDB\_SSL\_VERIFY [\#13](https://github.com/voxpupuli/puppet-puppetboard/pull/13) ([fpletz](https://github.com/fpletz))
 - Document parameters for all classes, and variables used by templates [\#12](https://github.com/voxpupuli/puppet-puppetboard/pull/12) ([jantman](https://github.com/jantman))
-- Fix problem with pip install git requirement [\#11](https://github.com/voxpupuli/puppet-puppetboard/pull/11) ([pavel-drobushevich](https://github.com/pavel-drobushevich))
+- Fix problem with pip install git requirement [\#11](https://github.com/voxpupuli/puppet-puppetboard/pull/11) ([pavel-drabushevich](https://github.com/pavel-drabushevich))
 
 ## [1.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/1.1.0) (2013-11-25)
 
