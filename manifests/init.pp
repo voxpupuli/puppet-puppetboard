@@ -235,7 +235,10 @@ class puppetboard(
     owner    => $user,
     source   => $git_source,
     revision => $revision,
-    require  => User[$user],
+    require  => [
+      User[$user],
+      Group[$group],
+    ],
   }
 
   file { "${basedir}/puppetboard":
