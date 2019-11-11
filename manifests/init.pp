@@ -127,6 +127,10 @@
 #   (string) Python version to use in virtualenv if manage_virtualenv is true.
 #   Defaults to 'system'
 #
+# [*virtualenv_cmd*]
+#   (string) virtualenv command name to use, instead of default 'virtualenv'
+#   Defaults to undef
+#
 # [*manage_user*]
 #   (bool) If true, manage (create) this group. If false do nothing.
 #   Defaults to true
@@ -195,6 +199,7 @@ class puppetboard(
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
   String[1]  $virtualenv_version                              = $puppetboard::params::virtualenv_version,
+  Optional[String] $virtualenv_cmd                            = undef,
   Integer $reports_count                                      = $puppetboard::params::reports_count,
   String $default_environment                                 = $puppetboard::params::default_environment,
   String $listen                                              = $puppetboard::params::listen,
@@ -264,6 +269,7 @@ class puppetboard(
     require      => Vcsrepo["${basedir}/puppetboard"],
     proxy        => $python_proxy,
     index        => $python_index,
+    virtualenv   => $virtualenv_cmd,
   }
 
   if $listen == 'public' {
