@@ -67,11 +67,11 @@
 # a WSGIApplicationGroup of %{GLOBAL}.
 #
 class puppetboard::apache::conf (
-  String $wsgi_alias                        = '/puppetboard',
-  Integer $threads                          = 5,
-  Integer $max_reqs                         = 0,
-  String $user                              = $puppetboard::params::user,
-  String $group                             = $puppetboard::params::group,
+  Stdlib::AbsolutePath $wsgi_alias          = '/puppetboard',
+  Integer[1] $threads                       = 5,
+  Integer[0] $max_reqs                      = 0,
+  String[1] $user                           = $puppetboard::params::user,
+  String[1] $group                          = $puppetboard::params::group,
   Stdlib::AbsolutePath $basedir             = $puppetboard::params::basedir,
   Boolean $enable_ldap_auth                 = $puppetboard::params::enable_ldap_auth,
   Optional[String] $ldap_bind_dn            = undef,

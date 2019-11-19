@@ -164,40 +164,40 @@
 #    basedir => '/www/puppetboard'
 #  }
 #
-class puppetboard(
-  String $user                                                = $puppetboard::params::user,
-  Optional[String] $homedir                                   = undef,
-  String $group                                               = $puppetboard::params::group,
-  Optional[Variant[String, Array[String]]] $groups            = undef,
+class puppetboard (
+  String[1] $user                                             = $puppetboard::params::user,
+  Optional[Stdlib::Absolutepath] $homedir                     = undef,
+  String[1] $group                                            = $puppetboard::params::group,
+  Optional[Variant[String[1], Array[String[1]]]] $groups      = undef,
   Stdlib::AbsolutePath $basedir                               = $puppetboard::params::basedir,
-  String $git_source                                          = $puppetboard::params::git_source,
-  String $dev_listen_host                                     = $puppetboard::params::dev_listen_host,
-  Integer $dev_listen_port                                    = $puppetboard::params::dev_listen_port,
-  String $puppetdb_host                                       = $puppetboard::params::puppetdb_host,
-  Integer $puppetdb_port                                      = $puppetboard::params::puppetdb_port,
+  Stdlib::HTTPUrl $git_source                                 = $puppetboard::params::git_source,
+  Stdlib::Host $dev_listen_host                               = $puppetboard::params::dev_listen_host,
+  Stdlib::Port::Unprivileged $dev_listen_port                 = $puppetboard::params::dev_listen_port,
+  Stdlib::Host $puppetdb_host                                 = $puppetboard::params::puppetdb_host,
+  Stdlib::Port::Unprivileged $puppetdb_port                   = $puppetboard::params::puppetdb_port,
   Optional[Stdlib::AbsolutePath] $puppetdb_key                = undef,
   Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = $puppetboard::params::puppetdb_ssl_verify,
   Optional[Stdlib::AbsolutePath] $puppetdb_cert               = undef,
-  Integer $puppetdb_timeout                                   = $puppetboard::params::puppetdb_timeout,
-  Integer $unresponsive                                       = $puppetboard::params::unresponsive,
+  Integer[1] $puppetdb_timeout                                = $puppetboard::params::puppetdb_timeout,
+  Integer[1] $unresponsive                                    = $puppetboard::params::unresponsive,
   Boolean $enable_catalog                                     = $puppetboard::params::enable_catalog,
   Boolean $enable_query                                       = $puppetboard::params::enable_query,
   Boolean $localise_timestamp                                 = $puppetboard::params::localise_timestamp,
   Puppetboard::Syslogpriority $python_loglevel                = $puppetboard::params::python_loglevel,
-  Optional[String] $python_proxy                              = undef,
-  Optional[String] $python_index                              = undef,
+  Optional[String[1]] $python_proxy                           = undef,
+  Optional[String[1]] $python_index                           = undef,
   Optional[Boolean] $python_use_epel                          = undef,
   Boolean $experimental                                       = $puppetboard::params::experimental,
-  Optional[String] $revision                                  = undef,
+  Optional[String[1]] $revision                               = undef,
   Boolean $manage_selinux                                     = $puppetboard::params::manage_selinux,
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
   String[1]  $virtualenv_version                              = $puppetboard::params::virtualenv_version,
-  Integer $reports_count                                      = $puppetboard::params::reports_count,
-  String $default_environment                                 = $puppetboard::params::default_environment,
-  String $listen                                              = $puppetboard::params::listen,
+  Integer[1] $reports_count                                   = $puppetboard::params::reports_count,
+  String[1] $default_environment                              = $puppetboard::params::default_environment,
+  Enum['public', 'private'] $listen                           = $puppetboard::params::listen,
   Boolean $offline_mode                                       = $puppetboard::params::offline_mode,
   Hash $extra_settings                                        = $puppetboard::params::extra_settings,
 ) inherits ::puppetboard::params {
@@ -244,7 +244,7 @@ class puppetboard(
     require => Vcsrepo["${basedir}/puppetboard"],
   }
 
-  file {"${basedir}/puppetboard/settings.py":
+  file { "${basedir}/puppetboard/settings.py":
     ensure  => 'file',
     group   => $group,
     mode    => '0644',
@@ -279,7 +279,7 @@ class puppetboard(
   }
 
   if $manage_git and !defined(Package['git']) {
-    package {'git':
+    package { 'git':
       ensure => installed,
     }
   }
@@ -293,15 +293,15 @@ class puppetboard(
   }
 
   if $manage_selinux {
-    selboolean {'httpd_can_network_relay' :
+    selboolean { 'httpd_can_network_relay':
       persistent => true,
       value      => 'on',
     }
-    selboolean {'httpd_can_network_connect' :
+    selboolean { 'httpd_can_network_connect':
       persistent => true,
       value      => 'on',
     }
-    selboolean {'httpd_can_network_connect_db' :
+    selboolean { 'httpd_can_network_connect_db':
       persistent => true,
       value      => 'on',
     }
