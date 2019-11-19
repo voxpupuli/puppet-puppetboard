@@ -8,55 +8,55 @@
 # Document parameters here.
 #
 # [*wsgi_alias*]
-#   (string) WSGI script alias source
+#   (Stdlib::AbsolutePath) WSGI script alias source
 #   Default: '/puppetboard'
 #
 # [*threads*]
-#   (int) Number of WSGI threads to use.
+#   (Integer) Number of WSGI threads to use.
 #   Defaults to 5
 #
 # [*max_reqs*]
-#   (int) Limit on number of requests allowed to daemon process
+#   (Integer) Limit on number of requests allowed to daemon process
 #   Defaults to 0 (no limit)
 #
 # [*user*]
-#   (string) WSGI daemon process user, and daemon process name
+#   (String) WSGI daemon process user, and daemon process name
 #   Defaults to 'puppetboard' ($::puppetboard::params::user)
 #
 # [*group*]
-#   (int) WSGI daemon process group owner, and daemon process group
+#   (Integer) WSGI daemon process group owner, and daemon process group
 #   Defaults to 'puppetboard' ($::puppetboard::params::group)
 #
 # [*basedir*]
-#   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
+#   (Stdlib::AbsolutePath) Base directory where to build puppetboard vcsrepo and python virtualenv.
 #   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
 #
 # [*enable_ldap_auth]
-#   (bool) Whether to enable LDAP auth
+#   (Boolean) Whether to enable LDAP auth
 #   Defaults to False ($::puppetboard::params::enable_ldap_auth)
 #
 # [*ldap_bind_dn]
-#   (string) LDAP Bind DN
+#   (String) LDAP Bind DN
 #   No default ($::puppetboard::params::ldap_bind_dn)
 #
 # [*ldap_bind_password]
-#   (string) LDAP password
+#   (String) LDAP password
 #   No default ($::puppetboard::params::ldap_bind_password)
 #
 # [*ldap_url]
-#   (string) LDAP connection string
+#   (String) LDAP connection string
 #   No default ($::puppetboard::params::ldap_url)
 #
 # [*ldap_bind_authoritative]
-#   (string) Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
+#   (String) Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
 #   No default ($::puppetboard::params::ldap_bind_authoritative)
 #
 # [*ldap_require_group]
-#   (bool) LDAP group to require on login
+#   (Boolean) LDAP group to require on login
 #   Default to False ($::puppetboard::params::ldap_require_group)
 #
 # [*$ldap_require_group_dn]
-#   (string) LDAP group DN for LDAP group
+#   (String) LDAP group DN for LDAP group
 #   No default
 #
 # === Notes:
