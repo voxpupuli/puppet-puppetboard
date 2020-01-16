@@ -108,9 +108,10 @@ class puppetboard::apache::vhost (
   }
 
   $wsgi_daemon_process_options = {
-    threads => $threads,
-    group   => $group,
-    user    => $user,
+    threads     => $threads,
+    group       => $group,
+    user        => $user,
+    python-home => "${basedir}/virtenv-puppetboard",
   }
 
   file { "${docroot}/wsgi.py":
