@@ -4,7 +4,25 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v6.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v6.0.0) (2019-10-07)
+## [v6.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v6.1.0) (2020-03-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v6.0.0...v6.1.0)
+
+**Implemented enhancements:**
+
+- Fixes for Python 3 and documentation for Python 3 on RHEL 7 [\#272](https://github.com/voxpupuli/puppet-puppetboard/pull/272) ([nmaludy](https://github.com/nmaludy))
+
+**Closed issues:**
+
+- Install with Python3 [\#252](https://github.com/voxpupuli/puppet-puppetboard/issues/252)
+
+**Merged pull requests:**
+
+- update repo links to https [\#269](https://github.com/voxpupuli/puppet-puppetboard/pull/269) ([bastelfreak](https://github.com/bastelfreak))
+- Require group for vcsrepo as well [\#259](https://github.com/voxpupuli/puppet-puppetboard/pull/259) ([paescuj](https://github.com/paescuj))
+- Fix Apache configuration fragment directory on Debian [\#233](https://github.com/voxpupuli/puppet-puppetboard/pull/233) ([mattock](https://github.com/mattock))
+
+## [v6.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v6.0.0) (2019-10-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v5.0.0...v6.0.0)
 
@@ -19,6 +37,7 @@ These should not affect the functionality of the module.
 
 **Fixed bugs:**
 
+- rename LDAP include fragment file extension so it doesn't get include… [\#257](https://github.com/voxpupuli/puppet-puppetboard/pull/257) ([lukebigum](https://github.com/lukebigum))
 - fix missing @ in the apache templates [\#237](https://github.com/voxpupuli/puppet-puppetboard/pull/237) ([swenske](https://github.com/swenske))
 
 **Closed issues:**
@@ -27,6 +46,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
+- Clean up acceptance spec helper [\#258](https://github.com/voxpupuli/puppet-puppetboard/pull/258) ([ekohl](https://github.com/ekohl))
 - Updating dependencies [\#251](https://github.com/voxpupuli/puppet-puppetboard/pull/251) ([pjonesIDBS](https://github.com/pjonesIDBS))
 
 ## [v5.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v5.0.0) (2018-10-14)
