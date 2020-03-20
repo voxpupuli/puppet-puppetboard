@@ -276,7 +276,7 @@ the specific version of Python you're running).
 ``` puppet
 $mod_wsgi_package_name = 'rh-python36-mod_wsgi'
 
-package { ['python36', 'python36-pip', 'python36-virtualenv']:
+package { ['python3', 'python3-pip', 'python3-devel', 'python36-virtualenv']:
   ensure => present,
 }
 
@@ -314,6 +314,23 @@ class { 'puppetboard':
   # specify other parameters here
 }
 ```
+
+**NOTE** Below are the Yum repos needed for the various packages above.
+         On CentOS you'll need to package `centos-release-scl-rh` or manage
+         the SCL repos with the [bodgit/scl](https://github.com/bodgit/puppet-scl) module.
+
+| OS       | package                | repo                          |
+|----------|------------------------|-------------------------------|
+| RHEL 7   | `python3`              | `rhel-7-server-rpms`          |
+| RHEL 7   | `python3-pip`          | `rhel-7-server-rpms`          |
+| RHEL 7   | `python3-devel`        | `rhel-7-server-optional-rpms` |
+| RHEL 7   | `python36-virtualenv`  | `EPEL`                        |
+| RHEL 7   | `rh-python36-mod_wsgi` | `rhel-server-rhscl-7-rpms`    |
+| CentOS 7 | `python3`              | `base/7`                      |
+| CentOS 7 | `python3-pip`          | `base/7`                      |
+| CentOS 7 | `python3-devel`        | `base/7`                      |
+| CentOS 7 | `python36-virtualenv`  | `EPEL`                        |
+| CentOS 7 | `rh-python36-mod_wsgi` | `centos-sclo-rh`              |
 
 ### Using SSL to the PuppetDB host
 
@@ -404,11 +421,34 @@ class { 'puppetboard':
          Puppet SSL certificate to have an IP Subject Alternative Name setup
          for `127.0.0.1`, otherwise the certificate verification will fail.
          You can set this up in your `puppet.conf` with the `dns_alt_names`
-         configuration option, documented [here](https://puppet.com/docs/puppet/latest/configuration.html#dnsaltnames):
+         configuration option, documented [here](https://puppet.com/docs/puppet/latest/configuration.html#dnsaltnames).
 
 ``` ini
 [main]
     dns_alt_names = puppetdb,puppetdb.domain.tld,puppetboard,puppetboard.domain.tld,IP:127.0.0.1
+```
+
+**NOTE** If you need to regenerate your existing cert to add DNS Alt Names
+follow the documentation [here](https://puppet.com/docs/puppet/latest/ssl_regenerate_certificates.html#regenerate_agent_certs_and_add_dns_alt_names):
+
+``` shell
+# remove the existing agent certs
+puppetserver ca clean --certname <CERTNAME_OF_YOUR_PUPPETDB>
+puppet ssl clean
+
+# stop our services
+puppet resource service puppetserver ensure=stopped
+puppet resource service puppetdb ensure=stopped
+
+# regenerate our cert
+puppetserver ca generate --certname <CERTNAME> --subject-alt-names puppetdb,puppetdb.domain.tld,puppetboard,puppetboard.domain.tld,IP:127.0.0.1 --ca-client
+# copy the cert into the PuppetDB directory
+cp /etc/puppetlabs/puppet/ssl/certs/<CERTNAME>.pem /etc/puppetlabs/puppetdb/ssl/public.pem 
+cp /etc/puppetlabs/puppet/ssl/private_keys/<CERTNAME>.pem /etc/puppetlabs/puppetdb/ssl/private.pem 
+
+# restart our services
+puppet resource service puppetdb ensure=running
+puppet resource service puppetserver ensure=running
 ```
 
 ## Development
