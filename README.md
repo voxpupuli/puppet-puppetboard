@@ -443,8 +443,8 @@ puppet resource service puppetdb ensure=stopped
 # regenerate our cert
 puppetserver ca generate --certname <CERTNAME> --subject-alt-names puppetdb,puppetdb.domain.tld,puppetboard,puppetboard.domain.tld,IP:127.0.0.1 --ca-client
 # copy the cert into the PuppetDB directory
-cp /etc/puppetlabs/puppet/ssl/certs/<CERTNAME>.pem /etc/puppetlabs/puppetdb/ssl/public.pem 
-cp /etc/puppetlabs/puppet/ssl/private_keys/<CERTNAME>.pem /etc/puppetlabs/puppetdb/ssl/private.pem 
+cp /etc/puppetlabs/puppet/ssl/certs/<CERTNAME>.pem /etc/puppetlabs/puppetdb/ssl/public.pem
+cp /etc/puppetlabs/puppet/ssl/private_keys/<CERTNAME>.pem /etc/puppetlabs/puppetdb/ssl/private.pem
 
 # restart our services
 puppet resource service puppetdb ensure=running
