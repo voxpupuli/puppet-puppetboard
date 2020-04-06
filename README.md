@@ -50,7 +50,7 @@ Note that this module no longer explicitly requires the puppetlabs apache module
     puppet module install puppetlabs-apache
 
 On RedHat type systems, EPEL may also need to be configured; you can use the
-[stahnma/epel](https://forge.puppet.com/stahnma/epel) module if you don't
+[puppet/epel](https://forge.puppet.com/puppet/epel) module if you don't
 already have it configured.
 
 This module also requires the ``git`` and ``virtualenv`` packages. These can be enabled in the module by:
