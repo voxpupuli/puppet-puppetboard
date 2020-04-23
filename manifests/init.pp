@@ -124,7 +124,7 @@
 #   Defaults to false
 #
 # [*virtualenv_version*]
-#   (string) Python version to use in virtualenv if manage_virtualenv is true.
+#   (string) Python version to use in virtualenv.
 #   Defaults to 'system'
 #
 # [*manage_user*]
