@@ -16,6 +16,6 @@ RSpec.configure do |c|
 
     # Install additional modules for soft deps
     install_module_from_forge('puppetlabs-apache', '>= 2.1.0 < 6.0.0')
-    install_module_from_forge('stahnma-epel', '>= 1.2.2 < 2.0.0')
+    install_module_from_forge('puppet-epel', '>= 3.0.0 < 4.0.0')
   end
 end
