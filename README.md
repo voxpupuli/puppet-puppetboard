@@ -304,7 +304,7 @@ file { '/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf':
 }
 file { '/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so':
   ensure  => 'link',
-  target  => '/opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so ',
+  target  => '/opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so',
   require => Package[$mod_wsgi_package_name],
 }
 
