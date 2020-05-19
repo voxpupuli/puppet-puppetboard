@@ -31,6 +31,10 @@
 #   (string, absolute path) Path to server SSL key
 #   No default.
 #
+# [*ssl_chain*]
+#   (string, absolute path) Path to server CA Chain file
+#   No default.
+#
 # [*threads*]
 #   (int) Number of WSGI threads to use.
 #   Defaults to 5
@@ -86,6 +90,7 @@ class puppetboard::apache::vhost (
   Boolean $ssl                              = false,
   Optional[Stdlib::AbsolutePath] $ssl_cert  = undef,
   Optional[Stdlib::AbsolutePath] $ssl_key   = undef,
+  Optional[Stdlib::AbsolutePath] $ssl_chain = undef,
   Integer[1] $threads                       = 5,
   String[1] $user                           = $puppetboard::params::user,
   String[1] $group                          = $puppetboard::params::group,
@@ -150,6 +155,7 @@ class puppetboard::apache::vhost (
     ssl                 => $ssl,
     ssl_cert            => $ssl_cert,
     ssl_key             => $ssl_key,
+    ssl_chain           => $ssl_chain,
     additional_includes => $ldap_additional_includes,
     wsgi_daemon_process => $wsgi_daemon_process,
     wsgi_process_group  => $group,
