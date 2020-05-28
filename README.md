@@ -272,65 +272,106 @@ By default RHEL 7 has Python 2.7 installed, so you'll need to install a Python 3
 the compatible version of `mod_wsgi` (the `mod_wsgi` module must be compiled to support
 the specific version of Python you're running).
 
+The easiest way to get a Python 3 RHEL / CentOS 7 Apache WSGI module is to use the IUS Repo (https://ius.io/). They have a pre-packaged python36-mod_wsgi and this simply replaces the standard OS mod_wsgi package. i.e. This package will work with the standard httpd packages and installation. There's no need to enable Software Collections or manage Apache in non-standard locations.
+
+Below is an example of a working Puppetboard configuration. The configuration utilises the puppetlabs/apache module to configure httpd and serve the puppetboard on http://localhost:80. 
 
 ``` puppet
-$mod_wsgi_package_name = 'rh-python36-mod_wsgi'
+# A class to install and manage the PuppetBoard on a Puppet Master
+class profile::puppetboard {
 
-package { ['python3', 'python3-pip', 'python3-devel', 'python36-virtualenv']:
-  ensure => present,
-}
+  # Python 3.6 packages
+  package { ['python3', 'python3-pip', 'python3-devel', 'python36-virtualenv']:
+    ensure => 'present',
+  }
 
-# configure apache
-class { 'apache':
-  purge_configs => false,
-  mpm_module    => 'prefork',
-  default_vhost => false,
-  default_mods  => false,
-}
+  # Setup the ius repo
+  yumrepo { 'ius':
+    ensure   => 'present',
+    name     => 'ius',
+    baseurl  => 'https://repo.ius.io/7/$basearch/',
+    descr    => 'IUS for Enterprise Linux 7 - $basearch',
+    enabled  => true,
+    gpgcheck => true,
+    gpgkey   => 'https://repo.ius.io/RPM-GPG-KEY-IUS-7',
+  }
 
-# configure mod_wsgi for python3
-class { 'apache::mod::wsgi':
-  mod_path           => 'modules/mod_rh-python36-wsgi.so',
-  package_name       => $mod_wsgi_package_name,
-  wsgi_socket_prefix => '/var/run/wsgi',
-}
+  # Install Apache
+  include ::apache
+  $puppetboard_certname = $trusted['certname']
+  $ssl_dir = '/etc/httpd/ssl'
 
-# create symlinks from the isolated Red Hat directory into the
-# standard Apache paths so that it can pick up the module and config
-file { '/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf':
-  ensure  => 'link',
-  target  => '/opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf',
-  require => Package[$mod_wsgi_package_name],
-}
-file { '/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so':
-  ensure  => 'link',
-  target  => '/opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so ',
-  require => Package[$mod_wsgi_package_name],
-}
+  file { $ssl_dir:
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
 
-class { 'puppetboard':
-  # use python3 when setting up the virtualenv for puppetboard
-  virtualenv_python => '3',
-  # specify other parameters here
+  file { "${ssl_dir}/certs":
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  file { "${ssl_dir}/private_keys":
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0750',
+  }
+
+  file { "${ssl_dir}/certs/ca.pem":
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "${::settings::ssldir}/certs/ca.pem",
+    before => Class['::puppetboard'],
+  }
+
+  file { "${ssl_dir}/certs/${puppetboard_certname}.pem":
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "${::settings::ssldir}/certs/${puppetboard_certname}.pem",
+    before => Class['::puppetboard'],
+  }
+
+  file { "${ssl_dir}/private_keys/${puppetboard_certname}.pem":
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "${::settings::ssldir}/private_keys/${puppetboard_certname}.pem",
+    before => Class['::puppetboard'],
+  }
+
+  class { '::puppetboard':
+    manage_git         => true,
+    virtualenv_version => '3',
+    manage_virtualenv  => true,
+    reports_count      => 40,
+    puppetdb_host      => 'localhost',
+    puppetdb_port      => 8080,
+  }
+
+  # configure mod_wsgi for python3
+  class { 'apache::mod::wsgi':
+    mod_path           => 'modules/mod_wsgi_python3.6.so',
+    package_name       => 'python36-mod_wsgi',
+    wsgi_socket_prefix => '/var/run/wsgi',
+    require            => Yumrepo['ius'],
+  }
+
+  class { '::puppetboard::apache::vhost':
+    vhost_name => 'localhost',
+    port       => 80,
+  }
 }
 ```
-
-**NOTE** Below are the Yum repos needed for the various packages above.
-         On CentOS you'll need to package `centos-release-scl-rh` or manage
-         the SCL repos with the [bodgit/scl](https://github.com/bodgit/puppet-scl) module.
-
-| OS       | package                | repo                          |
-|----------|------------------------|-------------------------------|
-| RHEL 7   | `python3`              | `rhel-7-server-rpms`          |
-| RHEL 7   | `python3-pip`          | `rhel-7-server-rpms`          |
-| RHEL 7   | `python3-devel`        | `rhel-7-server-optional-rpms` |
-| RHEL 7   | `python36-virtualenv`  | `EPEL`                        |
-| RHEL 7   | `rh-python36-mod_wsgi` | `rhel-server-rhscl-7-rpms`    |
-| CentOS 7 | `python3`              | `base/7`                      |
-| CentOS 7 | `python3-pip`          | `base/7`                      |
-| CentOS 7 | `python3-devel`        | `base/7`                      |
-| CentOS 7 | `python36-virtualenv`  | `EPEL`                        |
-| CentOS 7 | `rh-python36-mod_wsgi` | `centos-sclo-rh`              |
 
 ### Using SSL to the PuppetDB host
 
