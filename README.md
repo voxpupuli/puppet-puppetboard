@@ -22,7 +22,9 @@
       - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
     * [Redhat/CentOS](#redhatcentos)
     * [Apache, RedHat/CentOS and a non-standard port](#apache-redhatcentos-and-a-non-standard-port)
+    * [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)
     * [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
+    * [Using SSL to PuppetDB &gt;= 6.9.1](#using-ssl-to-puppetdb--691)
 1. [Development](#development)
     * [Authors](#authors)
 
@@ -310,7 +312,7 @@ file { '/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so':
 
 class { 'puppetboard':
   # use python3 when setting up the virtualenv for puppetboard
-  virtualenv_python => '3',
+  virtualenv_version => '3',
   # specify other parameters here
 }
 ```
