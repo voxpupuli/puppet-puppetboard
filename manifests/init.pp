@@ -162,7 +162,7 @@
 #    basedir => '/www/puppetboard'
 #  }
 #
-class puppetboard(
+class puppetboard (
   String $user                                                = $puppetboard::params::user,
   Optional[String] $homedir                                   = undef,
   String $group                                               = $puppetboard::params::group,
@@ -199,7 +199,6 @@ class puppetboard(
   Boolean $offline_mode                                       = $puppetboard::params::offline_mode,
   Hash $extra_settings                                        = $puppetboard::params::extra_settings,
 ) inherits puppetboard::params {
-
   if $manage_group {
     group { $group:
       ensure => present,
@@ -245,7 +244,7 @@ class puppetboard(
     require => Vcsrepo["${basedir}/puppetboard"],
   }
 
-  file {"${basedir}/puppetboard/settings.py":
+  file { "${basedir}/puppetboard/settings.py":
     ensure  => 'file',
     group   => $group,
     mode    => '0644',
@@ -282,7 +281,7 @@ class puppetboard(
   }
 
   if $manage_git and !defined(Package['git']) {
-    package {'git':
+    package { 'git':
       ensure => installed,
     }
   }
@@ -298,15 +297,15 @@ class puppetboard(
   }
 
   if $manage_selinux {
-    selboolean {'httpd_can_network_relay' :
+    selboolean { 'httpd_can_network_relay' :
       persistent => true,
       value      => 'on',
     }
-    selboolean {'httpd_can_network_connect' :
+    selboolean { 'httpd_can_network_connect' :
       persistent => true,
       value      => 'on',
     }
-    selboolean {'httpd_can_network_connect_db' :
+    selboolean { 'httpd_can_network_connect_db' :
       persistent => true,
       value      => 'on',
     }

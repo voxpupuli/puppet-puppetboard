@@ -34,7 +34,7 @@ describe 'puppetboard::apache::vhost' do
         end
         it do
           is_expected.to contain_file('puppetboard-ldap.part').with(
-            'ensure' => 'present'
+            'ensure' => 'file'
           )
         end
       end

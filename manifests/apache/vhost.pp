@@ -102,7 +102,6 @@ class puppetboard::apache::vhost (
   Hash $custom_apache_parameters            = {},
   Hash $wsgi_daemon_process_options_extra   = {},
 ) inherits puppetboard::params {
-
   $docroot = "${basedir}/puppetboard"
 
   $wsgi_script_aliases = {
@@ -118,7 +117,7 @@ class puppetboard::apache::vhost (
   $wsgi_daemon_process_options = merge($wsgi_daemon_process_options_default, $wsgi_daemon_process_options_extra)
 
   file { "${docroot}/wsgi.py":
-    ensure  => present,
+    ensure  => file,
     content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
@@ -129,10 +128,10 @@ class puppetboard::apache::vhost (
   }
 
   if $enable_ldap_auth {
-    $ldap_additional_includes = [ "${puppetboard::params::apache_confd}/puppetboard-ldap.part" ]
+    $ldap_additional_includes = ["${puppetboard::params::apache_confd}/puppetboard-ldap.part"]
     $ldap_require = File["${puppetboard::params::apache_confd}/puppetboard-ldap.part"]
     file { 'puppetboard-ldap.part':
-      ensure  => present,
+      ensure  => file,
       path    => "${puppetboard::params::apache_confd}/puppetboard-ldap.part",
       owner   => 'root',
       group   => 'root',
@@ -157,7 +156,7 @@ class puppetboard::apache::vhost (
     wsgi_script_aliases         => $wsgi_script_aliases,
     wsgi_daemon_process_options => $wsgi_daemon_process_options,
     override                    => $override,
-    require                     => [ File["${docroot}/wsgi.py"], $ldap_require ],
+    require                     => [File["${docroot}/wsgi.py"], $ldap_require],
     notify                      => Service[$puppetboard::params::apache_service],
     *                           => $custom_apache_parameters,
   }
