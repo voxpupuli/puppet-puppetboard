@@ -99,10 +99,6 @@
 #   (string) HTTP index server to use for pip/virtualenv.
 #   Defaults to false ($::puppetboard::params::python_index)
 #
-# [*python_use_epel*]
-#   (bool) Whether the Python class will use attempt to manage EPEL or not.
-#   Defaults to undef.
-#
 # [*default_environment*]
 #   (string) set the default environment
 #   Defaults to production ($::puppetboard::params::default_environment
@@ -126,6 +122,8 @@
 # [*virtualenv_version*]
 #   (string) Python version to use in virtualenv.
 #   Defaults to 'system'
+#
+#  @param virtualenv_dir Set location where virtualenv will be installed
 #
 # [*manage_user*]
 #   (bool) If true, manage (create) this group. If false do nothing.
@@ -186,7 +184,6 @@ class puppetboard(
   Puppetboard::Syslogpriority $python_loglevel                = $puppetboard::params::python_loglevel,
   Optional[String] $python_proxy                              = undef,
   Optional[String] $python_index                              = undef,
-  Optional[Boolean] $python_use_epel                          = undef,
   Boolean $experimental                                       = $puppetboard::params::experimental,
   Optional[String] $revision                                  = undef,
   Boolean $manage_selinux                                     = $puppetboard::params::manage_selinux,
@@ -194,13 +191,14 @@ class puppetboard(
   Boolean $manage_group                                       = true,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
-  String[1]  $virtualenv_version                              = $puppetboard::params::virtualenv_version,
+  Pattern[/^3\.\d$/] $python_version                          = $puppetboard::params::python_version,
+  Stdlib::Absolutepath $virtualenv_dir                        = $puppetboard::params::virtualenv_dir,
   Integer $reports_count                                      = $puppetboard::params::reports_count,
   String $default_environment                                 = $puppetboard::params::default_environment,
   String $listen                                              = $puppetboard::params::listen,
   Boolean $offline_mode                                       = $puppetboard::params::offline_mode,
   Hash $extra_settings                                        = $puppetboard::params::extra_settings,
-) inherits ::puppetboard::params {
+) inherits puppetboard::params {
 
   if $manage_group {
     group { $group:
@@ -256,17 +254,19 @@ class puppetboard(
     require => Vcsrepo["${basedir}/puppetboard"],
   }
 
-  python::virtualenv { "${basedir}/virtenv-puppetboard":
-    ensure       => present,
-    version      => $virtualenv_version,
-    requirements => "${basedir}/puppetboard/requirements.txt",
-    systempkgs   => true,
-    distribute   => false,
-    owner        => $user,
-    cwd          => "${basedir}/puppetboard",
-    require      => Vcsrepo["${basedir}/puppetboard"],
-    proxy        => $python_proxy,
-    index        => $python_index,
+  python::pyvenv { $virtualenv_dir:
+    ensure     => present,
+    version    => $python_version,
+    systempkgs => false,
+    owner      => $user,
+    group      => $group,
+    require    => Vcsrepo["${basedir}/puppetboard"],
+  }
+  python::requirements { "${basedir}/puppetboard/requirements.txt":
+    virtualenv => $virtualenv_dir,
+    proxy      => $python_proxy,
+    owner      => $user,
+    group      => $group,
   }
 
   if $listen == 'public' {
@@ -287,12 +287,14 @@ class puppetboard(
     }
   }
 
-  if $manage_virtualenv and !defined(Package[$puppetboard::params::virtualenv]) {
+  if $manage_virtualenv {
     class { 'python':
-      virtualenv => 'present',
-      dev        => 'present',
-      use_epel   => $python_use_epel,
+      virtualenv                => 'present',
+      manage_virtualenv_package => true,
+      version                   => $python_version,
+      dev                       => 'present',
     }
+    Class['python'] -> Class['puppetboard']
   }
 
   if $manage_selinux {

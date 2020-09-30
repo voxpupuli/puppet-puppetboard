@@ -3,4 +3,4 @@
   secure: "Hw0ScFZ+tANSuxXvkQlHOtbnV+9O6FyIxY4e8ZuNiE+4E045olgGjqus+ffo0MoHOHzCPPbThF107yQIXXHCwIy3wzOVIjQ7KQ/yVeamCl4K9A4AFP1Pcr/zMTRdK16zrgxBH+6wDkjSxHGonT8AyUKBrT7AeET+pqxwVHvHCfo="
   docker_sets:
     - set: ubuntu1604-64
-    - set: centos7-64
+    - set: centos7-64{image=centos:7.6.1810}

@@ -8,31 +8,6 @@ describe 'puppetboard class' do
     apache_conf_file = '/etc/apache2/conf-enabled/puppetboard.conf'
   end
 
-  context 'default parameters' do
-    it 'works with no errors' do
-      pp = <<-EOS
-      if $facts['os']['family'] == 'RedHat' {
-        include epel
-      }
-      class { '::puppetboard':
-        manage_git        => true,
-        manage_virtualenv => true,
-      }
-      EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
-    end
-
-    # TODO: get this working
-    # it 'should not answer to localhost' do
-    #  shell("/usr/bin/curl localhost:80", :acceptable_exit_codes => 7) do |r|
-    #    r.exit_code.should == 7 # curl (7): Couldn't connect to host
-    #  end
-    # end
-  end
-
   context 'configuring Apache / mod_wsgi' do
     it 'works with no errors' do
       pp = <<-EOS
@@ -41,19 +16,30 @@ describe 'puppetboard class' do
         default_vhost => false,
         purge_configs => true,
       }
-      if $facts['os']['family'] == 'RedHat' {
-        include epel
-        class { 'apache::mod::wsgi': wsgi_socket_prefix => '/var/run/wsgi' }
-      } else {
-        class { 'apache::mod::wsgi': }
+      $wsgi = $facts['os']['family'] ? {
+        'Debian' => {package_name => "libapache2-mod-wsgi-py3", mod_path => "/usr/lib/apache2/modules/mod_wsgi.so"},
+        default  => {},
+      }
+      class { 'apache::mod::wsgi':
+        * => $wsgi,
+      }
+
+      # Configure PuppetDB
+      class { 'puppetdb':
+        disable_ssl     => true,
+        manage_firewall => false,
       }
 
       # Configure Puppetboard
-      class { 'puppetboard': }
+      class { 'puppetboard':
+        manage_virtualenv => true,
+        manage_git        => true,
+        require           => Class['puppetdb'],
+      }
 
       # Access Puppetboard through pboard.example.com
       class { 'puppetboard::apache::vhost':
-        vhost_name => 'pboard.example.com',
+        vhost_name => 'localhost',
         port       => 80,
       }
       EOS
@@ -66,7 +52,9 @@ describe 'puppetboard class' do
     # rubocop:disable RSpec/MultipleExpectations
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost') do |r|
-        expect(r.stdout).to match(%r{Live from PuppetDB.})
+        # The default puppetboard page returns 404 on empty puppetdb
+        # https://github.com/voxpupuli/puppetboard/issues/515
+        expect(r.stdout).to match(%r{404 Not Found})
         expect(r.exit_code).to be_zero
       end
     end
@@ -76,19 +64,23 @@ describe 'puppetboard class' do
   context 'with SSL' do
     it 'works with no errors' do
       pp = <<-EOS
-      if $facts['os']['family'] == 'RedHat' {
-        include epel
-      }
       # Configure Apache on this server
       class { 'apache': }
       class { 'apache::mod::wsgi': }
       class { 'puppetboard':
         manage_virtualenv => true,
+        manage_git => true,
         puppetdb_host => 'puppet.example.com',
         puppetdb_port => 8081,
         puppetdb_key  => '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem',
         puppetdb_ssl_verify => true,
         puppetdb_cert => '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem',
+        require => Class['puppetdb'],
+      }
+      # Configure PuppetDB
+      class { 'puppetdb':
+        disable_ssl => true,
+        manage_firewall => false,
       }
       EOS
 
@@ -106,26 +98,30 @@ describe 'puppetboard class' do
   context 'LDAP auth' do
     it 'works with no errors' do
       pp = <<-EOS
-      if $facts['os']['family'] == 'RedHat' {
-        include epel
-      }
       # Configure Apache on this server
       class { 'apache': }
       class { 'apache::mod::wsgi': }
       class { 'apache::mod::authnz_ldap': }
       -> class { 'puppetboard':
         manage_virtualenv => true,
+        manage_git => true,
         puppetdb_host => 'puppet.example.com',
         puppetdb_port => 8081,
         puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
         puppetdb_ssl_verify => true,
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
+        require => Class['puppetdb'],
       }
       class { 'puppetboard::apache::conf':
         enable_ldap_auth => true,
         ldap_bind_dn => 'cn=user,dc=puppet,dc=example,dc=com',
         ldap_bind_password => 'password',
         ldap_url     => 'ldap://puppet.example.com',
+      }
+      # Configure PuppetDB
+      class { 'puppetdb':
+        disable_ssl => true,
+        manage_firewall => false,
       }
       EOS
 
@@ -148,20 +144,19 @@ describe 'puppetboard class' do
   context 'AUTH ldap-group' do
     it 'works with no errors' do
       pp = <<-EOS
-      if $facts['os']['family'] == 'RedHat' {
-        include epel
-      }
       # Configure Apache on this server
       class { 'apache': }
       class { 'apache::mod::wsgi': }
       class { 'apache::mod::authnz_ldap': }
       -> class { 'puppetboard':
         manage_virtualenv => true,
+        manage_git => true,
         puppetdb_host => 'puppet.example.com',
         puppetdb_port => 8081,
         puppetdb_key  => "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem",
         puppetdb_ssl_verify => true,
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
+        require => Class['puppetdb'],
       }
       class { 'puppetboard::apache::conf':
         enable_ldap_auth => true,
@@ -170,6 +165,11 @@ describe 'puppetboard class' do
         ldap_url     => 'ldap://puppet.example.com',
         ldap_require_group => true,
         ldap_require_group_dn => 'cn=admins,=cn=groups,dc=puppet,dc=example,dc=com',
+      }
+      # Configure PuppetDB
+      class { 'puppetdb':
+        disable_ssl => true,
+        manage_firewall => false,
       }
       EOS
 
