@@ -44,16 +44,10 @@ https://github.com/voxpupuli/puppetboard
     puppet module install puppet-puppetboard
 
 ### Dependencies
-Note Oracle linux 5 on puppet versions 4.6.0 to 4.7.1 has pip package problem
-which will cause an error trying to install puppetboard.
 
 Note that this module no longer explicitly requires the puppetlabs apache module. If you want to use the apache functionality of this module you will have to specify that the apache module is installed with:
 
     puppet module install puppetlabs-apache
-
-On RedHat type systems, EPEL may also need to be configured; you can use the
-[puppet/epel](https://forge.puppet.com/puppet/epel) module if you don't
-already have it configured.
 
 This module also requires the ``git`` and ``virtualenv`` packages. These can be enabled in the module by:
 
@@ -63,7 +57,6 @@ class { 'puppetboard':
   manage_git        => true,
   manage_virtualenv => true,
 }
-
 ```
 
 or by:
@@ -73,8 +66,9 @@ class { 'puppetboard':
   manage_git        => 'latest',
   manage_virtualenv => 'latest',
 }
-
 ```
+
+If the virtualenv is managed by this module, the [voxpupuli/python](https://forge.puppet.com/puppet/python#puppet-python) will be used. That module uses [voxpupuli/epel](https://forge.puppet.com/puppet/epel#configure-epel-extra-repository-for-enterprise-linux) on RHEL based platforms.
 
 ## Usage
 
@@ -153,18 +147,32 @@ The first, `puppetboard::apache::vhost`, will use the `apache::vhost`
 defined-type to create a full virtual host. This is useful if you want
 puppetboard to be available from http://pboard.example.com:
 
-```puppet
+(The following is generic code used in our tests, it works on Debian 9 and 10, also on Ubuntu 16.04 and 18.04. It will talk to PuppetDB on localhost via http)
 
+```puppet
 # Configure Apache on this server
-class { 'apache': }
-class { 'apache::mod::wsgi': }
+class { 'apache':
+  default_vhost => false,
+  purge_configs => true,
+}
+$wsgi = $facts['os']['family'] ? {
+  'Debian' => {package_name => "libapache2-mod-wsgi-py3", mod_path => "/usr/lib/apache2/modules/mod_wsgi.so"},
+  default  => {},
+}
+class { 'apache::mod::wsgi':
+  * => $wsgi,
+}
 
 # Configure Puppetboard
-class { 'puppetboard': }
+class { 'puppetboard':
+  manage_virtualenv => true,
+  manage_git        => true,
+  require           => Class['puppetdb'],
+}
 
 # Access Puppetboard through pboard.example.com
 class { 'puppetboard::apache::vhost':
-  vhost_name => 'pboard.example.com',
+  vhost_name => 'localhost',
   port       => 80,
 }
 ```
@@ -232,107 +240,13 @@ apache::vhost { 'example.acme':
 }
 ```
 
-### Redhat/CentOS
-
-RedHat/CentOS has restrictions on the /etc/apache directory that require wsgi to be configured to use /var/run.
-
-```puppet
-
-  class { 'apache::mod::wsgi':
-    wsgi_socket_prefix => "/var/run/wsgi",
-  }
-
-```
-
-### Apache, RedHat/CentOS and a non-standard port
-
-
-```puppet
-
-# Configure Apache on this server
-class { 'apache': }
-class { 'apache::mod::version': }
-class { 'apache::mod::wsgi':
-  wsgi_socket_prefix => "/var/run/wsgi",
-}
-
-# Configure Puppetboard
-class { 'puppetboard': }
-
-# Access Puppetboard through pboard.example.com, port 8888
-class { 'puppetboard::apache::vhost':
-  vhost_name => 'puppetboard.example.com',
-  port => '8888',
-}
-```
-
 ### RedHat/CentOS 7 with Python 3
 
-If you want to use the latest version of Puppet Board you'll need to run Python 3.6+.
-
-By default RHEL 7 has Python 2.7 installed, so you'll need to install a Python 3 and
-the compatible version of `mod_wsgi` (the `mod_wsgi` module must be compiled to support
-the specific version of Python you're running).
-
-
-``` puppet
-$mod_wsgi_package_name = 'rh-python36-mod_wsgi'
-
-package { ['python3', 'python3-pip', 'python3-devel', 'python36-virtualenv']:
-  ensure => present,
-}
-
-# configure apache
-class { 'apache':
-  purge_configs => false,
-  mpm_module    => 'prefork',
-  default_vhost => false,
-  default_mods  => false,
-}
-
-# configure mod_wsgi for python3
-class { 'apache::mod::wsgi':
-  mod_path           => 'modules/mod_rh-python36-wsgi.so',
-  package_name       => $mod_wsgi_package_name,
-  wsgi_socket_prefix => '/var/run/wsgi',
-}
-
-# create symlinks from the isolated Red Hat directory into the
-# standard Apache paths so that it can pick up the module and config
-file { '/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf':
-  ensure  => 'link',
-  target  => '/opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf',
-  require => Package[$mod_wsgi_package_name],
-}
-file { '/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so':
-  ensure  => 'link',
-  target  => '/opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so',
-  require => Package[$mod_wsgi_package_name],
-}
-
-class { 'puppetboard':
-  # use python3 when setting up the virtualenv for puppetboard
-  virtualenv_version => '3',
-  # specify other parameters here
-}
-```
-
-**NOTE** Below are the Yum repos needed for the various packages above.
-         On CentOS you'll need to package `centos-release-scl-rh` or manage
-         the SCL repos with the [bodgit/scl](https://github.com/bodgit/puppet-scl) module.
-
-| OS       | package                | repo                          |
-|----------|------------------------|-------------------------------|
-| RHEL 7   | `python3`              | `rhel-7-server-rpms`          |
-| RHEL 7   | `python3-pip`          | `rhel-7-server-rpms`          |
-| RHEL 7   | `python3-devel`        | `rhel-7-server-optional-rpms` |
-| RHEL 7   | `python36-virtualenv`  | `EPEL`                        |
-| RHEL 7   | `rh-python36-mod_wsgi` | `rhel-server-rhscl-7-rpms`    |
-| CentOS 7 | `python3`              | `base/7`                      |
-| CentOS 7 | `python3-pip`          | `base/7`                      |
-| CentOS 7 | `python3-devel`        | `base/7`                      |
-| CentOS 7 | `python36-virtualenv`  | `EPEL`                        |
-| CentOS 7 | `rh-python36-mod_wsgi` | `centos-sclo-rh`              |
+CentOS/RedHat 7 is pretty old. Python 3 got added after the initial release and
+a lot of packages are missing. For example python3.6 is available as a package,
+but no matching wsgi module for apache is available. Because of that, we don't
+test on CentOS 7 anymore. However, it's still possible to setup Puppetboard on
+CentOS with gunicorn as a webserver and nginx/apache forwarding to it.
 
 ### Using SSL to the PuppetDB host
 
@@ -455,7 +369,7 @@ puppet resource service puppetserver ensure=running
 
 ## Development
 
-This module is maintained by [Vox Pupuli](https://voxpupuli.org/). Voxpupuli
+This module is maintained by [Vox Pupuli](https://voxpupuli.org/). Vox Pupuli
 welcomes new contributions to this module, especially those that include
 documentation and rspec tests. We are happy to provide guidance if necessary.
 
@@ -465,5 +379,5 @@ Please log tickets and issues on github.
 
 ### Authors
 * Spencer Krum <krum.spencer@gmail.com>
-* Voxpupuli Team
+* Vox Pupuli Team
 * The core of this module was based on Hunter Haugen's puppetboard-vagrant repo.
