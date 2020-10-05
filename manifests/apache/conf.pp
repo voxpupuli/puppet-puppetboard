@@ -10,7 +10,8 @@
 # @param ldap_bind_dn LDAP Bind DN
 # @param ldap_bind_password LDAP password
 # @param ldap_url LDAP connection string
-# @param ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
+# @param
+#  ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
 # @param ldap_require_group LDAP group to require on login
 # @param ldap_require_group_dn LDAP group DN for LDAP group
 #
