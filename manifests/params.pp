@@ -5,7 +5,6 @@
 # Inherited by Class['puppetboard'].
 #
 class puppetboard::params {
-
   case $facts['os']['family'] {
     'Debian': {
       $apache_confd = '/etc/apache2/conf-enabled'

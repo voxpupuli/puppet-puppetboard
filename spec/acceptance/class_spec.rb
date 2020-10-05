@@ -48,8 +48,6 @@ describe 'puppetboard class' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_failures: true)
     end
-
-    # rubocop:disable RSpec/MultipleExpectations
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost') do |r|
         # The default puppetboard page returns 404 on empty puppetdb

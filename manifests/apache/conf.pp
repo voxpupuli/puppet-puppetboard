@@ -81,11 +81,10 @@ class puppetboard::apache::conf (
   Boolean $ldap_require_group               = $puppetboard::params::ldap_require_group,
   Optional[String] $ldap_require_group_dn   = undef,
 ) inherits ::puppetboard::params {
-
   $docroot = "${basedir}/puppetboard"
 
   file { "${docroot}/wsgi.py":
-    ensure  => present,
+    ensure  => file,
     content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
@@ -96,7 +95,7 @@ class puppetboard::apache::conf (
   }
 
   file { "${puppetboard::params::apache_confd}/puppetboard.conf":
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     content => template('puppetboard/apache/conf.erb'),
