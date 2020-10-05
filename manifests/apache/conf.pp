@@ -86,7 +86,7 @@ class puppetboard::apache::conf (
 
   file { "${docroot}/wsgi.py":
     ensure  => present,
-    content => template('puppetboard/wsgi.py.erb'),
+    content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
     require => [

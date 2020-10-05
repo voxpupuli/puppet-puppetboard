@@ -81,14 +81,14 @@
 #   No default
 class puppetboard::apache::vhost (
   String $vhost_name,
-  String $wsgi_alias                        = '/',
-  Integer $port                             = 5000,
+  Stdlib::Unixpath $wsgi_alias              = '/',
+  Stdlib::Port $port                        = 5000,
   Boolean $ssl                              = false,
   Optional[Stdlib::AbsolutePath] $ssl_cert  = undef,
   Optional[Stdlib::AbsolutePath] $ssl_key   = undef,
-  Integer $threads                          = 5,
-  String $user                              = $puppetboard::params::user,
-  String $group                             = $puppetboard::params::group,
+  Integer[1] $threads                       = 5,
+  String[1] $user                           = $puppetboard::params::user,
+  String[1] $group                          = $puppetboard::params::group,
   Stdlib::AbsolutePath $basedir             = $puppetboard::params::basedir,
   String $override                          = $puppetboard::params::apache_override,
   Boolean $enable_ldap_auth                 = $puppetboard::params::enable_ldap_auth,
@@ -98,8 +98,10 @@ class puppetboard::apache::vhost (
   Optional[String] $ldap_bind_authoritative = undef,
   Boolean $ldap_require_group               = $puppetboard::params::ldap_require_group,
   Optional[String] $ldap_require_group_dn   = undef,
+  Stdlib::Absolutepath $virtualenv_dir      = $puppetboard::params::virtualenv_dir,
   Hash $custom_apache_parameters            = {},
-) inherits ::puppetboard::params {
+  Hash $wsgi_daemon_process_options_extra   = {},
+) inherits puppetboard::params {
 
   $docroot = "${basedir}/puppetboard"
 
@@ -107,15 +109,17 @@ class puppetboard::apache::vhost (
     "${wsgi_alias}" => "${docroot}/wsgi.py",
   }
 
-  $wsgi_daemon_process_options = {
-    threads => $threads,
-    group   => $group,
-    user    => $user,
+  $wsgi_daemon_process_options_default = {
+    threads     => $threads,
+    group       => $group,
+    user        => $user,
+    python-home => $virtualenv_dir,
   }
+  $wsgi_daemon_process_options = merge($wsgi_daemon_process_options_default, $wsgi_daemon_process_options_extra)
 
   file { "${docroot}/wsgi.py":
     ensure  => present,
-    content => template('puppetboard/wsgi.py.erb'),
+    content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
     require => [
