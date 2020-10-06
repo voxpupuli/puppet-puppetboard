@@ -1,155 +1,48 @@
-# == Class: puppetboard
+# @summary Base class for Puppetboard. Sets up the user and python environment.
 #
-# Base class for Puppetboard.
-# Sets up the user and python environment.
+# @param user Puppetboard system user.
+# @param homedir Puppetboard system user's home directory.
+# @param group Puppetboard system group.
+# @param groups additional groups for the user that runs puppetboard
+# @param basedir Base directory where to build puppetboard vcsrepo and python virtualenv.
+# @param git_source Location of upstream Puppetboard GIT repository
+# @param puppetdb_host PuppetDB Host
+# @param puppetdb_port PuppetDB Port
+# @param puppetdb_key path to PuppetMaster/CA signed client SSL key
+# @param puppetdb_ssl_verify whether PuppetDB uses SSL or not (true or false), or the path to the puppet CA
+# @param puppetdb_cert path to PuppetMaster/CA signed client SSL cert
+# @param puppetdb_timeout timeout, in seconds, for connecting to PuppetDB
+# @param dev_listen_host host that dev server binds to/listens on
+# @param dev_listen_port port that dev server binds to/listens on
+# @param unresponsive number of hours after which a node is considered "unresponsive"
+# @param enable_catalog Whether to allow the user to browser catalog comparisons.
+# @param enable_query Whether to allow the user to run raw queries against PuppetDB.
+# @param offline_mode Weather to load static assents (jquery, semantic-ui, tablesorter, etc)
+# @param localise_timestamp Whether to localise the timestamps in the UI.
+# @param python_loglevel Python logging module log level.
+# @param python_proxy HTTP proxy server to use for pip/virtualenv.
+# @param python_index HTTP index server to use for pip/virtualenv.
+# @param default_environment set the default environment
+# @param experimental Enable experimental features.
+# @param revision Commit, tag, or branch from Puppetboard's Git repo to be used
+# @param manage_git If true, require the git package. If false do nothing.
+# @param manage_virtualenv If true, require the virtualenv package. If false do nothing.
+# @param python_version Python version to use in virtualenv.
+# @param virtualenv_dir Set location where virtualenv will be installed
+# @param manage_user If true, manage (create) this group. If false do nothing.
+# @param manage_group If true, manage (create) this group. If false do nothing.
+# @param manage_selinux If true, manage selinux policies for puppetboard. If false do nothing.
+# @param reports_count This is the number of reports that we want the dashboard to display.
+# @param listen If set to 'public' puppetboard will listen on all interfaces
+# @param extra_settings Defaults to an empty hash '{}'. Used to pass in arbitrary key/value
+# @param override Sets the Apache AllowOverride value
+# @param enable_ldap_auth Whether to enable LDAP auth
+# @param ldap_require_group LDAP group to require on login
+# @param apache_confd path to the apache2 vhost directory
+# @param apache_service name of the apache2 service
 #
-# You should also use one of the apache classes as well.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*user*]
-#   (string) Puppetboard system user.
-#   Defaults to 'puppetboard' ($::puppetboard::params::user)
-#
-# [*homedir*]
-#   (string) Puppetboard system user's home directory.
-#   Defaults to undef, which will make the default home directory /home/$user
-#
-# [*group*]
-#   (string) Puppetboard system group.
-#   Defaults to 'puppetboard' ($::puppetboard::params::group)
-#
-# [*groups*]
-#   (string) The groups to which the user belongs. The primary group should
-#   not be listed, and groups should be identified by name rather than by GID.
-#   Multiple groups should be specified as an array.
-#   Defaults to undef ($::puppetboard::params::groups)
-#
-# [*basedir*]
-#   (string, absolute path) Base directory where to build puppetboard vcsrepo and python virtualenv.
-#   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
-#
-# [*git_source*]
-#   (string) Location of upstream Puppetboard GIT repository
-#   Defaults to 'https://github.com/voxpupuli/puppetboard' ($::puppetboard::params::git_source)
-#
-# [*puppetdb_host*]
-#   (string) PuppetDB Host
-#   Defaults to 'localhost' ($::puppetboard::params::puppetdb_host)
-#
-# [*puppetdb_port*]
-#   (int) PuppetDB Port
-#   Defaults to 8080 ($::puppetboard::params::puppetdb_port)
-#
-# [*puppetdb_key*]
-#   (string, absolute path) path to PuppetMaster/CA signed client SSL key
-#   Defaults to 'None' ($::puppetboard::params::puppetdb_key)
-#
-# [*puppetdb_ssl_verify*]
-#   (bool, string) whether PuppetDB uses SSL or not (true or false), or the path to the puppet CA
-#   Defaults to false ($::puppetboard::params::puppetdb_ssl_verify)
-#
-# [*puppetdb_cert*]
-#   (string, absolute path) path to PuppetMaster/CA signed client SSL cert
-#   Defaults to 'None' ($::puppetboard::params::puppetdb_cert)
-#
-# [*puppetdb_timeout*]
-#   (int) timeout, in seconds, for connecting to PuppetDB
-#   Defaults to 20 ($::puppetboard::params::puppetdb_timeout)
-#
-# [*dev_listen_host*]
-#   (string) host that dev server binds to/listens on
-#   Defaults to '127.0.0.1' ($::puppetboard::params::dev_listen_host)
-#
-# [*dev_listen_port*]
-#   (int) port that dev server binds to/listens on
-#   Defaults to 5000 ($::puppetboard::params::dev_listen_port)
-#
-# [*unresponsive*]
-#   (int) number of hours after which a node is considered "unresponsive"
-#   Defaults to 3 ($::puppetboard::params::unresponsive)
-#
-# [*enable_catalog*]
-#   (bool) Whether to allow the user to browser catalog comparisons.
-#   Defaults to 'False' ($::puppetboard::params::enable_catalog)
-#
-# [*enable_query*]
-#   (bool) Whether to allow the user to run raw queries against PuppetDB.
-#   Defaults to 'True' ($::puppetboard::params::enable_query)
-#
-# [*offline_mode*]
-#   (bool) Weather to load static assents (jquery, semantic-ui, tablesorter, etc)
-#   Defaults to 'False' ($::puppetboard::params::offline_mode
-#
-# [*localise_timestamp*]
-#   (bool) Whether to localise the timestamps in the UI.
-#   Defaults to 'True' ($::puppetboard::params::localise_timestamp)
-#
-# [*python_loglevel*]
-#   (string) Python logging module log level.
-#   Defaults to 'info' ($::puppetboard::params::python_loglevel)
-#
-# [*python_proxy*]
-#   (string) HTTP proxy server to use for pip/virtualenv.
-#   Defaults to false ($::puppetboard::params::python_proxy)
-#
-# [*python_index*]
-#   (string) HTTP index server to use for pip/virtualenv.
-#   Defaults to false ($::puppetboard::params::python_index)
-#
-# [*default_environment*]
-#   (string) set the default environment
-#   Defaults to production ($::puppetboard::params::default_environment
-#
-# [*experimental*]
-#   (bool) Enable experimental features.
-#   Defaults to false ($::puppetboard::params::experimental)
-#
-# [*revision*]
-#   (string) Commit, tag, or branch from Puppetboard's Git repo to be used
-#   Defaults to undef, meaning latest commit will be used ($::puppetboard::params::revision)
-#
-# [*manage_git*]
-#   (bool) If true, require the git package. If false do nothing.
-#   Defaults to false
-#
-# [*manage_virtualenv*]
-#   (bool) If true, require the virtualenv package. If false do nothing.
-#   Defaults to false
-#
-# [*virtualenv_version*]
-#   (string) Python version to use in virtualenv.
-#   Defaults to 'system'
-#
-#  @param virtualenv_dir Set location where virtualenv will be installed
-#
-# [*manage_user*]
-#   (bool) If true, manage (create) this group. If false do nothing.
-#   Defaults to true
-#
-# [*manage_group*]
-#   (bool) If true, manage (create) this group. If false do nothing.
-#   Defaults to true
-#
-# [*manage_selinux*]
-#   (bool) If true, manage selinux policies for puppetboard. If false do nothing.
-#   Defaults to true if selinux is enabled
-#
-# [*reports_count*]
-#   (int) This is the number of reports that we want the dashboard to display.
-#   Defaults to 10
-#
-# [*listen*]
-#   (string) Defaults to 'private' If set to 'public' puppetboard will listen
-#   on 0.0.0.0; otherwise it will only be accessible via localhost.
-#
-# [*extra_settings*]
-#   (hash) Defaults to an empty hash '{}'. Used to pass in arbitrary key/value
-#   pairs that are added to settings.py
-#
-# === Examples
+# @example
+#   configure puppetboard with an apache config for a subpath (http://$fqdn/puppetboard)
 #
 #  class { 'puppetboard':
 #    user  => 'pboard',
@@ -163,28 +56,28 @@
 #  }
 #
 class puppetboard (
-  String $user                                                = $puppetboard::params::user,
-  Optional[String] $homedir                                   = undef,
-  String $group                                               = $puppetboard::params::group,
-  Optional[Variant[String, Array[String]]] $groups            = undef,
-  Stdlib::AbsolutePath $basedir                               = $puppetboard::params::basedir,
-  String $git_source                                          = $puppetboard::params::git_source,
-  String $dev_listen_host                                     = $puppetboard::params::dev_listen_host,
-  Integer $dev_listen_port                                    = $puppetboard::params::dev_listen_port,
-  String $puppetdb_host                                       = $puppetboard::params::puppetdb_host,
-  Integer $puppetdb_port                                      = $puppetboard::params::puppetdb_port,
+  String $user                                                = 'puppetboard',
+  Optional[Stdlib::Absolutepath] $homedir                     = undef,
+  String $group                                               = 'puppetboard',
+  Optional[Variant[String[1], Array[String[1]]]] $groups      = undef,
+  Stdlib::AbsolutePath $basedir                               = '/srv/puppetboard',
+  String $git_source                                          = 'https://github.com/voxpupuli/puppetboard',
+  String $dev_listen_host                                     = '127.0.0.1',
+  Stdlib::Port $dev_listen_port                               = 5000,
+  String $puppetdb_host                                       = '127.0.0.1',
+  Stdlib::Port $puppetdb_port                                 = 8080,
   Optional[Stdlib::AbsolutePath] $puppetdb_key                = undef,
-  Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = $puppetboard::params::puppetdb_ssl_verify,
+  Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = false,
   Optional[Stdlib::AbsolutePath] $puppetdb_cert               = undef,
-  Integer $puppetdb_timeout                                   = $puppetboard::params::puppetdb_timeout,
-  Integer $unresponsive                                       = $puppetboard::params::unresponsive,
-  Boolean $enable_catalog                                     = $puppetboard::params::enable_catalog,
-  Boolean $enable_query                                       = $puppetboard::params::enable_query,
-  Boolean $localise_timestamp                                 = $puppetboard::params::localise_timestamp,
-  Puppetboard::Syslogpriority $python_loglevel                = $puppetboard::params::python_loglevel,
-  Optional[String] $python_proxy                              = undef,
-  Optional[String] $python_index                              = undef,
-  Boolean $experimental                                       = $puppetboard::params::experimental,
+  Integer[0] $puppetdb_timeout                                = 20,
+  Integer[0] $unresponsive                                    = 0,
+  Boolean $enable_catalog                                     = false,
+  Boolean $enable_query                                       = true,
+  Boolean $localise_timestamp                                 = true,
+  Puppetboard::Syslogpriority $python_loglevel                = 'info',
+  Optional[String[1]] $python_proxy                           = undef,
+  Optional[String[1]] $python_index                           = undef,
+  Boolean $experimental                                       = false,
   Optional[String] $revision                                  = undef,
   Boolean $manage_selinux                                     = $puppetboard::params::manage_selinux,
   Boolean $manage_user                                        = true,
@@ -192,12 +85,17 @@ class puppetboard (
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
   Pattern[/^3\.\d$/] $python_version                          = $puppetboard::params::python_version,
-  Stdlib::Absolutepath $virtualenv_dir                        = $puppetboard::params::virtualenv_dir,
-  Integer $reports_count                                      = $puppetboard::params::reports_count,
-  String $default_environment                                 = $puppetboard::params::default_environment,
-  String $listen                                              = $puppetboard::params::listen,
-  Boolean $offline_mode                                       = $puppetboard::params::offline_mode,
-  Hash $extra_settings                                        = $puppetboard::params::extra_settings,
+  Stdlib::Absolutepath $virtualenv_dir                        = "${basedir}/virtenv-puppetboard",
+  Integer[0] $reports_count                                   = 10,
+  String[1] $default_environment                              = 'production',
+  Enum['public', 'private'] $listen                           = 'private',
+  Boolean $offline_mode                                       = false,
+  Hash $extra_settings                                        = {},
+  String[1] $override                                         = 'None',
+  Boolean $enable_ldap_auth                                   = false,
+  Boolean $ldap_require_group                                 = false,
+  Stdlib::Absolutepath $apache_confd                          = $puppetboard::params::apache_confd,
+  String[1] $apache_service                                   = $puppetboard::params::apache_service,
 ) inherits puppetboard::params {
   if $manage_group {
     group { $group:

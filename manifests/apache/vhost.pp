@@ -1,111 +1,47 @@
-# == Class: puppetboard::apache::vhost
+# @summary Sets up an apache::vhost to run PuppetBoard, and writes an appropriate wsgi.py from template
 #
-# Sets up an apache::vhost to run PuppetBoard,
-# and writes an appropriate wsgi.py from template.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*vhost_name*]
-#   (string) The vhost ServerName.
-#   No default.
-#
-# [*wsgi_alias*]
-#   (string) WSGI script alias source
-#   Default: '/'
-#
-# [*port*]
-#   (int) Port for the vhost to listen on.
-#   Defaults to 5000.
-#
-# [*ssl*]
-#   (bool) If vhost should be configured with ssl
-#   Defaults to false
-#
-# [*ssl_cert*]
-#   (string, absolute path) Path to server SSL cert
-#   No default.
-#
-# [*ssl_key*]
-#   (string, absolute path) Path to server SSL key
-#   No default.
-#
-# [*ssl_chain*]
-#   (string, absolute path) Path to server CA Chain file
-#   No default.
-#
-# [*threads*]
-#   (int) Number of WSGI threads to use.
-#   Defaults to 5
-#
-# [*user*]
-#   (string) WSGI daemon process user, and daemon process name
-#   Defaults to 'puppetboard' ($::puppetboard::params::user)
-#
-# [*group*]
-#   (int) WSGI daemon process group owner, and daemon process group
-#   Defaults to 'puppetboard' ($::puppetboard::params::group)
-#
-# [*basedir*]
-#   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
-#   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
-#
-# [*override*]
-#   (string) Sets the Apache AllowOverride value
-#   Defaults to 'None' ($::puppetboard::params::apache_override)
-#
-# [*enable_ldap_auth]
-#   (bool) Whether to enable LDAP auth
-#   Defaults to False ($::puppetboard::params::enable_ldap_auth)
-#
-# [*ldap_bind_dn]
-#   (string) LDAP Bind DN
-#   No default ($::puppetboard::params::ldap_bind_dn)
-#
-# [*ldap_bind_password]
-#   (string) LDAP password
-#   No default ($::puppetboard::params::ldap_bind_password)
-#
-# [*ldap_url]
-#   (string) LDAP connection string
-#   No default ($::puppetboard::params::ldap_url)
-#
-# [*ldap_bind_authoritative]
-#   (string) Determines if other authentication providers are used
-#            when a user can be mapped to a DN but the server cannot bind with the credentials
-#   No default ($::puppetboard::params::ldap_bind_authoritative)
-#
-# [*ldap_require_group]
-#   (bool) LDAP group to require on login
-#   Default to False ($::puppetboard::params::ldap_require_group)
-#
-# [*$ldap_require_group_dn]
-#   (string) LDAP group DN for LDAP group
-#   No default
+# @param vhost_name The vhost ServerName.
+# @param wsgi_alias WSGI script alias source
+# @param port Port for the vhost to listen on.
+# @param ssl If vhost should be configured with ssl
+# @param ssl_cert Path to server SSL cert
+# @param ssl_key Path to server SSL key
+# @param ssl_chain Path to server CA Chain file
+# @param threads Number of WSGI threads to use.
+# @param user WSGI daemon process user, and daemon process name
+# @param group WSGI daemon process group owner, and daemon process group
+# @param basedir Base directory where to build puppetboard vcsrepo and python virtualenv.
+# @param override Sets the Apache AllowOverride value
+# @param enable_ldap_auth Whether to enable LDAP auth
+# @param ldap_bind_dn LDAP Bind DN
+# @param ldap_bind_password LDAP password
+# @param ldap_url LDAP connection string
+# @param ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
+# @param ldap_require_group LDAP group to require on login
+# @param ldap_require_group_dn LDAP group DN for LDAP group
 class puppetboard::apache::vhost (
-  String $vhost_name,
-  Stdlib::Unixpath $wsgi_alias              = '/',
-  Stdlib::Port $port                        = 5000,
-  Boolean $ssl                              = false,
-  Optional[Stdlib::AbsolutePath] $ssl_cert  = undef,
-  Optional[Stdlib::AbsolutePath] $ssl_key   = undef,
-  Optional[Stdlib::AbsolutePath] $ssl_chain = undef,
-  Integer[1] $threads                       = 5,
-  String[1] $user                           = $puppetboard::params::user,
-  String[1] $group                          = $puppetboard::params::group,
-  Stdlib::AbsolutePath $basedir             = $puppetboard::params::basedir,
-  String $override                          = $puppetboard::params::apache_override,
-  Boolean $enable_ldap_auth                 = $puppetboard::params::enable_ldap_auth,
-  Optional[String] $ldap_bind_dn            = undef,
-  Optional[String] $ldap_bind_password      = undef,
-  Optional[String] $ldap_url                = undef,
-  Optional[String] $ldap_bind_authoritative = undef,
-  Boolean $ldap_require_group               = $puppetboard::params::ldap_require_group,
-  Optional[String] $ldap_require_group_dn   = undef,
-  Stdlib::Absolutepath $virtualenv_dir      = $puppetboard::params::virtualenv_dir,
-  Hash $custom_apache_parameters            = {},
-) inherits puppetboard::params {
+  String[1] $vhost_name,
+  Stdlib::Unixpath $wsgi_alias                 = '/',
+  Stdlib::Port $port                           = 5000,
+  Boolean $ssl                                 = false,
+  Optional[Stdlib::AbsolutePath] $ssl_cert     = undef,
+  Optional[Stdlib::AbsolutePath] $ssl_key      = undef,
+  Optional[Stdlib::AbsolutePath] $ssl_chain    = undef,
+  Integer[1] $threads                          = 5,
+  String[1] $user                              = $puppetboard::user,
+  String[1] $group                             = $puppetboard::group,
+  Stdlib::AbsolutePath $basedir                = $puppetboard::basedir,
+  String[1] $override                          = $puppetboard::apache_override,
+  Boolean $enable_ldap_auth                    = $puppetboard::enable_ldap_auth,
+  Optional[String[1]] $ldap_bind_dn            = undef,
+  Optional[String[1]] $ldap_bind_password      = undef,
+  Optional[String[1]] $ldap_url                = undef,
+  Optional[String[1]] $ldap_bind_authoritative = undef,
+  Boolean $ldap_require_group                  = $puppetboard::ldap_require_group,
+  Optional[String[1]] $ldap_require_group_dn   = undef,
+  Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
+  Hash $custom_apache_parameters               = {},
+) inherits puppetboard {
   $docroot = "${basedir}/puppetboard"
 
   $wsgi_script_aliases = {
@@ -149,7 +85,7 @@ class puppetboard::apache::vhost (
     $ldap_additional_includes = undef
     $ldap_require = undef
   }
-  ::apache::vhost { $vhost_name:
+  apache::vhost { $vhost_name:
     port                => $port,
     docroot             => $docroot,
     ssl                 => $ssl,

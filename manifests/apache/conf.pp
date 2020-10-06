@@ -1,86 +1,38 @@
-# == Class: puppetboard::apache::conf
+# @summary Creates an entry in your apache configuration directory to run PuppetBoard server-wide (i.e. not in a vhost).
 #
-# Creates an entry in your apache configuration directory
-# to run PuppetBoard server-wide (i.e. not in a vhost).
+# @param wsgi_alias WSGI script alias source
+# @param threads Number of WSGI threads to use
+# @param max_reqs Limit on number of requests allowed to daemon process Defaults to 0 (no limit)
+# @param user WSGI daemon process user, and daemon process name
+# @param group WSGI daemon process group owner, and daemon process group
+# @param basedir Base directory where to build puppetboard vcsrepo and python virtualenv.
+# @param enable_ldap_auth Whether to enable LDAP auth
+# @param ldap_bind_dn LDAP Bind DN
+# @param ldap_bind_password LDAP password
+# @param ldap_url LDAP connection string
+# @param
+#  ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
+# @param ldap_require_group LDAP group to require on login
+# @param ldap_require_group_dn LDAP group DN for LDAP group
 #
-# === Parameters
-#
-# Document parameters here.
-#
-# [*wsgi_alias*]
-#   (string) WSGI script alias source
-#   Default: '/puppetboard'
-#
-# [*threads*]
-#   (int) Number of WSGI threads to use.
-#   Defaults to 5
-#
-# [*max_reqs*]
-#   (int) Limit on number of requests allowed to daemon process
-#   Defaults to 0 (no limit)
-#
-# [*user*]
-#   (string) WSGI daemon process user, and daemon process name
-#   Defaults to 'puppetboard' ($::puppetboard::params::user)
-#
-# [*group*]
-#   (int) WSGI daemon process group owner, and daemon process group
-#   Defaults to 'puppetboard' ($::puppetboard::params::group)
-#
-# [*basedir*]
-#   (string) Base directory where to build puppetboard vcsrepo and python virtualenv.
-#   Defaults to '/srv/puppetboard' ($::puppetboard::params::basedir)
-#
-# [*enable_ldap_auth]
-#   (bool) Whether to enable LDAP auth
-#   Defaults to False ($::puppetboard::params::enable_ldap_auth)
-#
-# [*ldap_bind_dn]
-#   (string) LDAP Bind DN
-#   No default ($::puppetboard::params::ldap_bind_dn)
-#
-# [*ldap_bind_password]
-#   (string) LDAP password
-#   No default ($::puppetboard::params::ldap_bind_password)
-#
-# [*ldap_url]
-#   (string) LDAP connection string
-#   No default ($::puppetboard::params::ldap_url)
-#
-# [*ldap_bind_authoritative]
-#   (string) Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
-#   No default ($::puppetboard::params::ldap_bind_authoritative)
-#
-# [*ldap_require_group]
-#   (bool) LDAP group to require on login
-#   Default to False ($::puppetboard::params::ldap_require_group)
-#
-# [*$ldap_require_group_dn]
-#   (string) LDAP group DN for LDAP group
-#   No default
-#
-# === Notes:
-#
-# Make sure you have purge_configs set to false in your apache class!
-#
-# This runs the WSGI application with a WSGIProcessGroup of $user and
-# a WSGIApplicationGroup of %{GLOBAL}.
+# @note Make sure you have purge_configs set to false in your apache class!
+# @note This runs the WSGI application with a WSGIProcessGroup of $user and a WSGIApplicationGroup of %{GLOBAL}.
 #
 class puppetboard::apache::conf (
-  String $wsgi_alias                        = '/puppetboard',
-  Integer $threads                          = 5,
-  Integer $max_reqs                         = 0,
-  String $user                              = $puppetboard::params::user,
-  String $group                             = $puppetboard::params::group,
-  Stdlib::AbsolutePath $basedir             = $puppetboard::params::basedir,
-  Boolean $enable_ldap_auth                 = $puppetboard::params::enable_ldap_auth,
-  Optional[String] $ldap_bind_dn            = undef,
-  Optional[String] $ldap_bind_password      = undef,
-  Optional[String] $ldap_url                = undef,
-  Optional[String] $ldap_bind_authoritative = undef,
-  Boolean $ldap_require_group               = $puppetboard::params::ldap_require_group,
-  Optional[String] $ldap_require_group_dn   = undef,
-) inherits ::puppetboard::params {
+  Stdlib::Unixpath $wsgi_alias                 = '/puppetboard',
+  Integer[1] $threads                          = 5,
+  Integer[0] $max_reqs                         = 0,
+  String[1] $user                              = $puppetboard::user,
+  String[1] $group                             = $puppetboard::group,
+  Stdlib::AbsolutePath $basedir                = $puppetboard::basedir,
+  Boolean $enable_ldap_auth                    = $puppetboard::enable_ldap_auth,
+  Optional[String[1]] $ldap_bind_dn            = undef,
+  Optional[String[1]] $ldap_bind_password      = undef,
+  Optional[String[1]] $ldap_url                = undef,
+  Optional[String[1]] $ldap_bind_authoritative = undef,
+  Boolean $ldap_require_group                  = $puppetboard::ldap_require_group,
+  Optional[String[1]] $ldap_require_group_dn   = undef,
+) inherits puppetboard {
   $docroot = "${basedir}/puppetboard"
 
   file { "${docroot}/wsgi.py":
