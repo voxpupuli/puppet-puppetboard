@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v7.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v7.0.0) (2020-10-06)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v6.1.0...v7.0.0)
+
+**Breaking changes:**
+
+- Drop SLES 12 because of missing tests/compatibility [\#297](https://github.com/voxpupuli/puppet-puppetboard/issues/297)
+- Drop End of Life Ubuntu 14.04 [\#296](https://github.com/voxpupuli/puppet-puppetboard/issues/296)
+- Drop End of Life Debian 8 [\#295](https://github.com/voxpupuli/puppet-puppetboard/issues/295)
+- Drop RedHat/CentOS 6/7 support due to missing Python 3.6 support in apache [\#294](https://github.com/voxpupuli/puppet-puppetboard/issues/294)
+- Add datatypes to all params/puppet-strings docs [\#302](https://github.com/voxpupuli/puppet-puppetboard/pull/302) ([bastelfreak](https://github.com/bastelfreak))
+- Drop Python 2, implement Python 3, replace virtualenv with native python 3 implementation, drop EPEL parameter [\#292](https://github.com/voxpupuli/puppet-puppetboard/pull/292) ([waipeng](https://github.com/waipeng))
+
+**Implemented enhancements:**
+
+- replace legacy virtualenv with python 3 builtin [\#300](https://github.com/voxpupuli/puppet-puppetboard/issues/300)
+- Add Ubuntu 16.04 and 18.04 support [\#299](https://github.com/voxpupuli/puppet-puppetboard/issues/299)
+- Add Debian 9 and 10 support  [\#298](https://github.com/voxpupuli/puppet-puppetboard/issues/298)
+- add support for Apache::Vhost ssl\_chain parameter [\#284](https://github.com/voxpupuli/puppet-puppetboard/pull/284) ([lukebigum](https://github.com/lukebigum))
+
+**Fixed bugs:**
+
+- Fix depreciation introduced by https://github.com/puppetlabs/puppetlabs-apache/pull/1884 [\#301](https://github.com/voxpupuli/puppet-puppetboard/pull/301) ([bastelfreak](https://github.com/bastelfreak))
+
+**Closed issues:**
+
+- lateset on ubuntu 18.04 [\#287](https://github.com/voxpupuli/puppet-puppetboard/issues/287)
+- Fix wrong path in README [\#281](https://github.com/voxpupuli/puppet-puppetboard/issues/281)
+
+**Merged pull requests:**
+
+- Use voxpupuli-acceptance and allow puppet/python 4.x and 5.x [\#293](https://github.com/voxpupuli/puppet-puppetboard/pull/293) ([ekohl](https://github.com/ekohl))
+- Remove whitespace [\#282](https://github.com/voxpupuli/puppet-puppetboard/pull/282) ([dhoppe](https://github.com/dhoppe))
+- Fix virtualenv\_version comment [\#279](https://github.com/voxpupuli/puppet-puppetboard/pull/279) ([smortex](https://github.com/smortex))
+- Fix wrong virtualenv parameter in README [\#278](https://github.com/voxpupuli/puppet-puppetboard/pull/278) ([paescuj](https://github.com/paescuj))
+- Require puppet-epel over stahnma-epel [\#277](https://github.com/voxpupuli/puppet-puppetboard/pull/277) ([dhoppe](https://github.com/dhoppe))
+
 ## [v6.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v6.1.0) (2020-03-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v6.0.0...v6.1.0)
