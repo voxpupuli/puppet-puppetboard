@@ -638,7 +638,7 @@ Default value: ``undef``
 
 Data type: `Stdlib::Absolutepath`
 
-
+Set location where virtualenv will be installed
 
 Default value: `$puppetboard::virtualenv_dir`
 
@@ -646,7 +646,7 @@ Default value: `$puppetboard::virtualenv_dir`
 
 Data type: `Hash`
 
-
+A hash passed to the `apache::vhost` for custom settings
 
 Default value: `{}`
 

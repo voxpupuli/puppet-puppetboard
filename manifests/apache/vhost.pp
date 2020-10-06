@@ -19,6 +19,8 @@
 # @param ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
 # @param ldap_require_group LDAP group to require on login
 # @param ldap_require_group_dn LDAP group DN for LDAP group
+# @param virtualenv_dir Set location where virtualenv will be installed
+# @param custom_apache_parameters A hash passed to the `apache::vhost` for custom settings
 class puppetboard::apache::vhost (
   String[1] $vhost_name,
   Stdlib::Unixpath $wsgi_alias                 = '/',
