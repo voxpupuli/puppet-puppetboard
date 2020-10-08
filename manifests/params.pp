@@ -54,30 +54,4 @@ class puppetboard::params {
     true   => true,
     default => false,
   }
-
-  $user  = 'puppetboard'
-  $group = 'puppetboard'
-  $basedir = '/srv/puppetboard'
-  $git_source = 'https://github.com/voxpupuli/puppetboard'
-  $puppetdb_host = '127.0.0.1'
-  $puppetdb_port = 8080
-  $puppetdb_ssl_verify = false
-  $puppetdb_timeout = 20
-  $dev_listen_host = '127.0.0.1'
-  $dev_listen_port = 5000
-  $unresponsive = 3
-  $enable_catalog = false
-  $enable_query = true
-  $localise_timestamp = true
-  $offline_mode = false
-  $python_loglevel = 'info'
-  $reports_count = 10
-  $experimental = false
-  $listen = 'private'
-  $apache_override = 'None'
-  $default_environment = 'production'
-  $extra_settings = {}
-  $enable_ldap_auth = false
-  $ldap_require_group = false
-  $virtualenv_dir = "${basedir}/virtenv-puppetboard"
 }
