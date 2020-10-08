@@ -33,7 +33,7 @@ class puppetboard::apache::vhost (
   String[1] $user                              = $puppetboard::user,
   String[1] $group                             = $puppetboard::group,
   Stdlib::AbsolutePath $basedir                = $puppetboard::basedir,
-  String[1] $override                          = $puppetboard::apache_override,
+  String[1] $override                          = $puppetboard::override,
   Boolean $enable_ldap_auth                    = $puppetboard::enable_ldap_auth,
   Optional[String[1]] $ldap_bind_dn            = undef,
   Optional[String[1]] $ldap_bind_password      = undef,
