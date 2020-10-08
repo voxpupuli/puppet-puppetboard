@@ -70,7 +70,7 @@ class puppetboard (
   Variant[Boolean, Stdlib::AbsolutePath] $puppetdb_ssl_verify = false,
   Optional[Stdlib::AbsolutePath] $puppetdb_cert               = undef,
   Integer[0] $puppetdb_timeout                                = 20,
-  Integer[0] $unresponsive                                    = 0,
+  Integer[0] $unresponsive                                    = $puppetboard::params::unresponsive,
   Boolean $enable_catalog                                     = false,
   Boolean $enable_query                                       = true,
   Boolean $localise_timestamp                                 = true,
