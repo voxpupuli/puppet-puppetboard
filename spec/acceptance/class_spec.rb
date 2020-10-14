@@ -8,7 +8,52 @@ describe 'puppetboard class' do
     apache_conf_file = '/etc/apache2/conf-enabled/puppetboard.conf'
   end
 
-  context 'configuring Apache / mod_wsgi' do
+  context 'configuring Apache without vhost / mod_wsgi' do
+    it 'works with no errors' do
+      pp = <<-EOS
+      # Configure Apache on this server
+      class { 'apache': }
+      $wsgi = $facts['os']['family'] ? {
+        'Debian' => {package_name => "libapache2-mod-wsgi-py3", mod_path => "/usr/lib/apache2/modules/mod_wsgi.so"},
+        default  => {},
+      }
+      class { 'apache::mod::wsgi':
+        * => $wsgi,
+      }
+
+      # Configure PuppetDB
+      class { 'puppetdb':
+        disable_ssl     => true,
+        manage_firewall => false,
+      }
+
+      # Configure Puppetboard
+      class { 'puppetboard':
+        manage_virtualenv => true,
+        manage_git        => true,
+        require           => Class['puppetdb'],
+      }
+
+      # Access Puppetboard through pboard.example.com
+      class { 'puppetboard::apache::conf': }
+      EOS
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_failures: true)
+    end
+    it 'answers to localhost' do
+      shell('/usr/bin/curl localhost/puppetboard/') do |r|
+        # The default puppetboard page returns 404 on empty puppetdb
+        # https://github.com/voxpupuli/puppetboard/issues/515
+        expect(r.stdout).to match(%r{404 Not Found})
+        expect(r.exit_code).to be_zero
+      end
+    end
+    # rubocop:enable RSpec/MultipleExpectations
+  end
+
+  context 'configuring Apache with vhost / mod_wsgi' do
     it 'works with no errors' do
       pp = <<-EOS
       # Configure Apache on this server

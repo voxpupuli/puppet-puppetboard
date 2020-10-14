@@ -160,7 +160,7 @@ Data type: `Integer[0]`
 
 number of hours after which a node is considered "unresponsive"
 
-Default value: `0`
+Default value: `3`
 
 ##### `enable_catalog`
 
@@ -476,6 +476,14 @@ LDAP group DN for LDAP group
 
 Default value: ``undef``
 
+##### `virtualenv_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Set location where virtualenv will be installed
+
+Default value: `$puppetboard::virtualenv_dir`
+
 ### `puppetboard::apache::vhost`
 
 Sets up an apache::vhost to run PuppetBoard, and writes an appropriate wsgi.py from template
@@ -576,7 +584,7 @@ Data type: `String[1]`
 
 Sets the Apache AllowOverride value
 
-Default value: `$puppetboard::apache_override`
+Default value: `$puppetboard::override`
 
 ##### `enable_ldap_auth`
 
