@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v7.0.1](https://github.com/voxpupuli/puppet-puppetboard/tree/v7.0.1) (2020-10-08)
+## [v7.0.2](https://github.com/voxpupuli/puppet-puppetboard/tree/v7.0.2) (2020-10-17)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v7.0.1...v7.0.2)
+
+**Fixed bugs:**
+
+- Fix running puppetboard without vhost [\#310](https://github.com/voxpupuli/puppet-puppetboard/pull/310) ([waipeng](https://github.com/waipeng))
+
+## [v7.0.1](https://github.com/voxpupuli/puppet-puppetboard/tree/v7.0.1) (2020-10-09)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v7.0.0...v7.0.1)
 
