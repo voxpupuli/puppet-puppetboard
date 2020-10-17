@@ -13,6 +13,7 @@
 # @param ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
 # @param ldap_require_group LDAP group to require on login
 # @param ldap_require_group_dn LDAP group DN for LDAP group
+# @param virtualenv_dir Set location where virtualenv will be installed
 #
 # @note Make sure you have purge_configs set to false in your apache class!
 # @note This runs the WSGI application with a WSGIProcessGroup of $user and a WSGIApplicationGroup of %{GLOBAL}.
@@ -31,6 +32,7 @@ class puppetboard::apache::conf (
   Optional[String[1]] $ldap_bind_authoritative = undef,
   Boolean $ldap_require_group                  = $puppetboard::ldap_require_group,
   Optional[String[1]] $ldap_require_group_dn   = undef,
+  Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
 ) inherits puppetboard {
   $docroot = "${basedir}/puppetboard"
 

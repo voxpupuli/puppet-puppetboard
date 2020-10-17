@@ -1,4 +1,4 @@
-WSGIDaemonProcess puppetboard user=<%= @user -%> group=<%= @user -%> threads=<%= @threads %> maximum-requests=<%= @max_reqs %>
+WSGIDaemonProcess puppetboard python-home=<%= @virtualenv_dir %> user=<%= @user -%> group=<%= @user -%> threads=<%= @threads %> maximum-requests=<%= @max_reqs %>
 WSGIScriptAlias <%= @wsgi_alias -%> <%= @docroot -%>/wsgi.py
 
 <Directory <%= @docroot -%>>
