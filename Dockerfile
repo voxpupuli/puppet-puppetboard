@@ -1,4 +1,4 @@
-FROM ruby:2.5.8
+FROM ruby:2.5.3
 
 WORKDIR /opt/puppet
 
