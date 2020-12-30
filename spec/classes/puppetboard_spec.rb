@@ -9,7 +9,6 @@ describe 'puppetboard', type: :class do
     context "on #{os}" do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('puppetboard') }
-      it { is_expected.to contain_class('puppetboard::params') }
       it { is_expected.to contain_file('/srv/puppetboard/puppetboard/settings.py') }
       it { is_expected.to contain_file('/srv/puppetboard/puppetboard') }
       it { is_expected.to contain_file('/srv/puppetboard') }

@@ -56,6 +56,10 @@
 #  }
 #
 class puppetboard (
+  Stdlib::Absolutepath $apache_confd,
+  String[1] $apache_service,
+  Pattern[/^3\.\d$/] $python_version,
+  Optional[Boolean] $manage_selinux,
   String $user                                                = 'puppetboard',
   Optional[Stdlib::Absolutepath] $homedir                     = undef,
   String $group                                               = 'puppetboard',
@@ -79,12 +83,10 @@ class puppetboard (
   Optional[String[1]] $python_index                           = undef,
   Boolean $experimental                                       = false,
   Optional[String] $revision                                  = undef,
-  Boolean $manage_selinux                                     = $puppetboard::params::manage_selinux,
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
-  Pattern[/^3\.\d$/] $python_version                          = $puppetboard::params::python_version,
   Stdlib::Absolutepath $virtualenv_dir                        = "${basedir}/virtenv-puppetboard",
   Integer[0] $reports_count                                   = 10,
   String[1] $default_environment                              = 'production',
@@ -94,9 +96,7 @@ class puppetboard (
   String[1] $override                                         = 'None',
   Boolean $enable_ldap_auth                                   = false,
   Boolean $ldap_require_group                                 = false,
-  Stdlib::Absolutepath $apache_confd                          = $puppetboard::params::apache_confd,
-  String[1] $apache_service                                   = $puppetboard::params::apache_service,
-) inherits puppetboard::params {
+) {
   if $manage_group {
     group { $group:
       ensure => present,

@@ -47,12 +47,12 @@ class puppetboard::apache::conf (
     ],
   }
 
-  file { "${puppetboard::params::apache_confd}/puppetboard.conf":
+  file { "${puppetboard::apache_confd}/puppetboard.conf":
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     content => template('puppetboard/apache/conf.erb'),
     require => File["${docroot}/wsgi.py"],
-    notify  => Service[$puppetboard::params::apache_service],
+    notify  => Service[$puppetboard::apache_service],
   }
 }

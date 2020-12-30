@@ -1,0 +1,1 @@
+puppetboard::manage_selinux: "%{facts.os.selinux.enabled}"
