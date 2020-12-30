@@ -71,16 +71,16 @@ class puppetboard::apache::vhost (
   }
 
   if $enable_ldap_auth {
-    $ldap_additional_includes = ["${puppetboard::params::apache_confd}/puppetboard-ldap.part"]
-    $ldap_require = File["${puppetboard::params::apache_confd}/puppetboard-ldap.part"]
+    $ldap_additional_includes = ["${puppetboard::apache_confd}/puppetboard-ldap.part"]
+    $ldap_require = File["${puppetboard::apache_confd}/puppetboard-ldap.part"]
     file { 'puppetboard-ldap.part':
       ensure  => file,
-      path    => "${puppetboard::params::apache_confd}/puppetboard-ldap.part",
+      path    => "${puppetboard::apache_confd}/puppetboard-ldap.part",
       owner   => 'root',
       group   => 'root',
       content => template('puppetboard/apache/ldap.erb'),
       require => File["${docroot}/wsgi.py"],
-      notify  => Service[$puppetboard::params::apache_service],
+      notify  => Service[$puppetboard::apache_service],
     }
   }
   else {
@@ -100,7 +100,7 @@ class puppetboard::apache::vhost (
     wsgi_script_aliases => $wsgi_script_aliases,
     override            => $override,
     require             => [File["${docroot}/wsgi.py"], $ldap_require],
-    notify              => Service[$puppetboard::params::apache_service],
+    notify              => Service[$puppetboard::apache_service],
     *                   => $custom_apache_parameters,
   }
   File["${basedir}/puppetboard/settings.py"] ~> Service['httpd']
