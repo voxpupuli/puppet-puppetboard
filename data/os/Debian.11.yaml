@@ -1,1 +1,1 @@
-puppetboard::python_version: 3.8
+puppetboard::python_version: '3.8'
