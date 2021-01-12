@@ -151,13 +151,21 @@ class puppetboard (
     require => Vcsrepo["${basedir}/puppetboard"],
   }
 
+  $pyvenv_proxy_env = $python_proxy ? {
+    undef => [],
+    default => [
+      "HTTP_PROXY=${python_proxy}",
+      "HTTPS_PROXY=${python_proxy}",
+    ]
+  }
   python::pyvenv { $virtualenv_dir:
-    ensure     => present,
-    version    => $python_version,
-    systempkgs => false,
-    owner      => $user,
-    group      => $group,
-    require    => Vcsrepo["${basedir}/puppetboard"],
+    ensure      => present,
+    version     => $python_version,
+    systempkgs  => false,
+    owner       => $user,
+    group       => $group,
+    require     => Vcsrepo["${basedir}/puppetboard"],
+    environment => $pyvenv_proxy_env,
   }
   python::requirements { "${basedir}/puppetboard/requirements.txt":
     virtualenv => $virtualenv_dir,
