@@ -59,15 +59,6 @@ class { 'puppetboard':
 }
 ```
 
-or by:
-
-```puppet
-class { 'puppetboard':
-  manage_git        => 'latest',
-  manage_virtualenv => 'latest',
-}
-```
-
 If the virtualenv is managed by this module, the [voxpupuli/python](https://forge.puppet.com/puppet/python#puppet-python) will be used. That module uses [voxpupuli/epel](https://forge.puppet.com/puppet/epel#configure-epel-extra-repository-for-enterprise-linux) on RHEL based platforms.
 
 ## Usage
