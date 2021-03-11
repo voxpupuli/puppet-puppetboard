@@ -17,7 +17,7 @@
 1. [Number of Reports](#number-of-reports)
 1. [Offline Mode](#offline-mode)
 1. [Set Default Environment](#set-default-environment)
-1. [Disable SELinux](#disable-selinux)
+1. [Disable SELinux Management](#disable-selinux-management)
     * [Apache](#apache)
       - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
     * [Redhat/CentOS](#redhatcentos)
@@ -120,13 +120,15 @@ class { 'puppetboard':
 ```
 
 
-Disable SELinux
+Disable SELinux Management
 -----
 ```puppet
 class { 'puppetboard':
   manage_selinux => false,
 }
 ```
+
+If manage_selinux is true, manage policies related to SELinux. If false, do nothing. By default, this module will try to determine if SELinux is enabled, and manage the policies if it is.
 
 ### Apache
 
