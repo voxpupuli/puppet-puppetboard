@@ -18,12 +18,10 @@
 1. [Offline Mode](#offline-mode)
 1. [Set Default Environment](#set-default-environment)
 1. [Disable SELinux Management](#disable-selinux-management)
-    * [Apache](#apache)
-      - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
-    * [Redhat/CentOS](#redhatcentos)
-    * [Apache, RedHat/CentOS and a non-standard port](#apache-redhatcentos-and-a-non-standard-port)
-    * [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)
-    * [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
+1. [Apache](#apache)
+    * [Apache (with Reverse Proxy)](#apache-with-reverse-proxy) 
+1. [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)   
+1. [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
     * [Using SSL to PuppetDB &gt;= 6.9.1](#using-ssl-to-puppetdb--691)
 1. [Development](#development)
     * [Authors](#authors)
@@ -130,7 +128,7 @@ class { 'puppetboard':
 
 If manage_selinux is true, manage policies related to SELinux. If false, do nothing. By default, this module will try to determine if SELinux is enabled, and manage the policies if it is.
 
-### Apache
+## Apache
 
 If you want puppetboard accessible through Apache and you're able to use the
 official `puppetlabs/apache` Puppet module, this module contains two classes
@@ -194,7 +192,7 @@ class { 'puppetboard': }
 class { 'puppetboard::apache::conf': }
 ```
 
-#### Apache (with Reverse Proxy)
+### Apache (with Reverse Proxy)
 
 You can also relocate puppetboard to a sub-URI of a Virtual Host. This is
 useful if you want to reverse-proxy puppetboard, but are not planning on
@@ -233,7 +231,7 @@ apache::vhost { 'example.acme':
 }
 ```
 
-### RedHat/CentOS 7 with Python 3
+## RedHat/CentOS 7 with Python 3
 
 CentOS/RedHat 7 is pretty old. Python 3 got added after the initial release and
 a lot of packages are missing. For example python3.6 is available as a package,
@@ -241,7 +239,7 @@ but no matching wsgi module for apache is available. Because of that, we don't
 test on CentOS 7 anymore. However, it's still possible to setup Puppetboard on
 CentOS with gunicorn as a webserver and nginx/apache forwarding to it.
 
-### Using SSL to the PuppetDB host
+## Using SSL to the PuppetDB host
 
 
 If you would like to use certificate auth into the PuppetDB service you must configure puppetboard to use a client certificate and private key.
