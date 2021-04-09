@@ -11,20 +11,20 @@
 
 1. [Overview](#overview)
 1. [Setup](#setup)
-    * [Installation](#installation)
-    * [Dependencies](#dependencies)
+   - [Installation](#installation)
+   - [Dependencies](#dependencies)
 1. [Usage](#usage)
 1. [Number of Reports](#number-of-reports)
 1. [Offline Mode](#offline-mode)
 1. [Set Default Environment](#set-default-environment)
 1. [Disable SELinux Management](#disable-selinux-management)
 1. [Apache](#apache)
-    * [Apache (with Reverse Proxy)](#apache-with-reverse-proxy) 
-1. [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)   
+   - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
+1. [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)
 1. [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
-    * [Using SSL to PuppetDB &gt;= 6.9.1](#using-ssl-to-puppetdb--691)
+   - [Using SSL to PuppetDB &gt;= 6.9.1](#using-ssl-to-puppetdb--691)
 1. [Development](#development)
-    * [Authors](#authors)
+   - [Authors](#authors)
 
 ## Overview
 
@@ -33,7 +33,6 @@ This is the puppetboard puppet module.
 Puppetboard is an open source puppet dashboard
 
 https://github.com/voxpupuli/puppetboard
-
 
 ## Setup
 
@@ -47,8 +46,7 @@ Note that this module no longer explicitly requires the puppetlabs apache module
 
     puppet module install puppetlabs-apache
 
-This module also requires the ``git`` and ``virtualenv`` packages. These can be enabled in the module by:
-
+This module also requires the `git` and `virtualenv` packages. These can be enabled in the module by:
 
 ```puppet
 class { 'puppetboard':
@@ -67,8 +65,7 @@ Declare the base puppetboard manifest:
 class { 'puppetboard': }
 ```
 
-Number of Reports
------
+## Number of Reports
 
 NOTE: In order to have reports present in the dashboard, report storage must be enabled on the Puppet master node.
 This is not the default behavior, so it mush be enabled.
@@ -85,8 +82,8 @@ class { 'puppetboard':
 }
 
 ```
-Offline Mode
------
+
+## Offline Mode
 
 If you are running puppetboard in an environment which does not have network access to public CDNs,
 puppet board can load static assets (jquery, semantic-ui, tablesorter, etc) from the local web server instead of a CDN:
@@ -97,8 +94,7 @@ class { 'puppetboard':
 }
 ```
 
-Set Default Environment
------
+## Set Default Environment
 
 by default, puppetboard defaults to "production" environment. This can be
 set to default to a different environment.
@@ -117,9 +113,8 @@ class { 'puppetboard':
 }
 ```
 
+## Disable SELinux Management
 
-Disable SELinux Management
------
 ```puppet
 class { 'puppetboard':
   manage_selinux => false,
@@ -241,7 +236,6 @@ CentOS with gunicorn as a webserver and nginx/apache forwarding to it.
 
 ## Using SSL to the PuppetDB host
 
-
 If you would like to use certificate auth into the PuppetDB service you must configure puppetboard to use a client certificate and private key.
 
 You have two options for the source of the client certificate & key:
@@ -250,14 +244,17 @@ You have two options for the source of the client certificate & key:
 2. Use the existing puppet client certificate
 
 If you choose option 1, generate the new certificates on the CA puppet master as follows:
+
 ```
 sudo puppet cert generate puppetboard.example.com
 ```
+
 Note: this name cannot conflict with an existing certificate name.
 
 The new certificate and private key can be found in $certdir/<NAME>.pem and $privatekeydir/<NAME>.pem on the CA puppet master. If you are not running puppetboard on the CA puppet master you will need to copy the certificate and key to the node running puppetboard.
 
 Here's an example, using new certificates:
+
 ```puppet
 $ssl_dir = '/var/lib/puppetboard/ssl'
 $puppetboard_certname = 'puppetboard.example.com'
@@ -270,6 +267,7 @@ class { 'puppetboard':
   puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
+
 If you are re-using the existing puppet client certificates, they will already exist on the node (assuming puppet has been run and the client cert signed by the puppet master). However, the puppetboaard user will not have permission to read the private key unless you add it to the puppet group.
 
 Here's a complete example, re-using the puppet client certs:
@@ -287,6 +285,7 @@ class { 'puppetboard':
   puppetdb_cert       => "${ssl_dir}/certs/${puppetboard_certname}.pem",
 }
 ```
+
 Note that both the above approaches only work if you have the Puppet CA root certificate added to the root certificate authority file used by your operating system. If you want to specify the location to the Puppet CA file ( you probably do) you have to use the syntax below. Currently this is a bit of a gross hack, but it's an open issue to resolve it in the Puppet module:
 
 ```puppet
@@ -309,7 +308,7 @@ As of PuppetDB `6.9.1` the `/metrics/v2` API is only accessible on the loopback/
 interface of the PuppetDB server. This requires you to run `puppetboard` locally on
 that host and configure `puppetdb_host` to `127.0.0.1`:
 
-``` puppet
+```puppet
 
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
@@ -325,12 +324,12 @@ class { 'puppetboard':
 ```
 
 **NOTE** In order for SSL to verify properly in this setup, you'll need your
-         Puppet SSL certificate to have an IP Subject Alternative Name setup
-         for `127.0.0.1`, otherwise the certificate verification will fail.
-         You can set this up in your `puppet.conf` with the `dns_alt_names`
-         configuration option, documented [here](https://puppet.com/docs/puppet/latest/configuration.html#dnsaltnames).
+Puppet SSL certificate to have an IP Subject Alternative Name setup
+for `127.0.0.1`, otherwise the certificate verification will fail.
+You can set this up in your `puppet.conf` with the `dns_alt_names`
+configuration option, documented [here](https://puppet.com/docs/puppet/latest/configuration.html#dnsaltnames).
 
-``` ini
+```ini
 [main]
     dns_alt_names = puppetdb,puppetdb.domain.tld,puppetboard,puppetboard.domain.tld,IP:127.0.0.1
 ```
@@ -338,7 +337,7 @@ class { 'puppetboard':
 **NOTE** If you need to regenerate your existing cert to add DNS Alt Names
 follow the documentation [here](https://puppet.com/docs/puppet/latest/ssl_regenerate_certificates.html#regenerate_agent_certs_and_add_dns_alt_names):
 
-``` shell
+```shell
 # remove the existing agent certs
 puppetserver ca clean --certname <CERTNAME_OF_YOUR_PUPPETDB>
 puppet ssl clean
@@ -369,6 +368,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for more details.
 Please log tickets and issues on github.
 
 ### Authors
-* Spencer Krum <krum.spencer@gmail.com>
-* Vox Pupuli Team
-* The core of this module was based on Hunter Haugen's puppetboard-vagrant repo.
+
+- Spencer Krum <krum.spencer@gmail.com>
+- Vox Pupuli Team
+- The core of this module was based on Hunter Haugen's puppetboard-vagrant repo.
