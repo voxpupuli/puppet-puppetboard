@@ -1,10 +1,9 @@
 ---
 .travis.yml:
-  secure: "Hw0ScFZ+tANSuxXvkQlHOtbnV+9O6FyIxY4e8ZuNiE+4E045olgGjqus+ffo0MoHOHzCPPbThF107yQIXXHCwIy3wzOVIjQ7KQ/yVeamCl4K9A4AFP1Pcr/zMTRdK16zrgxBH+6wDkjSxHGonT8AyUKBrT7AeET+pqxwVHvHCfo="
+  secure: 'Hw0ScFZ+tANSuxXvkQlHOtbnV+9O6FyIxY4e8ZuNiE+4E045olgGjqus+ffo0MoHOHzCPPbThF107yQIXXHCwIy3wzOVIjQ7KQ/yVeamCl4K9A4AFP1Pcr/zMTRdK16zrgxBH+6wDkjSxHGonT8AyUKBrT7AeET+pqxwVHvHCfo='
   docker_sets:
-    - set: ubuntu1604-64{image=ubuntu:xenial-20191212}
     - set: ubuntu1804-64
-    - set: debian9-64
+    - set: ubuntu2004-64
     - set: debian10-64
 Gemfile:
   optional:
