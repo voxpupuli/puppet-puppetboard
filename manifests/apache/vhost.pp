@@ -64,10 +64,6 @@ class puppetboard::apache::vhost (
     content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
-    require => [
-      User[$user],
-      Vcsrepo[$docroot],
-    ],
   }
 
   if $enable_ldap_auth {
@@ -90,6 +86,7 @@ class puppetboard::apache::vhost (
   apache::vhost { $vhost_name:
     port                => $port,
     docroot             => $docroot,
+    manage_docroot      => false,
     ssl                 => $ssl,
     ssl_cert            => $ssl_cert,
     ssl_key             => $ssl_key,
@@ -103,5 +100,6 @@ class puppetboard::apache::vhost (
     notify              => Service[$puppetboard::apache_service],
     *                   => $custom_apache_parameters,
   }
-  File["${basedir}/puppetboard/settings.py"] ~> Service['httpd']
+
+  File[$puppetboard::settings_file] ~> Service[$puppetboard::apache_service]
 }
