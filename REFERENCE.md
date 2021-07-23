@@ -9,7 +9,6 @@
 * [`puppetboard`](#puppetboard): Base class for Puppetboard. Sets up the user and python environment.
 * [`puppetboard::apache::conf`](#puppetboardapacheconf): Creates an entry in your apache configuration directory to run PuppetBoard server-wide (i.e. not in a vhost).
 * [`puppetboard::apache::vhost`](#puppetboardapachevhost): Sets up an apache::vhost to run PuppetBoard, and writes an appropriate wsgi.py from template
-* [`puppetboard::params`](#puppetboardparams): == Class: puppetboard::params  Defines default values for puppetboard parameters.  Inherited by Class['puppetboard'].
 
 ### Data types
 
@@ -17,7 +16,7 @@
 
 ## Classes
 
-### `puppetboard`
+### <a name="puppetboard"></a>`puppetboard`
 
 class { 'puppetboard':
    user  => 'pboard',
@@ -40,9 +39,50 @@ configure puppetboard with an apache config for a subpath (http://$fqdn/puppetbo
 
 #### Parameters
 
-The following parameters are available in the `puppetboard` class.
+The following parameters are available in the `puppetboard` class:
 
-##### `user`
+* [`user`](#user)
+* [`homedir`](#homedir)
+* [`group`](#group)
+* [`groups`](#groups)
+* [`basedir`](#basedir)
+* [`git_source`](#git_source)
+* [`puppetdb_host`](#puppetdb_host)
+* [`puppetdb_port`](#puppetdb_port)
+* [`puppetdb_key`](#puppetdb_key)
+* [`puppetdb_ssl_verify`](#puppetdb_ssl_verify)
+* [`puppetdb_cert`](#puppetdb_cert)
+* [`puppetdb_timeout`](#puppetdb_timeout)
+* [`dev_listen_host`](#dev_listen_host)
+* [`dev_listen_port`](#dev_listen_port)
+* [`unresponsive`](#unresponsive)
+* [`enable_catalog`](#enable_catalog)
+* [`enable_query`](#enable_query)
+* [`offline_mode`](#offline_mode)
+* [`localise_timestamp`](#localise_timestamp)
+* [`python_loglevel`](#python_loglevel)
+* [`python_proxy`](#python_proxy)
+* [`python_index`](#python_index)
+* [`default_environment`](#default_environment)
+* [`experimental`](#experimental)
+* [`revision`](#revision)
+* [`manage_git`](#manage_git)
+* [`manage_virtualenv`](#manage_virtualenv)
+* [`python_version`](#python_version)
+* [`virtualenv_dir`](#virtualenv_dir)
+* [`manage_user`](#manage_user)
+* [`manage_group`](#manage_group)
+* [`manage_selinux`](#manage_selinux)
+* [`reports_count`](#reports_count)
+* [`listen`](#listen)
+* [`extra_settings`](#extra_settings)
+* [`override`](#override)
+* [`enable_ldap_auth`](#enable_ldap_auth)
+* [`ldap_require_group`](#ldap_require_group)
+* [`apache_confd`](#apache_confd)
+* [`apache_service`](#apache_service)
+
+##### <a name="user"></a>`user`
 
 Data type: `String`
 
@@ -50,7 +90,7 @@ Puppetboard system user.
 
 Default value: `'puppetboard'`
 
-##### `homedir`
+##### <a name="homedir"></a>`homedir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -58,7 +98,7 @@ Puppetboard system user's home directory.
 
 Default value: ``undef``
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String`
 
@@ -66,7 +106,7 @@ Puppetboard system group.
 
 Default value: `'puppetboard'`
 
-##### `groups`
+##### <a name="groups"></a>`groups`
 
 Data type: `Optional[Variant[String[1], Array[String[1]]]]`
 
@@ -74,7 +114,7 @@ additional groups for the user that runs puppetboard
 
 Default value: ``undef``
 
-##### `basedir`
+##### <a name="basedir"></a>`basedir`
 
 Data type: `Stdlib::AbsolutePath`
 
@@ -82,7 +122,7 @@ Base directory where to build puppetboard vcsrepo and python virtualenv.
 
 Default value: `'/srv/puppetboard'`
 
-##### `git_source`
+##### <a name="git_source"></a>`git_source`
 
 Data type: `String`
 
@@ -90,7 +130,7 @@ Location of upstream Puppetboard GIT repository
 
 Default value: `'https://github.com/voxpupuli/puppetboard'`
 
-##### `puppetdb_host`
+##### <a name="puppetdb_host"></a>`puppetdb_host`
 
 Data type: `String`
 
@@ -98,7 +138,7 @@ PuppetDB Host
 
 Default value: `'127.0.0.1'`
 
-##### `puppetdb_port`
+##### <a name="puppetdb_port"></a>`puppetdb_port`
 
 Data type: `Stdlib::Port`
 
@@ -106,7 +146,7 @@ PuppetDB Port
 
 Default value: `8080`
 
-##### `puppetdb_key`
+##### <a name="puppetdb_key"></a>`puppetdb_key`
 
 Data type: `Optional[Stdlib::AbsolutePath]`
 
@@ -114,7 +154,7 @@ path to PuppetMaster/CA signed client SSL key
 
 Default value: ``undef``
 
-##### `puppetdb_ssl_verify`
+##### <a name="puppetdb_ssl_verify"></a>`puppetdb_ssl_verify`
 
 Data type: `Variant[Boolean, Stdlib::AbsolutePath]`
 
@@ -122,7 +162,7 @@ whether PuppetDB uses SSL or not (true or false), or the path to the puppet CA
 
 Default value: ``false``
 
-##### `puppetdb_cert`
+##### <a name="puppetdb_cert"></a>`puppetdb_cert`
 
 Data type: `Optional[Stdlib::AbsolutePath]`
 
@@ -130,7 +170,7 @@ path to PuppetMaster/CA signed client SSL cert
 
 Default value: ``undef``
 
-##### `puppetdb_timeout`
+##### <a name="puppetdb_timeout"></a>`puppetdb_timeout`
 
 Data type: `Integer[0]`
 
@@ -138,7 +178,7 @@ timeout, in seconds, for connecting to PuppetDB
 
 Default value: `20`
 
-##### `dev_listen_host`
+##### <a name="dev_listen_host"></a>`dev_listen_host`
 
 Data type: `String`
 
@@ -146,7 +186,7 @@ host that dev server binds to/listens on
 
 Default value: `'127.0.0.1'`
 
-##### `dev_listen_port`
+##### <a name="dev_listen_port"></a>`dev_listen_port`
 
 Data type: `Stdlib::Port`
 
@@ -154,7 +194,7 @@ port that dev server binds to/listens on
 
 Default value: `5000`
 
-##### `unresponsive`
+##### <a name="unresponsive"></a>`unresponsive`
 
 Data type: `Integer[0]`
 
@@ -162,7 +202,7 @@ number of hours after which a node is considered "unresponsive"
 
 Default value: `3`
 
-##### `enable_catalog`
+##### <a name="enable_catalog"></a>`enable_catalog`
 
 Data type: `Boolean`
 
@@ -170,7 +210,7 @@ Whether to allow the user to browser catalog comparisons.
 
 Default value: ``false``
 
-##### `enable_query`
+##### <a name="enable_query"></a>`enable_query`
 
 Data type: `Boolean`
 
@@ -178,7 +218,7 @@ Whether to allow the user to run raw queries against PuppetDB.
 
 Default value: ``true``
 
-##### `offline_mode`
+##### <a name="offline_mode"></a>`offline_mode`
 
 Data type: `Boolean`
 
@@ -186,7 +226,7 @@ Weather to load static assents (jquery, semantic-ui, tablesorter, etc)
 
 Default value: ``false``
 
-##### `localise_timestamp`
+##### <a name="localise_timestamp"></a>`localise_timestamp`
 
 Data type: `Boolean`
 
@@ -194,7 +234,7 @@ Whether to localise the timestamps in the UI.
 
 Default value: ``true``
 
-##### `python_loglevel`
+##### <a name="python_loglevel"></a>`python_loglevel`
 
 Data type: `Puppetboard::Syslogpriority`
 
@@ -202,7 +242,7 @@ Python logging module log level.
 
 Default value: `'info'`
 
-##### `python_proxy`
+##### <a name="python_proxy"></a>`python_proxy`
 
 Data type: `Optional[String[1]]`
 
@@ -210,7 +250,7 @@ HTTP proxy server to use for pip/virtualenv.
 
 Default value: ``undef``
 
-##### `python_index`
+##### <a name="python_index"></a>`python_index`
 
 Data type: `Optional[String[1]]`
 
@@ -218,7 +258,7 @@ HTTP index server to use for pip/virtualenv.
 
 Default value: ``undef``
 
-##### `default_environment`
+##### <a name="default_environment"></a>`default_environment`
 
 Data type: `String[1]`
 
@@ -226,7 +266,7 @@ set the default environment
 
 Default value: `'production'`
 
-##### `experimental`
+##### <a name="experimental"></a>`experimental`
 
 Data type: `Boolean`
 
@@ -234,7 +274,7 @@ Enable experimental features.
 
 Default value: ``false``
 
-##### `revision`
+##### <a name="revision"></a>`revision`
 
 Data type: `Optional[String]`
 
@@ -242,7 +282,7 @@ Commit, tag, or branch from Puppetboard's Git repo to be used
 
 Default value: ``undef``
 
-##### `manage_git`
+##### <a name="manage_git"></a>`manage_git`
 
 Data type: `Boolean`
 
@@ -250,7 +290,7 @@ If true, require the git package. If false do nothing.
 
 Default value: ``false``
 
-##### `manage_virtualenv`
+##### <a name="manage_virtualenv"></a>`manage_virtualenv`
 
 Data type: `Boolean`
 
@@ -258,15 +298,13 @@ If true, require the virtualenv package. If false do nothing.
 
 Default value: ``false``
 
-##### `python_version`
+##### <a name="python_version"></a>`python_version`
 
 Data type: `Pattern[/^3\.\d$/]`
 
 Python version to use in virtualenv.
 
-Default value: `$puppetboard::params::python_version`
-
-##### `virtualenv_dir`
+##### <a name="virtualenv_dir"></a>`virtualenv_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -274,7 +312,7 @@ Set location where virtualenv will be installed
 
 Default value: `"${basedir}/virtenv-puppetboard"`
 
-##### `manage_user`
+##### <a name="manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -282,7 +320,7 @@ If true, manage (create) this group. If false do nothing.
 
 Default value: ``true``
 
-##### `manage_group`
+##### <a name="manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -290,15 +328,15 @@ If true, manage (create) this group. If false do nothing.
 
 Default value: ``true``
 
-##### `manage_selinux`
+##### <a name="manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
 If true, manage selinux policies for puppetboard. If false do nothing.
 
-Default value: `$puppetboard::params::manage_selinux`
+Default value: `pick($facts['os.selinux.enabled'], false)`
 
-##### `reports_count`
+##### <a name="reports_count"></a>`reports_count`
 
 Data type: `Integer[0]`
 
@@ -306,7 +344,7 @@ This is the number of reports that we want the dashboard to display.
 
 Default value: `10`
 
-##### `listen`
+##### <a name="listen"></a>`listen`
 
 Data type: `Enum['public', 'private']`
 
@@ -314,7 +352,7 @@ If set to 'public' puppetboard will listen on all interfaces
 
 Default value: `'private'`
 
-##### `extra_settings`
+##### <a name="extra_settings"></a>`extra_settings`
 
 Data type: `Hash`
 
@@ -322,7 +360,7 @@ Defaults to an empty hash '{}'. Used to pass in arbitrary key/value
 
 Default value: `{}`
 
-##### `override`
+##### <a name="override"></a>`override`
 
 Data type: `String[1]`
 
@@ -330,7 +368,7 @@ Sets the Apache AllowOverride value
 
 Default value: `'None'`
 
-##### `enable_ldap_auth`
+##### <a name="enable_ldap_auth"></a>`enable_ldap_auth`
 
 Data type: `Boolean`
 
@@ -338,7 +376,7 @@ Whether to enable LDAP auth
 
 Default value: ``false``
 
-##### `ldap_require_group`
+##### <a name="ldap_require_group"></a>`ldap_require_group`
 
 Data type: `Boolean`
 
@@ -346,23 +384,19 @@ LDAP group to require on login
 
 Default value: ``false``
 
-##### `apache_confd`
+##### <a name="apache_confd"></a>`apache_confd`
 
 Data type: `Stdlib::Absolutepath`
 
 path to the apache2 vhost directory
 
-Default value: `$puppetboard::params::apache_confd`
-
-##### `apache_service`
+##### <a name="apache_service"></a>`apache_service`
 
 Data type: `String[1]`
 
 name of the apache2 service
 
-Default value: `$puppetboard::params::apache_service`
-
-### `puppetboard::apache::conf`
+### <a name="puppetboardapacheconf"></a>`puppetboard::apache::conf`
 
 Creates an entry in your apache configuration directory to run PuppetBoard server-wide (i.e. not in a vhost).
 
@@ -370,9 +404,24 @@ Creates an entry in your apache configuration directory to run PuppetBoard serve
 
 #### Parameters
 
-The following parameters are available in the `puppetboard::apache::conf` class.
+The following parameters are available in the `puppetboard::apache::conf` class:
 
-##### `wsgi_alias`
+* [`wsgi_alias`](#wsgi_alias)
+* [`threads`](#threads)
+* [`max_reqs`](#max_reqs)
+* [`user`](#user)
+* [`group`](#group)
+* [`basedir`](#basedir)
+* [`enable_ldap_auth`](#enable_ldap_auth)
+* [`ldap_bind_dn`](#ldap_bind_dn)
+* [`ldap_bind_password`](#ldap_bind_password)
+* [`ldap_url`](#ldap_url)
+* [`ldap_bind_authoritative`](#ldap_bind_authoritative)
+* [`ldap_require_group`](#ldap_require_group)
+* [`ldap_require_group_dn`](#ldap_require_group_dn)
+* [`virtualenv_dir`](#virtualenv_dir)
+
+##### <a name="wsgi_alias"></a>`wsgi_alias`
 
 Data type: `Stdlib::Unixpath`
 
@@ -380,7 +429,7 @@ WSGI script alias source
 
 Default value: `'/puppetboard'`
 
-##### `threads`
+##### <a name="threads"></a>`threads`
 
 Data type: `Integer[1]`
 
@@ -388,7 +437,7 @@ Number of WSGI threads to use
 
 Default value: `5`
 
-##### `max_reqs`
+##### <a name="max_reqs"></a>`max_reqs`
 
 Data type: `Integer[0]`
 
@@ -396,7 +445,7 @@ Limit on number of requests allowed to daemon process Defaults to 0 (no limit)
 
 Default value: `0`
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String[1]`
 
@@ -404,7 +453,7 @@ WSGI daemon process user, and daemon process name
 
 Default value: `$puppetboard::user`
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String[1]`
 
@@ -412,7 +461,7 @@ WSGI daemon process group owner, and daemon process group
 
 Default value: `$puppetboard::group`
 
-##### `basedir`
+##### <a name="basedir"></a>`basedir`
 
 Data type: `Stdlib::AbsolutePath`
 
@@ -420,7 +469,7 @@ Base directory where to build puppetboard vcsrepo and python virtualenv.
 
 Default value: `$puppetboard::basedir`
 
-##### `enable_ldap_auth`
+##### <a name="enable_ldap_auth"></a>`enable_ldap_auth`
 
 Data type: `Boolean`
 
@@ -428,7 +477,7 @@ Whether to enable LDAP auth
 
 Default value: `$puppetboard::enable_ldap_auth`
 
-##### `ldap_bind_dn`
+##### <a name="ldap_bind_dn"></a>`ldap_bind_dn`
 
 Data type: `Optional[String[1]]`
 
@@ -436,7 +485,7 @@ LDAP Bind DN
 
 Default value: ``undef``
 
-##### `ldap_bind_password`
+##### <a name="ldap_bind_password"></a>`ldap_bind_password`
 
 Data type: `Optional[String[1]]`
 
@@ -444,7 +493,7 @@ LDAP password
 
 Default value: ``undef``
 
-##### `ldap_url`
+##### <a name="ldap_url"></a>`ldap_url`
 
 Data type: `Optional[String[1]]`
 
@@ -452,7 +501,7 @@ LDAP connection string
 
 Default value: ``undef``
 
-##### `ldap_bind_authoritative`
+##### <a name="ldap_bind_authoritative"></a>`ldap_bind_authoritative`
 
 Data type: `Optional[String[1]]`
 
@@ -460,7 +509,7 @@ Determines if other authentication providers are used when a user can be mapped 
 
 Default value: ``undef``
 
-##### `ldap_require_group`
+##### <a name="ldap_require_group"></a>`ldap_require_group`
 
 Data type: `Boolean`
 
@@ -468,7 +517,7 @@ LDAP group to require on login
 
 Default value: `$puppetboard::ldap_require_group`
 
-##### `ldap_require_group_dn`
+##### <a name="ldap_require_group_dn"></a>`ldap_require_group_dn`
 
 Data type: `Optional[String[1]]`
 
@@ -476,7 +525,7 @@ LDAP group DN for LDAP group
 
 Default value: ``undef``
 
-##### `virtualenv_dir`
+##### <a name="virtualenv_dir"></a>`virtualenv_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -484,21 +533,43 @@ Set location where virtualenv will be installed
 
 Default value: `$puppetboard::virtualenv_dir`
 
-### `puppetboard::apache::vhost`
+### <a name="puppetboardapachevhost"></a>`puppetboard::apache::vhost`
 
 Sets up an apache::vhost to run PuppetBoard, and writes an appropriate wsgi.py from template
 
 #### Parameters
 
-The following parameters are available in the `puppetboard::apache::vhost` class.
+The following parameters are available in the `puppetboard::apache::vhost` class:
 
-##### `vhost_name`
+* [`vhost_name`](#vhost_name)
+* [`wsgi_alias`](#wsgi_alias)
+* [`port`](#port)
+* [`ssl`](#ssl)
+* [`ssl_cert`](#ssl_cert)
+* [`ssl_key`](#ssl_key)
+* [`ssl_chain`](#ssl_chain)
+* [`threads`](#threads)
+* [`user`](#user)
+* [`group`](#group)
+* [`basedir`](#basedir)
+* [`override`](#override)
+* [`enable_ldap_auth`](#enable_ldap_auth)
+* [`ldap_bind_dn`](#ldap_bind_dn)
+* [`ldap_bind_password`](#ldap_bind_password)
+* [`ldap_url`](#ldap_url)
+* [`ldap_bind_authoritative`](#ldap_bind_authoritative)
+* [`ldap_require_group`](#ldap_require_group)
+* [`ldap_require_group_dn`](#ldap_require_group_dn)
+* [`virtualenv_dir`](#virtualenv_dir)
+* [`custom_apache_parameters`](#custom_apache_parameters)
+
+##### <a name="vhost_name"></a>`vhost_name`
 
 Data type: `String[1]`
 
 The vhost ServerName.
 
-##### `wsgi_alias`
+##### <a name="wsgi_alias"></a>`wsgi_alias`
 
 Data type: `Stdlib::Unixpath`
 
@@ -506,7 +577,7 @@ WSGI script alias source
 
 Default value: `'/'`
 
-##### `port`
+##### <a name="port"></a>`port`
 
 Data type: `Stdlib::Port`
 
@@ -514,7 +585,7 @@ Port for the vhost to listen on.
 
 Default value: `5000`
 
-##### `ssl`
+##### <a name="ssl"></a>`ssl`
 
 Data type: `Boolean`
 
@@ -522,7 +593,7 @@ If vhost should be configured with ssl
 
 Default value: ``false``
 
-##### `ssl_cert`
+##### <a name="ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[Stdlib::AbsolutePath]`
 
@@ -530,7 +601,7 @@ Path to server SSL cert
 
 Default value: ``undef``
 
-##### `ssl_key`
+##### <a name="ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Stdlib::AbsolutePath]`
 
@@ -538,7 +609,7 @@ Path to server SSL key
 
 Default value: ``undef``
 
-##### `ssl_chain`
+##### <a name="ssl_chain"></a>`ssl_chain`
 
 Data type: `Optional[Stdlib::AbsolutePath]`
 
@@ -546,7 +617,7 @@ Path to server CA Chain file
 
 Default value: ``undef``
 
-##### `threads`
+##### <a name="threads"></a>`threads`
 
 Data type: `Integer[1]`
 
@@ -554,7 +625,7 @@ Number of WSGI threads to use.
 
 Default value: `5`
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String[1]`
 
@@ -562,7 +633,7 @@ WSGI daemon process user, and daemon process name
 
 Default value: `$puppetboard::user`
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String[1]`
 
@@ -570,7 +641,7 @@ WSGI daemon process group owner, and daemon process group
 
 Default value: `$puppetboard::group`
 
-##### `basedir`
+##### <a name="basedir"></a>`basedir`
 
 Data type: `Stdlib::AbsolutePath`
 
@@ -578,7 +649,7 @@ Base directory where to build puppetboard vcsrepo and python virtualenv.
 
 Default value: `$puppetboard::basedir`
 
-##### `override`
+##### <a name="override"></a>`override`
 
 Data type: `String[1]`
 
@@ -586,7 +657,7 @@ Sets the Apache AllowOverride value
 
 Default value: `$puppetboard::override`
 
-##### `enable_ldap_auth`
+##### <a name="enable_ldap_auth"></a>`enable_ldap_auth`
 
 Data type: `Boolean`
 
@@ -594,7 +665,7 @@ Whether to enable LDAP auth
 
 Default value: `$puppetboard::enable_ldap_auth`
 
-##### `ldap_bind_dn`
+##### <a name="ldap_bind_dn"></a>`ldap_bind_dn`
 
 Data type: `Optional[String[1]]`
 
@@ -602,7 +673,7 @@ LDAP Bind DN
 
 Default value: ``undef``
 
-##### `ldap_bind_password`
+##### <a name="ldap_bind_password"></a>`ldap_bind_password`
 
 Data type: `Optional[String[1]]`
 
@@ -610,7 +681,7 @@ LDAP password
 
 Default value: ``undef``
 
-##### `ldap_url`
+##### <a name="ldap_url"></a>`ldap_url`
 
 Data type: `Optional[String[1]]`
 
@@ -618,7 +689,7 @@ LDAP connection string
 
 Default value: ``undef``
 
-##### `ldap_bind_authoritative`
+##### <a name="ldap_bind_authoritative"></a>`ldap_bind_authoritative`
 
 Data type: `Optional[String[1]]`
 
@@ -626,7 +697,7 @@ Determines if other authentication providers are used when a user can be mapped 
 
 Default value: ``undef``
 
-##### `ldap_require_group`
+##### <a name="ldap_require_group"></a>`ldap_require_group`
 
 Data type: `Boolean`
 
@@ -634,7 +705,7 @@ LDAP group to require on login
 
 Default value: `$puppetboard::ldap_require_group`
 
-##### `ldap_require_group_dn`
+##### <a name="ldap_require_group_dn"></a>`ldap_require_group_dn`
 
 Data type: `Optional[String[1]]`
 
@@ -642,7 +713,7 @@ LDAP group DN for LDAP group
 
 Default value: ``undef``
 
-##### `virtualenv_dir`
+##### <a name="virtualenv_dir"></a>`virtualenv_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -650,7 +721,7 @@ Set location where virtualenv will be installed
 
 Default value: `$puppetboard::virtualenv_dir`
 
-##### `custom_apache_parameters`
+##### <a name="custom_apache_parameters"></a>`custom_apache_parameters`
 
 Data type: `Hash`
 
@@ -658,19 +729,15 @@ A hash passed to the `apache::vhost` for custom settings
 
 Default value: `{}`
 
-### `puppetboard::params`
-
-== Class: puppetboard::params
-
-Defines default values for puppetboard parameters.
-
-Inherited by Class['puppetboard'].
-
 ## Data types
 
-### `Puppetboard::Syslogpriority`
+### <a name="puppetboardsyslogpriority"></a>`Puppetboard::Syslogpriority`
 
 type for the different Python log levels
 
-Alias of `Enum['debug', 'info', 'notice', 'warning', 'err', 'crit', 'alert', 'emerg']`
+Alias of
+
+```puppet
+Enum['debug', 'info', 'notice', 'warning', 'err', 'crit', 'alert', 'emerg']
+```
 
