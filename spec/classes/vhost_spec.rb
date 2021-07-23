@@ -18,11 +18,11 @@ describe 'puppetboard::apache::vhost' do
     end
 
     on_supported_os.each do |os, facts|
-      let :facts do
-        facts
-      end
-
       context "on  #{os}" do
+        let :facts do
+          facts
+        end
+
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('puppetboard::apache::vhost') }
         it { is_expected.to contain_file('/srv/puppetboard/puppetboard/wsgi.py') }
