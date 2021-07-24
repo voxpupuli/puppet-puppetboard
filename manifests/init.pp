@@ -167,7 +167,7 @@ class puppetboard (
     require     => Vcsrepo["${basedir}/puppetboard"],
     environment => $pyvenv_proxy_env,
   }
-  python::requirements { "${basedir}/puppetboard/requirements.txt":
+  python::pip { "${basedir}/puppetboard":
     virtualenv => $virtualenv_dir,
     proxy      => $python_proxy,
     owner      => $user,
@@ -182,7 +182,7 @@ class puppetboard (
       match   => ' app.run\(\'([\d\.]+)\'\)',
       require => [
         File["${basedir}/puppetboard"],
-        Python::Requirements["${basedir}/puppetboard/requirements.txt"],
+        Python::Pip["${basedir}/puppetboard"],
       ],
     }
   }
