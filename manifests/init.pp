@@ -172,6 +172,7 @@ class puppetboard (
     proxy      => $python_proxy,
     owner      => $user,
     group      => $group,
+    require    => Python::Pyvenv[$virtualenv_dir],
   }
 
   if $listen == 'public' {
@@ -181,7 +182,7 @@ class puppetboard (
       match   => ' app.run\(\'([\d\.]+)\'\)',
       require => [
         File["${basedir}/puppetboard"],
-        Python::Virtualenv["${basedir}/virtenv-puppetboard"]
+        Python::Requirements["${basedir}/puppetboard/requirements.txt"],
       ],
     }
   }
