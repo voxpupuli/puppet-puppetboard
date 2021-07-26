@@ -41,10 +41,6 @@ class puppetboard::apache::conf (
     content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
-    require => [
-      User[$user],
-      Vcsrepo[$docroot],
-    ],
   }
 
   file { "${puppetboard::apache_confd}/puppetboard.conf":
