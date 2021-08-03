@@ -33,7 +33,6 @@
 # @param manage_group If true, manage (create) this group. If false do nothing.
 # @param manage_selinux If true, manage selinux policies for puppetboard. If false do nothing.
 # @param reports_count This is the number of reports that we want the dashboard to display.
-# @param listen If set to 'public' puppetboard will listen on all interfaces
 # @param extra_settings Defaults to an empty hash '{}'. Used to pass in arbitrary key/value
 # @param override Sets the Apache AllowOverride value
 # @param enable_ldap_auth Whether to enable LDAP auth
@@ -90,7 +89,6 @@ class puppetboard (
   Stdlib::Absolutepath $virtualenv_dir                        = "${basedir}/virtenv-puppetboard",
   Integer[0] $reports_count                                   = 10,
   String[1] $default_environment                              = 'production',
-  Enum['public', 'private'] $listen                           = 'private',
   Boolean $offline_mode                                       = false,
   Hash $extra_settings                                        = {},
   String[1] $override                                         = 'None',
@@ -172,18 +170,6 @@ class puppetboard (
     proxy      => $python_proxy,
     owner      => $user,
     group      => $group,
-  }
-
-  if $listen == 'public' {
-    file_line { 'puppetboard listen':
-      path    => "${basedir}/puppetboard/dev.py",
-      line    => " app.run('0.0.0.0')",
-      match   => ' app.run\(\'([\d\.]+)\'\)',
-      require => [
-        File["${basedir}/puppetboard"],
-        Python::Virtualenv["${basedir}/virtenv-puppetboard"]
-      ],
-    }
   }
 
   if $manage_git and !defined(Package['git']) {
