@@ -111,7 +111,7 @@ class puppetboard (
   if $manage_user {
     user { $user:
       ensure     => present,
-      shell      => '/bin/bash',
+      shell      => '/bin/sh',
       home       => $homedir,
       managehome => true,
       gid        => $group,
