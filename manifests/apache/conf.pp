@@ -33,7 +33,7 @@ class puppetboard::apache::conf (
   Boolean $ldap_require_group                  = $puppetboard::ldap_require_group,
   Optional[String[1]] $ldap_require_group_dn   = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
-) inherits puppetboard {
+) {
   $docroot = "${basedir}/puppetboard"
 
   file { "${docroot}/wsgi.py":
