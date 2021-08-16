@@ -1,5 +1,6 @@
 # @summary Base class for Puppetboard. Sets up the user and python environment.
 #
+# @param install_from Specify how the package should be installed
 # @param user Puppetboard system user.
 # @param homedir Puppetboard system user's home directory.
 # @param group Puppetboard system group.
@@ -31,8 +32,10 @@
 # @param virtualenv_dir Set location where virtualenv will be installed
 # @param manage_user If true, manage (create) this group. If false do nothing.
 # @param manage_group If true, manage (create) this group. If false do nothing.
+# @param package_name Name of the package to install puppetboard
 # @param manage_selinux If true, manage selinux policies for puppetboard. If false do nothing.
 # @param reports_count This is the number of reports that we want the dashboard to display.
+# @param settings_file Path to puppetboard configuration file
 # @param extra_settings Defaults to an empty hash '{}'. Used to pass in arbitrary key/value
 # @param override Sets the Apache AllowOverride value
 # @param enable_ldap_auth Whether to enable LDAP auth
@@ -58,6 +61,7 @@ class puppetboard (
   Stdlib::Absolutepath $apache_confd,
   String[1] $apache_service,
   Pattern[/^3\.\d$/] $python_version,
+  Enum['package', 'vcsrepo'] $install_from                    = 'vcsrepo',
   Boolean $manage_selinux                                     = pick($facts['os.selinux.enabled'], false),
   String $user                                                = 'puppetboard',
   Optional[Stdlib::Absolutepath] $homedir                     = undef,
@@ -84,12 +88,14 @@ class puppetboard (
   Optional[String] $revision                                  = undef,
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
+  Optional[String[1]] $package_name                           = undef,
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
   Stdlib::Absolutepath $virtualenv_dir                        = "${basedir}/virtenv-puppetboard",
   Integer[0] $reports_count                                   = 10,
   String[1] $default_environment                              = 'production',
   Boolean $offline_mode                                       = false,
+  Stdlib::Absolutepath $settings_file                         = "${basedir}/puppetboard/settings.py",
   Hash $extra_settings                                        = {},
   String[1] $override                                         = 'None',
   Boolean $enable_ldap_auth                                   = false,
@@ -105,7 +111,7 @@ class puppetboard (
   if $manage_user {
     user { $user:
       ensure     => present,
-      shell      => '/bin/bash',
+      shell      => '/bin/sh',
       home       => $homedir,
       managehome => true,
       gid        => $group,
@@ -115,61 +121,75 @@ class puppetboard (
     }
   }
 
-  file { $basedir:
-    ensure => 'directory',
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
+  case $install_from {
+    'package': {
+      package { $package_name:
+        ensure => installed,
+      }
+    }
+    'vcsrepo': {
+      file { $basedir:
+        ensure => 'directory',
+        owner  => $user,
+        group  => $group,
+        mode   => '0755',
+      }
+
+      vcsrepo { "${basedir}/puppetboard":
+        ensure   => present,
+        provider => git,
+        owner    => $user,
+        source   => $git_source,
+        revision => $revision,
+        require  => [
+          User[$user],
+          Group[$group],
+        ],
+        before   => [
+          File[$settings_file],
+        ],
+      }
+
+      file { "${basedir}/puppetboard":
+        owner   => $user,
+        recurse => true,
+        require => Vcsrepo["${basedir}/puppetboard"],
+      }
+
+      $pyvenv_proxy_env = $python_proxy ? {
+        undef => [],
+        default => [
+          "HTTP_PROXY=${python_proxy}",
+          "HTTPS_PROXY=${python_proxy}",
+        ]
+      }
+      python::pyvenv { $virtualenv_dir:
+        ensure      => present,
+        version     => $python_version,
+        systempkgs  => false,
+        owner       => $user,
+        group       => $group,
+        require     => Vcsrepo["${basedir}/puppetboard"],
+        environment => $pyvenv_proxy_env,
+      }
+      python::requirements { "${basedir}/puppetboard/requirements.txt":
+        virtualenv => $virtualenv_dir,
+        proxy      => $python_proxy,
+        owner      => $user,
+        group      => $group,
+      }
+    }
+    default: {
+      fail("Unsupported installation method: ${install_from}")
+    }
   }
 
-  vcsrepo { "${basedir}/puppetboard":
-    ensure   => present,
-    provider => git,
-    owner    => $user,
-    source   => $git_source,
-    revision => $revision,
-    require  => [
-      User[$user],
-      Group[$group],
-    ],
-  }
-
-  file { "${basedir}/puppetboard":
-    owner   => $user,
-    recurse => true,
-    require => Vcsrepo["${basedir}/puppetboard"],
-  }
-
-  file { "${basedir}/puppetboard/settings.py":
+  file { $settings_file:
     ensure  => 'file',
     group   => $group,
     mode    => '0644',
     owner   => $user,
     content => template('puppetboard/settings.py.erb'),
-    require => Vcsrepo["${basedir}/puppetboard"],
-  }
-
-  $pyvenv_proxy_env = $python_proxy ? {
-    undef => [],
-    default => [
-      "HTTP_PROXY=${python_proxy}",
-      "HTTPS_PROXY=${python_proxy}",
-    ]
-  }
-  python::pyvenv { $virtualenv_dir:
-    ensure      => present,
-    version     => $python_version,
-    systempkgs  => false,
-    owner       => $user,
-    group       => $group,
-    require     => Vcsrepo["${basedir}/puppetboard"],
-    environment => $pyvenv_proxy_env,
-  }
-  python::requirements { "${basedir}/puppetboard/requirements.txt":
-    virtualenv => $virtualenv_dir,
-    proxy      => $python_proxy,
-    owner      => $user,
-    group      => $group,
   }
 
   if $manage_git and !defined(Package['git']) {
