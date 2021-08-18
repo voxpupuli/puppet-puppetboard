@@ -33,7 +33,7 @@ class puppetboard::apache::conf (
   Boolean $ldap_require_group                  = $puppetboard::ldap_require_group,
   Optional[String[1]] $ldap_require_group_dn   = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
-) inherits puppetboard {
+) {
   $docroot = "${basedir}/puppetboard"
 
   file { "${docroot}/wsgi.py":
@@ -41,10 +41,6 @@ class puppetboard::apache::conf (
     content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
-    require => [
-      User[$user],
-      Vcsrepo[$docroot],
-    ],
   }
 
   file { "${puppetboard::apache_confd}/puppetboard.conf":

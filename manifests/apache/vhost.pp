@@ -43,7 +43,7 @@ class puppetboard::apache::vhost (
   Optional[String[1]] $ldap_require_group_dn   = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
   Hash $custom_apache_parameters               = {},
-) inherits puppetboard {
+) {
   $docroot = "${basedir}/puppetboard"
 
   $wsgi_script_aliases = {
