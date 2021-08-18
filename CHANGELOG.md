@@ -4,6 +4,44 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v8.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v8.0.0) (2021-08-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v7.0.2...v8.0.0)
+
+**Breaking changes:**
+
+- Remove the $listen parameter [\#331](https://github.com/voxpupuli/puppet-puppetboard/pull/331) ([smortex](https://github.com/smortex))
+- increase lower bounds for stdlib, vcsrepo [\#327](https://github.com/voxpupuli/puppet-puppetboard/pull/327) ([kenyon](https://github.com/kenyon))
+
+**Implemented enhancements:**
+
+- Add support for FreeBSD [\#329](https://github.com/voxpupuli/puppet-puppetboard/pull/329) ([smortex](https://github.com/smortex))
+
+**Fixed bugs:**
+
+- Class\[Python\]: has no parameter named 'manage\_virtualenv\_package' with v7.0.2 version [\#319](https://github.com/voxpupuli/puppet-puppetboard/issues/319)
+- Fix the way facts are set in the test suite [\#328](https://github.com/voxpupuli/puppet-puppetboard/pull/328) ([smortex](https://github.com/smortex))
+- metadata.json: increase python minimum to 4.1.0 [\#320](https://github.com/voxpupuli/puppet-puppetboard/pull/320) ([kenyon](https://github.com/kenyon))
+
+**Closed issues:**
+
+- No Module Named Flask [\#333](https://github.com/voxpupuli/puppet-puppetboard/issues/333)
+- Puppet-python version dependency update [\#326](https://github.com/voxpupuli/puppet-puppetboard/issues/326)
+- Could not find resource [\#322](https://github.com/voxpupuli/puppet-puppetboard/issues/322)
+- Proxy setting \(python\_proxy\) is not passed to python::pyvenv [\#315](https://github.com/voxpupuli/puppet-puppetboard/issues/315)
+- remove virtualenv requirements [\#276](https://github.com/voxpupuli/puppet-puppetboard/issues/276)
+- manage\_git and manage\_virtualenv cannot be set to latest as readme suggests [\#253](https://github.com/voxpupuli/puppet-puppetboard/issues/253)
+- catalog failure is not reflected in node status [\#235](https://github.com/voxpupuli/puppet-puppetboard/issues/235)
+
+**Merged pull requests:**
+
+- Miscellaneous improvements [\#334](https://github.com/voxpupuli/puppet-puppetboard/pull/334) ([smortex](https://github.com/smortex))
+- README TOC points to removed sections, has wrong child elements. [\#324](https://github.com/voxpupuli/puppet-puppetboard/pull/324) ([mattblaha](https://github.com/mattblaha))
+- Clarify SELinux section of README. [\#323](https://github.com/voxpupuli/puppet-puppetboard/pull/323) ([mattblaha](https://github.com/mattblaha))
+- README.md: remove wrong example [\#321](https://github.com/voxpupuli/puppet-puppetboard/pull/321) ([kenyon](https://github.com/kenyon))
+- Remove params and switch to Hiera-based module data [\#318](https://github.com/voxpupuli/puppet-puppetboard/pull/318) ([towo](https://github.com/towo))
+- Fix python::pyvenv behind proxy. [\#316](https://github.com/voxpupuli/puppet-puppetboard/pull/316) ([dsnt02518](https://github.com/dsnt02518))
+
 ## [v7.0.2](https://github.com/voxpupuli/puppet-puppetboard/tree/v7.0.2) (2020-10-17)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v7.0.1...v7.0.2)

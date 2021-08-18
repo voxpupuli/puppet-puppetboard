@@ -41,6 +41,7 @@ configure puppetboard with an apache config for a subpath (http://$fqdn/puppetbo
 
 The following parameters are available in the `puppetboard` class:
 
+* [`install_from`](#install_from)
 * [`user`](#user)
 * [`homedir`](#homedir)
 * [`group`](#group)
@@ -72,15 +73,24 @@ The following parameters are available in the `puppetboard` class:
 * [`virtualenv_dir`](#virtualenv_dir)
 * [`manage_user`](#manage_user)
 * [`manage_group`](#manage_group)
+* [`package_name`](#package_name)
 * [`manage_selinux`](#manage_selinux)
 * [`reports_count`](#reports_count)
-* [`listen`](#listen)
+* [`settings_file`](#settings_file)
 * [`extra_settings`](#extra_settings)
 * [`override`](#override)
 * [`enable_ldap_auth`](#enable_ldap_auth)
 * [`ldap_require_group`](#ldap_require_group)
 * [`apache_confd`](#apache_confd)
 * [`apache_service`](#apache_service)
+
+##### <a name="install_from"></a>`install_from`
+
+Data type: `Enum['package', 'vcsrepo']`
+
+Specify how the package should be installed
+
+Default value: `'vcsrepo'`
 
 ##### <a name="user"></a>`user`
 
@@ -328,6 +338,14 @@ If true, manage (create) this group. If false do nothing.
 
 Default value: ``true``
 
+##### <a name="package_name"></a>`package_name`
+
+Data type: `Optional[String[1]]`
+
+Name of the package to install puppetboard
+
+Default value: ``undef``
+
 ##### <a name="manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
@@ -344,13 +362,13 @@ This is the number of reports that we want the dashboard to display.
 
 Default value: `10`
 
-##### <a name="listen"></a>`listen`
+##### <a name="settings_file"></a>`settings_file`
 
-Data type: `Enum['public', 'private']`
+Data type: `Stdlib::Absolutepath`
 
-If set to 'public' puppetboard will listen on all interfaces
+Path to puppetboard configuration file
 
-Default value: `'private'`
+Default value: `"${basedir}/puppetboard/settings.py"`
 
 ##### <a name="extra_settings"></a>`extra_settings`
 
