@@ -5,24 +5,14 @@ require 'spec_helper_acceptance'
 describe 'puppetboard class' do
   case fact('os.family')
   when 'RedHat'
-    apache_conf_file = '/etc/httpd/conf.d/puppetboard.conf'
+    apache_conf_file = '/etc/httpd/conf.d/25-puppetboard.conf'
   when 'Debian'
-    apache_conf_file = '/etc/apache2/conf-enabled/puppetboard.conf'
+    apache_conf_file = '/etc/apache2/conf.d/25-puppetboard.conf'
   end
 
   context 'configuring Apache without vhost / mod_wsgi' do
     it 'works with no errors' do
       pp = <<-EOS
-      # Configure Apache on this server
-      class { 'apache': }
-      $wsgi = $facts['os']['family'] ? {
-        'Debian' => {package_name => "libapache2-mod-wsgi-py3", mod_path => "/usr/lib/apache2/modules/mod_wsgi.so"},
-        default  => {},
-      }
-      class { 'apache::mod::wsgi':
-        * => $wsgi,
-      }
-
       # Configure PuppetDB
       class { 'puppetdb':
         disable_ssl     => true,
@@ -36,7 +26,7 @@ describe 'puppetboard class' do
         require           => Class['puppetdb'],
       }
 
-      # Access Puppetboard through pboard.example.com
+      # Configure Apache to allow access to localhost/puppetboard
       class { 'puppetboard::apache::conf': }
       EOS
 
@@ -61,14 +51,6 @@ describe 'puppetboard class' do
       # Configure Apache on this server
       class { 'apache':
         default_vhost => false,
-        purge_configs => true,
-      }
-      $wsgi = $facts['os']['family'] ? {
-        'Debian' => {package_name => "libapache2-mod-wsgi-py3", mod_path => "/usr/lib/apache2/modules/mod_wsgi.so"},
-        default  => {},
-      }
-      class { 'apache::mod::wsgi':
-        * => $wsgi,
       }
 
       # Configure PuppetDB
@@ -145,7 +127,6 @@ describe 'puppetboard class' do
       pp = <<-EOS
       # Configure Apache on this server
       class { 'apache': }
-      class { 'apache::mod::wsgi': }
       class { 'apache::mod::authnz_ldap': }
       -> class { 'puppetboard':
         manage_virtualenv => true,
@@ -192,7 +173,6 @@ describe 'puppetboard class' do
       pp = <<-EOS
       # Configure Apache on this server
       class { 'apache': }
-      class { 'apache::mod::wsgi': }
       class { 'apache::mod::authnz_ldap': }
       -> class { 'puppetboard':
         manage_virtualenv => true,

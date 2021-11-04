@@ -46,6 +46,17 @@ class puppetboard::apache::vhost (
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
   Hash $custom_apache_parameters               = {},
 ) {
+  $wsgi = $facts['os']['family'] ? {
+    'Debian' => {
+      package_name => 'libapache2-mod-wsgi-py3',
+      mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
+    },
+    default  => {},
+  }
+  class { 'apache::mod::wsgi':
+    * => $wsgi,
+  }
+
   $docroot = "${basedir}/puppetboard"
 
   $wsgi_script_aliases = {
@@ -76,7 +87,16 @@ class puppetboard::apache::vhost (
       path    => "${puppetboard::apache_confd}/puppetboard-ldap.part",
       owner   => 'root',
       group   => 'root',
-      content => template('puppetboard/apache/ldap.erb'),
+      content => epp("${module_name}/apache/ldap.epp",
+        {
+          'ldap_bind_authoritative' => $ldap_bind_authoritative,
+          'ldap_bind_dn'            => $ldap_bind_dn,
+          'ldap_bind_password'      => $ldap_bind_password,
+          'ldap_require_group_dn'   => $ldap_require_group_dn,
+          'ldap_require_group'      => $ldap_require_group,
+          'ldap_url'                => $ldap_url,
+        },
+      ),
       require => File["${docroot}/wsgi.py"],
       notify  => Service[$puppetboard::apache_service],
     }

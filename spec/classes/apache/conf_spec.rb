@@ -10,8 +10,6 @@ describe 'puppetboard::apache::conf' do
     end
     let(:pre_condition) do
       [
-        'class { "apache": default_vhost => false, default_mods => false, }',
-        'class { "apache::mod::wsgi": }',
         'class { "puppetboard": }'
       ]
     end
@@ -23,6 +21,7 @@ describe 'puppetboard::apache::conf' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_class('apache::mod::wsgi') }
       end
     end
   end
