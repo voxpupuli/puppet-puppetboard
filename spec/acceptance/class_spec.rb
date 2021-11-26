@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'puppetboard class' do
@@ -42,6 +44,7 @@ describe 'puppetboard class' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_failures: true)
     end
+
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost/puppetboard/') do |r|
         # The default puppetboard page returns 404 on empty puppetdb
@@ -50,7 +53,6 @@ describe 'puppetboard class' do
         expect(r.exit_code).to be_zero
       end
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 
   context 'configuring Apache with vhost / mod_wsgi' do
@@ -93,6 +95,7 @@ describe 'puppetboard class' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_failures: true)
     end
+
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost') do |r|
         # The default puppetboard page returns 404 on empty puppetdb
@@ -101,7 +104,6 @@ describe 'puppetboard class' do
         expect(r.exit_code).to be_zero
       end
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 
   context 'with SSL' do
@@ -178,6 +180,7 @@ describe 'puppetboard class' do
       it { is_expected.to contain 'AuthLDAPBindDN "cn=user,dc=puppet,dc=example,dc=com"' }
       it { is_expected.to contain 'AuthLDAPURL "ldap://puppet.example.com"' }
     end
+
     describe file('/srv/puppetboard/puppetboard/settings.py') do
       it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
       it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
@@ -227,6 +230,7 @@ describe 'puppetboard class' do
       it { is_expected.to contain 'AuthLDAPURL "ldap://puppet.example.com"' }
       it { is_expected.to contain 'Require ldap-group cn=admins,=cn=groups,dc=puppet,dc=example,dc=com' }
     end
+
     describe file('/srv/puppetboard/puppetboard/settings.py') do
       it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
       it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }

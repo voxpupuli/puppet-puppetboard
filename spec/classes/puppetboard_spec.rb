@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'puppetboard', type: :class do
@@ -11,6 +13,7 @@ describe 'puppetboard', type: :class do
       it { is_expected.to contain_class('puppetboard') }
       it { is_expected.to contain_group('puppetboard') }
       it { is_expected.to contain_user('puppetboard') }
+
       if ['FreeBSD'].include?(facts[:os]['family'])
         it { is_expected.to contain_package('py38-puppetboard') }
       else
