@@ -2,6 +2,7 @@
 #
 # @param vhost_name The vhost ServerName.
 # @param wsgi_alias WSGI script alias source
+# @param ip IP for the vhost to bind to
 # @param port Port for the vhost to listen on.
 # @param ssl If vhost should be configured with ssl
 # @param ssl_cert Path to server SSL cert
@@ -24,6 +25,7 @@
 class puppetboard::apache::vhost (
   String[1] $vhost_name,
   Stdlib::Unixpath $wsgi_alias                 = '/',
+  Optional[Stdlib::IP::Address] $ip            = undef,
   Stdlib::Port $port                           = 5000,
   Boolean $ssl                                 = false,
   Optional[Stdlib::AbsolutePath] $ssl_cert     = undef,
@@ -85,6 +87,7 @@ class puppetboard::apache::vhost (
   }
   apache::vhost { $vhost_name:
     port                => $port,
+    ip                  => $ip,
     docroot             => $docroot,
     manage_docroot      => false,
     ssl                 => $ssl,
