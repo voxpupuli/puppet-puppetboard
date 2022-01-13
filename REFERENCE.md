@@ -561,6 +561,7 @@ The following parameters are available in the `puppetboard::apache::vhost` class
 
 * [`vhost_name`](#vhost_name)
 * [`wsgi_alias`](#wsgi_alias)
+* [`ip`](#ip)
 * [`port`](#port)
 * [`ssl`](#ssl)
 * [`ssl_cert`](#ssl_cert)
@@ -594,6 +595,14 @@ Data type: `Stdlib::Unixpath`
 WSGI script alias source
 
 Default value: `'/'`
+
+##### <a name="ip"></a>`ip`
+
+Data type: `Optional[Stdlib::IP::Address]`
+
+IP for the vhost to bind to
+
+Default value: ``undef``
 
 ##### <a name="port"></a>`port`
 
