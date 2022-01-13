@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v8.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v8.1.0) (2022-01-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v8.0.0...v8.1.0)
+
+**Implemented enhancements:**
+
+- add parameter for listen ip [\#344](https://github.com/voxpupuli/puppet-puppetboard/pull/344) ([stefan-ahrefs](https://github.com/stefan-ahrefs))
+
+**Merged pull requests:**
+
+- README: fix link to PuppetDB docs [\#342](https://github.com/voxpupuli/puppet-puppetboard/pull/342) ([kenyon](https://github.com/kenyon))
+- Allow up-to-date dependencies [\#337](https://github.com/voxpupuli/puppet-puppetboard/pull/337) ([smortex](https://github.com/smortex))
+
 ## [v8.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v8.0.0) (2021-08-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v7.0.2...v8.0.0)
