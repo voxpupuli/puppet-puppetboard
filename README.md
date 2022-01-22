@@ -139,14 +139,6 @@ puppetboard to be available from http://pboard.example.com:
 # Configure Apache on this server
 class { 'apache':
   default_vhost => false,
-  purge_configs => true,
-}
-$wsgi = $facts['os']['family'] ? {
-  'Debian' => {package_name => "libapache2-mod-wsgi-py3", mod_path => "/usr/lib/apache2/modules/mod_wsgi.so"},
-  default  => {},
-}
-class { 'apache::mod::wsgi':
-  * => $wsgi,
 }
 
 # Configure Puppetboard
@@ -169,17 +161,6 @@ This is useful if you simply want puppetboard accessible from
 http://example.com/puppetboard:
 
 ```puppet
-# Configure Apache
-# Ensure it does *not* purge configuration files
-class { 'apache':
-  purge_configs => false,
-  mpm_module    => 'prefork',
-  default_vhost => true,
-  default_mods  => false,
-}
-
-class { 'apache::mod::wsgi': }
-
 # Configure Puppetboard
 class { 'puppetboard': }
 

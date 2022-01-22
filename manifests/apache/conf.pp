@@ -34,21 +34,49 @@ class puppetboard::apache::conf (
   Optional[String[1]] $ldap_require_group_dn   = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
 ) {
+  $wsgi = $facts['os']['family'] ? {
+    'Debian' => {
+      package_name => 'libapache2-mod-wsgi-py3',
+      mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
+    },
+    default  => {},
+  }
+  class { 'apache::mod::wsgi':
+    * => $wsgi,
+  }
+
   $docroot = "${basedir}/puppetboard"
 
-  file { "${docroot}/wsgi.py":
+  file { "${puppetboard::apache_confd}/puppetboard.conf":
+    ensure => absent,
+  }
+  -> file { "${docroot}/wsgi.py":
     ensure  => file,
     content => file("${module_name}/wsgi.py"),
     owner   => $user,
     group   => $group,
   }
-
-  file { "${puppetboard::apache_confd}/puppetboard.conf":
-    ensure  => file,
+  -> apache::custom_config { 'puppetboard':
+    ensure  => present,
     owner   => 'root',
     group   => 'root',
-    content => template('puppetboard/apache/conf.erb'),
-    require => File["${docroot}/wsgi.py"],
-    notify  => Service[$puppetboard::apache_service],
+    content => epp("${module_name}/apache/conf.epp",
+      {
+        'docroot'                 => $docroot,
+        'enable_ldap_auth'        => $enable_ldap_auth,
+        'group'                   => $group,
+        'ldap_bind_authoritative' => $ldap_bind_authoritative,
+        'ldap_bind_dn'            => $ldap_bind_dn,
+        'ldap_bind_password'      => $ldap_bind_password,
+        'ldap_require_group_dn'   => $ldap_require_group_dn,
+        'ldap_require_group'      => $ldap_require_group,
+        'ldap_url'                => $ldap_url,
+        'max_reqs'                => $max_reqs,
+        'threads'                 => $threads,
+        'user'                    => $user,
+        'virtualenv_dir'          => $virtualenv_dir,
+        'wsgi_alias'              => $wsgi_alias,
+      },
+    ),
   }
 }
