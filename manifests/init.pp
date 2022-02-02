@@ -139,6 +139,7 @@ class puppetboard (
         ensure   => present,
         provider => git,
         owner    => $user,
+        group    => $group,
         source   => $git_source,
         revision => $revision,
         require  => [
