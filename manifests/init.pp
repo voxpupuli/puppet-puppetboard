@@ -138,7 +138,7 @@ class puppetboard (
       vcsrepo { "${basedir}/puppetboard":
         ensure   => present,
         provider => git,
-        owner    => $user,
+        user     => $user,
         source   => $git_source,
         revision => $revision,
         require  => [
@@ -148,12 +148,6 @@ class puppetboard (
         before   => [
           File[$settings_file],
         ],
-      }
-
-      file { "${basedir}/puppetboard":
-        owner   => $user,
-        recurse => true,
-        require => Vcsrepo["${basedir}/puppetboard"],
       }
 
       $pyvenv_proxy_env = $python_proxy ? {

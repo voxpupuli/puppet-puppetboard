@@ -18,7 +18,6 @@ describe 'puppetboard', type: :class do
         it { is_expected.to contain_package('py38-puppetboard') }
       else
         it { is_expected.to contain_file('/srv/puppetboard/puppetboard/settings.py') }
-        it { is_expected.to contain_file('/srv/puppetboard/puppetboard') }
         it { is_expected.to contain_file('/srv/puppetboard') }
         it { is_expected.to contain_python__pyvenv('/srv/puppetboard/virtenv-puppetboard') }
         it { is_expected.to contain_vcsrepo('/srv/puppetboard/puppetboard') }
