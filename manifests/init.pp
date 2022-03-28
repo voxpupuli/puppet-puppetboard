@@ -148,6 +148,7 @@ class puppetboard (
         before   => [
           File[$settings_file],
         ],
+        notify   => Python::Requirements["${basedir}/puppetboard/requirements.txt"],
       }
 
       $pyvenv_proxy_env = $python_proxy ? {
