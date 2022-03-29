@@ -13,8 +13,6 @@
 # @param puppetdb_ssl_verify whether PuppetDB uses SSL or not (true or false), or the path to the puppet CA
 # @param puppetdb_cert path to PuppetMaster/CA signed client SSL cert
 # @param puppetdb_timeout timeout, in seconds, for connecting to PuppetDB
-# @param dev_listen_host host that dev server binds to/listens on
-# @param dev_listen_port port that dev server binds to/listens on
 # @param unresponsive number of hours after which a node is considered "unresponsive"
 # @param enable_catalog Whether to allow the user to browser catalog comparisons.
 # @param enable_query Whether to allow the user to run raw queries against PuppetDB.
@@ -24,7 +22,6 @@
 # @param python_proxy HTTP proxy server to use for pip/virtualenv.
 # @param python_index HTTP index server to use for pip/virtualenv.
 # @param default_environment set the default environment
-# @param experimental Enable experimental features.
 # @param revision Commit, tag, or branch from Puppetboard's Git repo to be used
 # @param version PyPI package version to be installed
 # @param use_pre_releases if version is set to 'latest', then should pre-releases be used too?
@@ -71,8 +68,6 @@ class puppetboard (
   Optional[Variant[String[1], Array[String[1]]]] $groups      = undef,
   Stdlib::AbsolutePath $basedir                               = '/srv/puppetboard',
   String $git_source                                          = 'https://github.com/voxpupuli/puppetboard',
-  String $dev_listen_host                                     = '127.0.0.1',
-  Stdlib::Port $dev_listen_port                               = 5000,
   String $puppetdb_host                                       = '127.0.0.1',
   Stdlib::Port $puppetdb_port                                 = 8080,
   Optional[Stdlib::AbsolutePath] $puppetdb_key                = undef,
@@ -86,7 +81,6 @@ class puppetboard (
   Puppetboard::Syslogpriority $python_loglevel                = 'info',
   Optional[String[1]] $python_proxy                           = undef,
   Optional[String[1]] $python_index                           = undef,
-  Boolean $experimental                                       = false,
   Optional[String] $revision                                  = undef,
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
