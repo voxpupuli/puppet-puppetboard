@@ -2,7 +2,9 @@
 
 require 'spec_helper_acceptance'
 
-describe 'puppetboard class' do
+require_relative 'support/puppetdb'
+
+describe 'puppetboard class', if: has_puppetdb do
   case fact('os.family')
   when 'RedHat'
     apache_conf_file = '/etc/httpd/conf.d/25-puppetboard.conf'
