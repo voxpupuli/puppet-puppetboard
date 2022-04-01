@@ -1,6 +1,6 @@
 # @summary Base class for Puppetboard. Sets up the user and python environment.
 #
-# @param install_from Specify how the package should be installed
+# @param install_from Specify how the app should be installed
 # @param user Puppetboard system user.
 # @param homedir Puppetboard system user's home directory.
 # @param group Puppetboard system group.
@@ -141,6 +141,10 @@ class puppetboard (
       }
     }
     'pip': {
+      if $revision {
+        fail("'pip' installation method uses \$version parameter to specify version, not \$revision.")
+      }
+
       file { "${basedir}/puppetboard":
         ensure  => directory,
         recurse => true,
@@ -174,6 +178,10 @@ class puppetboard (
       }
     }
     'vcsrepo': {
+      if $version != 'latest' {
+        fail("'vcsrepo' installation method uses \$revision parameter to specify version, not \$version.")
+      }
+
       notify { 'Not recommended':
         message => "This installation method is recommended mainly for the contributors to voxpupuli/puppetboard.
                     Consider switching to 'pip' if you are not one of them.",
