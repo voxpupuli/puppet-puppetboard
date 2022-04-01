@@ -26,6 +26,8 @@
 # @param default_environment set the default environment
 # @param experimental Enable experimental features.
 # @param revision Commit, tag, or branch from Puppetboard's Git repo to be used
+# @param version PyPI package version to be installed
+# @param use_pre_releases if version is set to 'latest', then should pre-releases be used too?
 # @param manage_git If true, require the git package. If false do nothing.
 # @param manage_virtualenv If true, require the virtualenv package. If false do nothing.
 # @param python_version Python version to use in virtualenv.
@@ -61,7 +63,7 @@ class puppetboard (
   Stdlib::Absolutepath $apache_confd,
   String[1] $apache_service,
   Pattern[/^3\.\d$/] $python_version,
-  Enum['package', 'vcsrepo'] $install_from                    = 'vcsrepo',
+  Enum['package', 'pip', 'vcsrepo'] $install_from             = 'pip',
   Boolean $manage_selinux                                     = pick($facts['os.selinux.enabled'], false),
   String $user                                                = 'puppetboard',
   Optional[Stdlib::Absolutepath] $homedir                     = undef,
@@ -100,6 +102,8 @@ class puppetboard (
   String[1] $override                                         = 'None',
   Boolean $enable_ldap_auth                                   = false,
   Boolean $ldap_require_group                                 = false,
+  Variant[Enum['latest'], String[1]] $version                 = 'latest',
+  Boolean $use_pre_releases                                   = false,
 ) {
   if $manage_group {
     group { $group:
@@ -121,18 +125,64 @@ class puppetboard (
     }
   }
 
+  $pyvenv_proxy_env = $python_proxy ? {
+    undef   => [],
+    default => [
+      "HTTP_PROXY=${python_proxy}",
+      "HTTPS_PROXY=${python_proxy}",
+    ]
+  }
+
+  file { $basedir:
+    ensure => 'directory',
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
+  }
+
   case $install_from {
     'package': {
       package { $package_name:
         ensure => installed,
       }
     }
+    'pip': {
+      file { "${basedir}/puppetboard":
+        ensure  => directory,
+        recurse => true,
+        force   => true,
+        purge   => true, # such cleanup is needed in case of a switch from install_from=vcsrepo to install_from=pip
+      }
+
+      python::pyvenv { $virtualenv_dir:
+        ensure      => present,
+        version     => $python_version,
+        systempkgs  => false,
+        owner       => $user,
+        group       => $group,
+        require     => File[$basedir],
+        environment => $pyvenv_proxy_env,
+      }
+
+      $install_args = $use_pre_releases ? {
+        true    => '--pre',
+        default => undef,
+      }
+
+      python::pip { 'puppetboard':
+        ensure       => $version,
+        virtualenv   => $virtualenv_dir,
+        proxy        => $python_proxy,
+        owner        => $user,
+        group        => $group,
+        require      => Python::Pyvenv[$virtualenv_dir],
+        install_args => $install_args,
+      }
+    }
     'vcsrepo': {
-      file { $basedir:
-        ensure => 'directory',
-        owner  => $user,
-        group  => $group,
-        mode   => '0755',
+      notify { 'Not recommended':
+        message => "This installation method is recommended mainly for the contributors to voxpupuli/puppetboard.
+                    Consider switching to 'pip' if you are not one of them.",
       }
 
       vcsrepo { "${basedir}/puppetboard":
@@ -151,13 +201,6 @@ class puppetboard (
         notify   => Python::Requirements["${basedir}/puppetboard/requirements.txt"],
       }
 
-      $pyvenv_proxy_env = $python_proxy ? {
-        undef => [],
-        default => [
-          "HTTP_PROXY=${python_proxy}",
-          "HTTPS_PROXY=${python_proxy}",
-        ]
-      }
       python::pyvenv { $virtualenv_dir:
         ensure      => present,
         version     => $python_version,
@@ -167,6 +210,7 @@ class puppetboard (
         require     => Vcsrepo["${basedir}/puppetboard"],
         environment => $pyvenv_proxy_env,
       }
+
       python::requirements { "${basedir}/puppetboard/requirements.txt":
         virtualenv => $virtualenv_dir,
         proxy      => $python_proxy,
@@ -202,15 +246,15 @@ class puppetboard (
   }
 
   if $manage_selinux {
-    selboolean { 'httpd_can_network_relay' :
+    selboolean { 'httpd_can_network_relay':
       persistent => true,
       value      => 'on',
     }
-    selboolean { 'httpd_can_network_connect' :
+    selboolean { 'httpd_can_network_connect':
       persistent => true,
       value      => 'on',
     }
-    selboolean { 'httpd_can_network_connect_db' :
+    selboolean { 'httpd_can_network_connect_db':
       persistent => true,
       value      => 'on',
     }
