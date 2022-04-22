@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v8.2.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v8.2.0) (2022-04-22)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v8.1.0...v8.2.0)
+
+**Implemented enhancements:**
+
+- Support Debian 11 [\#348](https://github.com/voxpupuli/puppet-puppetboard/pull/348) ([kenyon](https://github.com/kenyon))
+- always use python3 wsgi apache module on Debian [\#343](https://github.com/voxpupuli/puppet-puppetboard/pull/343) ([kenyon](https://github.com/kenyon))
+
+**Closed issues:**
+
+- Warning: The directory '/srv/puppetboard/puppetboard' contains 1936 entries, which exceeds the default soft limit 1000 [\#351](https://github.com/voxpupuli/puppet-puppetboard/issues/351)
+- Debian 11 data targets incorrect system python version [\#338](https://github.com/voxpupuli/puppet-puppetboard/issues/338)
+- Use python3-pip instead of python-pip [\#311](https://github.com/voxpupuli/puppet-puppetboard/issues/311)
+- Use the $custom apache parameters to set up puppetboard with basic auth [\#243](https://github.com/voxpupuli/puppet-puppetboard/issues/243)
+- New version of CommonMark has changed the name to lower case -\> commonmark [\#223](https://github.com/voxpupuli/puppet-puppetboard/issues/223)
+
+**Merged pull requests:**
+
+- Clone git repository as $user [\#352](https://github.com/voxpupuli/puppet-puppetboard/pull/352) ([smortex](https://github.com/smortex))
+
 ## [v8.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v8.1.0) (2022-01-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v8.0.0...v8.1.0)
