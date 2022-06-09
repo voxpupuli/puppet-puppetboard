@@ -39,9 +39,7 @@ describe 'puppetboard class', if: has_puppetdb do
 
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost/puppetboard/') do |r|
-        # The default puppetboard page returns 404 on empty puppetdb
-        # https://github.com/voxpupuli/puppetboard/issues/515
-        expect(r.stdout).to match(%r{404 Not Found})
+        expect(r.stdout).to match(%r{<title>Puppetboard</title>})
         expect(r.exit_code).to be_zero
       end
     end
@@ -82,9 +80,7 @@ describe 'puppetboard class', if: has_puppetdb do
 
     it 'answers to localhost' do
       shell('/usr/bin/curl localhost') do |r|
-        # The default puppetboard page returns 404 on empty puppetdb
-        # https://github.com/voxpupuli/puppetboard/issues/515
-        expect(r.stdout).to match(%r{404 Not Found})
+        expect(r.stdout).to match(%r{<title>Puppetboard</title>})
         expect(r.exit_code).to be_zero
       end
     end
