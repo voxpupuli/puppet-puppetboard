@@ -97,7 +97,7 @@ class puppetboard (
   Boolean $offline_mode                                       = false,
   Stdlib::Absolutepath $settings_file                         = "${basedir}/puppetboard/settings.py",
   Hash $extra_settings                                        = {},
-  String[1] $override                                         = 'None',
+  Variant[Array[String[1]], String[1]] $override              = ['None'],
   Boolean $enable_ldap_auth                                   = false,
   Boolean $ldap_require_group                                 = false,
 ) {
