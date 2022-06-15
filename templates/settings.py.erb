@@ -1,9 +1,3 @@
-<% if @dev_listen_host -%>
-DEV_LISTEN_HOST = '<%= @dev_listen_host %>'
-<% end -%>
-<% if @dev_listen_port -%>
-DEV_LISTEN_PORT = <%= @dev_listen_port %>
-<% end -%>
 <% if @python_loglevel -%>
 LOGLEVEL = '<%= @python_loglevel-%>'
 <% end -%>
@@ -51,11 +45,6 @@ LOCALISE_TIMESTAMP = False
 OFFLINE_MODE = True
 <% else -%>
 OFFLINE_MODE = False
-<% end -%>
-<% if @experimental -%>
-PUPPETDB_EXPERIMENTAL = True
-<% else -%>
-PUPPETDB_EXPERIMENTAL = False
 <% end -%>
 <% if @default_environment -%>
 DEFAULT_ENVIRONMENT = '<%= @default_environment %>'
