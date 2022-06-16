@@ -28,11 +28,11 @@
 
 ## Overview
 
-This is the puppetboard puppet module.
+Puppet module for installing and managing [Puppetboard](https://github.com/voxpupuli/puppetboard).
 
-Puppetboard is an open source puppet dashboard
-
-https://github.com/voxpupuli/puppetboard
+Puppetboard is a web interface to [PuppetDB](https://puppet.com/docs/puppetdb/latest/index.html) aiming to replace
+the reporting functionality of [Puppet Enterprise console (previously: Puppet Dashboard)](https://puppet.com/docs/pe/latest/console_accessing.html)
+for the open source Puppet.
 
 ## Setup
 
@@ -67,7 +67,7 @@ class { 'puppetboard':
 }
 ```
 
-This will install the latest stable version of the app from a `pip` package in a virtualenv created using the requested Python version and keep it up to date.
+This will install the latest stable version of the app from a [PyPI package](https://pypi.org/project/puppetboard/) in a virtualenv created using the requested Python version and keep it up to date.
 
 ## Number of Reports
 
