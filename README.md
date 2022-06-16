@@ -46,11 +46,11 @@ Note that this module no longer explicitly requires the puppetlabs apache module
 
     puppet module install puppetlabs-apache
 
-This module also requires the `git` and `virtualenv` packages. These can be enabled in the module by:
+In most cases the module requires the `virtualenv` package. This can be enabled in the module with the `manage_virtualenv` flag set to `true`:
 
 ```puppet
 class { 'puppetboard':
-  manage_git        => true,
+  python_version    => '3.6',
   manage_virtualenv => true,
 }
 ```
@@ -59,16 +59,20 @@ If the virtualenv is managed by this module, the [voxpupuli/python](https://forg
 
 ## Usage
 
-Declare the base puppetboard manifest:
+Declare the base puppetboard manifest with the below required parameter(s), set to the values you want to use:
 
 ```puppet
-class { 'puppetboard': }
+class { 'puppetboard':
+  python_version => '3.6',
+}
 ```
+
+This will install the latest stable version of the app from a `pip` package in a virtualenv created using the requested Python version and keep it up to date.
 
 ## Number of Reports
 
 NOTE: In order to have reports present in the dashboard, report storage must be enabled on the Puppet master node.
-This is not the default behavior, so it mush be enabled.
+This is not the default behavior, so it must be enabled.
 
 See https://puppet.com/docs/puppetdb/latest/connect_puppet_server.html#enabling-report-storage for instructions on
 report storage.
@@ -78,9 +82,9 @@ controlled to set the number of reports to show.
 
 ```puppet
 class { 'puppetboard':
-  reports_count => 40
+  python_version => '3.6',
+  reports_count  => 40,
 }
-
 ```
 
 ## Offline Mode
@@ -90,17 +94,19 @@ puppet board can load static assets (jquery, semantic-ui, tablesorter, etc) from
 
 ```puppet
 class { 'puppetboard':
-  offline_mode => true,
+  python_version => '3.6',
+  offline_mode   => true,
 }
 ```
 
 ## Set Default Environment
 
-by default, puppetboard defaults to "production" environment. This can be
+By default, puppetboard defaults to "production" environment. This can be
 set to default to a different environment.
 
 ```puppet
 class { 'puppetboard':
+  python_version      => '3.6',
   default_environment => 'customers',
 }
 ```
@@ -109,6 +115,7 @@ or to default to "All environments":
 
 ```puppet
 class { 'puppetboard':
+  python_version      => '3.6',
   default_environment => '*',
 }
 ```
@@ -117,6 +124,7 @@ class { 'puppetboard':
 
 ```puppet
 class { 'puppetboard':
+  python_version => '3.6',
   manage_selinux => false,
 }
 ```
@@ -131,7 +139,7 @@ to help configuration.
 
 The first, `puppetboard::apache::vhost`, will use the `apache::vhost`
 defined-type to create a full virtual host. This is useful if you want
-puppetboard to be available from http://pboard.example.com:
+puppetboard to be available under an address like http://pboard.example.com:
 
 (The following is generic code used in our tests, it works on Debian 9 and 10, also on Ubuntu 16.04 and 18.04. It will talk to PuppetDB on localhost via http)
 
@@ -143,14 +151,13 @@ class { 'apache':
 
 # Configure Puppetboard
 class { 'puppetboard':
+  python_version    => '3.6',
   manage_virtualenv => true,
-  manage_git        => true,
-  require           => Class['puppetdb'],
 }
 
 # Access Puppetboard through pboard.example.com
 class { 'puppetboard::apache::vhost':
-  vhost_name => 'localhost',
+  vhost_name => 'pboard.example.com',
   port       => 80,
 }
 ```
@@ -162,7 +169,9 @@ http://example.com/puppetboard:
 
 ```puppet
 # Configure Puppetboard
-class { 'puppetboard': }
+class { 'puppetboard':
+  python_version => '3.6',
+}
 
 # Access Puppetboard from example.com/puppetboard
 class { 'puppetboard::apache::conf': }
@@ -240,6 +249,7 @@ Here's an example, using new certificates:
 $ssl_dir = '/var/lib/puppetboard/ssl'
 $puppetboard_certname = 'puppetboard.example.com'
 class { 'puppetboard':
+  python_version      => '3.6',
   manage_virtualenv   => true,
   puppetdb_host       => 'puppetdb.example.com',
   puppetdb_port       => 8081,
@@ -257,8 +267,9 @@ Here's a complete example, re-using the puppet client certs:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  groups              => 'puppet',
+  python_version      => '3.6',
   manage_virtualenv   => true,
+  groups              => 'puppet',
   puppetdb_host       => 'puppetdb.example.com',
   puppetdb_port       => 8081,
   puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
@@ -273,8 +284,9 @@ Note that both the above approaches only work if you have the Puppet CA root cer
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  groups              => 'puppet',
+  python_version      => '3.6',
   manage_virtualenv   => true,
+  groups              => 'puppet',
   puppetdb_host       => 'puppetdb.example.com',
   puppetdb_port       => 8081,
   puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
@@ -294,8 +306,9 @@ that host and configure `puppetdb_host` to `127.0.0.1`:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  groups              => 'puppet',
+  python_version      => '3.6',
   manage_virtualenv   => true,
+  groups              => 'puppet',
   puppetdb_host       => '127.0.0.1',
   puppetdb_port       => 8081,
   puppetdb_key        => "${ssl_dir}/private_keys/${puppetboard_certname}.pem",
@@ -312,7 +325,7 @@ configuration option, documented [here](https://puppet.com/docs/puppet/latest/co
 
 ```ini
 [main]
-    dns_alt_names = puppetdb,puppetdb.domain.tld,puppetboard,puppetboard.domain.tld,IP:127.0.0.1
+dns_alt_names = puppetdb,puppetdb.domain.tld,puppetboard,puppetboard.domain.tld,IP:127.0.0.1
 ```
 
 **NOTE** If you need to regenerate your existing cert to add DNS Alt Names
