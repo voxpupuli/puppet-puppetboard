@@ -15,7 +15,7 @@ describe 'puppetboard', type: :class do
       it { is_expected.to contain_user('puppetboard') }
 
       if ['FreeBSD'].include?(facts[:os]['family'])
-        it { is_expected.to contain_package('py38-puppetboard') }
+        it { is_expected.to contain_package('py39-puppetboard') }
       else
         it { is_expected.to contain_file('/srv/puppetboard/puppetboard/settings.py') }
         it { is_expected.to contain_file('/srv/puppetboard') }
