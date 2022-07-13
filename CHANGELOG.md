@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v9.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v9.0.0) (2022-07-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v8.2.0...v9.0.0)
+
+**Breaking changes:**
+
+- Install from PyPI package and keep up to date by default [\#354](https://github.com/voxpupuli/puppet-puppetboard/pull/354) ([gdubicki](https://github.com/gdubicki))
+
+**Implemented enhancements:**
+
+- Sync FreeBSD default Python version with upstream [\#361](https://github.com/voxpupuli/puppet-puppetboard/pull/361) ([smortex](https://github.com/smortex))
+
+**Closed issues:**
+
+- Path /srv/puppetboard/puppetboard exists and is not the desired repository [\#355](https://github.com/voxpupuli/puppet-puppetboard/issues/355)
+- pip 9.0 fail with puppetboard ? [\#174](https://github.com/voxpupuli/puppet-puppetboard/issues/174)
+- Using with packaged puppetboard [\#85](https://github.com/voxpupuli/puppet-puppetboard/issues/85)
+
+**Merged pull requests:**
+
+- Update docs after switching to default install from pip [\#360](https://github.com/voxpupuli/puppet-puppetboard/pull/360) ([gdubicki](https://github.com/gdubicki))
+- Fix CI [\#359](https://github.com/voxpupuli/puppet-puppetboard/pull/359) ([smortex](https://github.com/smortex))
+
 ## [v8.2.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v8.2.0) (2022-04-22)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v8.1.0...v8.2.0)
@@ -11,7 +34,7 @@ These should not affect the functionality of the module.
 **Implemented enhancements:**
 
 - Support Debian 11 [\#348](https://github.com/voxpupuli/puppet-puppetboard/pull/348) ([kenyon](https://github.com/kenyon))
-- always use python3 wsgi apache module on Debian [\#343](https://github.com/voxpupuli/puppet-puppetboard/pull/343) ([kenyon](https://github.com/kenyon))
+- Always use python3 wsgi apache module on Debian [\#343](https://github.com/voxpupuli/puppet-puppetboard/pull/343) ([kenyon](https://github.com/kenyon))
 
 **Closed issues:**
 
