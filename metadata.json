@@ -33,6 +33,12 @@
         "18.04",
         "20.04"
       ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "8"
+      ]
     }
   ],
   "requirements": [
