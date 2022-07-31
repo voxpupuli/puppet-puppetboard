@@ -2,7 +2,6 @@ fixtures:
   repositories:
     stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
     concat: https://github.com/puppetlabs/puppetlabs-concat.git
-    vcsrepo: https://github.com/puppetlabs/puppetlabs-vcsrepo.git
     python: https://github.com/voxpupuli/puppet-python.git
     epel: https://github.com/voxpupuli/puppet-epel.git
     apache: https://github.com/puppetlabs/puppetlabs-apache.git
