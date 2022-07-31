@@ -127,11 +127,13 @@ class puppetboard (
     ]
   }
 
-  file { $basedir:
-    ensure => 'directory',
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
+  if $install_from in ['pip', 'vcsrepo'] {
+    file { $basedir:
+      ensure => 'directory',
+      owner  => $user,
+      group  => $group,
+      mode   => '0755',
+    }
   }
 
   case $install_from {
