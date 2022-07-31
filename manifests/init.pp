@@ -245,6 +245,7 @@ class puppetboard (
     class { 'python':
       version => $python_version,
       dev     => 'present',
+      venv    => 'present',
     }
     Class['python'] -> Class['puppetboard']
   }
