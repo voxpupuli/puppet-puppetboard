@@ -49,10 +49,6 @@
     {
       "name": "puppet/python",
       "version_requirement": ">= 6.3.0 < 7.0.0"
-    },
-    {
-      "name": "puppetlabs/vcsrepo",
-      "version_requirement": ">= 4.0.0 < 6.0.0"
     }
   ]
 }
