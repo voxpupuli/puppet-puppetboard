@@ -59,7 +59,7 @@
 class puppetboard (
   Stdlib::Absolutepath $apache_confd,
   String[1] $apache_service,
-  Pattern[/^3\.\d$/] $python_version,
+  Variant[Enum['rh-python38'], Pattern[/^3\.\d$/]] $python_version,
   Enum['package', 'pip', 'vcsrepo'] $install_from             = 'pip',
   Boolean $manage_selinux                                     = pick($facts['os.selinux.enabled'], false),
   String $user                                                = 'puppetboard',
