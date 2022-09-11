@@ -242,10 +242,19 @@ class puppetboard (
   }
 
   if $manage_virtualenv {
-    class { 'python':
-      version => $python_version,
-      dev     => 'present',
-      venv    => 'present',
+    if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
+      class { 'python':
+        provider => 'rhscl',
+        version  => $python_version,
+        dev      => 'present',
+        venv     => 'present',
+      }
+    } else {
+      class { 'python':
+        version => $python_version,
+        dev     => 'present',
+        venv    => 'present',
+      }
     }
     Class['python'] -> Class['puppetboard']
   }
