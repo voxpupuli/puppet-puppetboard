@@ -23,7 +23,7 @@
 # @param ldap_require_user if set, list of uids for Require ldap-user directive
 # @param ldap_require_dn if set, dn to be matched by Require ldap-dn directive
 # @param ldap_require_attribute if set, attributes of LDAP users for Require ldap-attribute directive
-# @param ldap_require_filter if set, LDAP search filter for Require ldap-filter directive 
+# @param ldap_require_filter if set, LDAP search filter for Require ldap-filter directive
 # @param virtualenv_dir Set location where virtualenv will be installed
 # @param custom_apache_parameters A hash passed to the `apache::vhost` for custom settings
 class puppetboard::apache::vhost (
@@ -58,6 +58,20 @@ class puppetboard::apache::vhost (
     'Debian' => {
       package_name => 'libapache2-mod-wsgi-py3',
       mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
+    },
+    'RedHat' => $facts['os']['release']['major'] ? {
+      '8'     => {
+        package_name => $puppetboard::python_version ? {
+          '3.6'  => 'python3-mod_wsgi',
+          '3.8'  => 'python38-mod_wsgi',
+          '3.9'  => 'python39-mod_wsgi',
+          '3.11' => 'python3.11-mod_wsgi',
+          '3.12' => 'python3.12-mod_wsgi',
+          default => fail('python version not supported'),
+        },
+        mod_path     => 'modules/mod_wsgi_python3.so',
+      },
+      default => {},
     },
     default  => {},
   }
