@@ -46,6 +46,42 @@ describe 'puppetboard::apache::vhost' do
             'ensure' => 'file'
           )
         end
+
+        if ['RedHat'].include?(facts[:os]['family'])
+          ['3.6', '3.8', '3.9'].each do |python_version|
+            context "with python_versions #{python_version}" do
+              let(:pre_condition) do
+                [
+                  "class { 'puppetboard': python_version => \"#{python_version}\", }"
+                ]
+              end
+
+              case python_version
+              when '3.6'
+                package_name = 'python3-mod_wsgi'
+              when '3.8'
+                package_name = 'python38-mod_wsgi'
+              when '3.9'
+                package_name = 'python39-mod_wsgi'
+              end
+
+              it { is_expected.to contain_class('apache::mod::wsgi').with(package_name: package_name) }
+            end
+          end
+
+          context 'with unsupported python_versions' do
+            let(:pre_condition) do
+              [
+                "class { 'puppetboard':
+                   python_version => '3.7',
+                 }
+                "
+              ]
+            end
+
+            it { is_expected.to raise_error(Puppet::Error, %r{python version not supported}) }
+          end
+        end
       end
     end
   end
