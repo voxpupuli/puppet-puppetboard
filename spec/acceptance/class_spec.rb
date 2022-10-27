@@ -16,9 +16,15 @@ describe 'puppetboard class', if: has_puppetdb do
     it 'works with no errors' do
       pp = <<-EOS
       # Configure PuppetDB
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '8' {
+        $postgres_version = '13'
+      } else {
+        $postgres_version = undef
+      }
       class { 'puppetdb':
-        disable_ssl     => true,
-        manage_firewall => false,
+        disable_ssl      => true,
+        manage_firewall  => false,
+        postgres_version => $postgres_version,
       }
 
       # Configure Puppetboard
@@ -54,9 +60,15 @@ describe 'puppetboard class', if: has_puppetdb do
       }
 
       # Configure PuppetDB
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '8' {
+        $postgres_version = '13'
+      } else {
+        $postgres_version = undef
+      }
       class { 'puppetdb':
-        disable_ssl     => true,
-        manage_firewall => false,
+        disable_ssl      => true,
+        manage_firewall  => false,
+        postgres_version => $postgres_version,
       }
 
       # Configure Puppetboard
@@ -103,9 +115,15 @@ describe 'puppetboard class', if: has_puppetdb do
         require => Class['puppetdb'],
       }
       # Configure PuppetDB
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '8' {
+        $postgres_version = '13'
+      } else {
+        $postgres_version = undef
+      }
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        disable_ssl      => true,
+        manage_firewall  => false,
+        postgres_version => $postgres_version,
       }
       EOS
 
@@ -143,9 +161,15 @@ describe 'puppetboard class', if: has_puppetdb do
         ldap_url     => 'ldap://puppet.example.com',
       }
       # Configure PuppetDB
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '8' {
+        $postgres_version = '13'
+      } else {
+        $postgres_version = undef
+      }
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        disable_ssl      => true,
+        manage_firewall  => false,
+        postgres_version => $postgres_version,
       }
       EOS
 
@@ -191,9 +215,15 @@ describe 'puppetboard class', if: has_puppetdb do
         ldap_require_group_dn => 'cn=admins,=cn=groups,dc=puppet,dc=example,dc=com',
       }
       # Configure PuppetDB
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '8' {
+        $postgres_version = '13'
+      } else {
+        $postgres_version = undef
+      }
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        disable_ssl      => true,
+        manage_firewall  => false,
+        postgres_version => $postgres_version,
       }
       EOS
 
