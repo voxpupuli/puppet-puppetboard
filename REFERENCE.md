@@ -268,6 +268,14 @@ HTTP index server to use for pip/virtualenv.
 
 Default value: ``undef``
 
+##### <a name="python_systempkgs"></a>`python_systempkgs`
+
+Data type: `Boolean`
+
+Python system packages available in virtualenv.
+
+Default value: ``false``
+
 ##### <a name="default_environment"></a>`default_environment`
 
 Data type: `String[1]`
