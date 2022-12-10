@@ -26,6 +26,7 @@ describe 'puppetboard class', if: has_puppetdb do
         manage_virtualenv => true,
         manage_git        => true,
         require           => Class['puppetdb'],
+        secret_key        => 'this_should_be_a_long_secret_string',
       }
 
       # Configure Apache to allow access to localhost/puppetboard
@@ -64,6 +65,7 @@ describe 'puppetboard class', if: has_puppetdb do
         manage_virtualenv => true,
         manage_git        => true,
         require           => Class['puppetdb'],
+        secret_key        => 'this_should_be_a_long_secret_string',
       }
 
       # Access Puppetboard through pboard.example.com
@@ -101,6 +103,7 @@ describe 'puppetboard class', if: has_puppetdb do
         puppetdb_ssl_verify => true,
         puppetdb_cert => '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem',
         require => Class['puppetdb'],
+        secret_key => 'this_should_be_a_long_secret_string',
       }
       # Configure PuppetDB
       class { 'puppetdb':
@@ -135,6 +138,7 @@ describe 'puppetboard class', if: has_puppetdb do
         puppetdb_ssl_verify => true,
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
         require => Class['puppetdb'],
+        secret_key => 'this_should_be_a_long_secret_string',
       }
       class { 'puppetboard::apache::conf':
         enable_ldap_auth => true,
@@ -181,6 +185,7 @@ describe 'puppetboard class', if: has_puppetdb do
         puppetdb_ssl_verify => true,
         puppetdb_cert => "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem",
         require => Class['puppetdb'],
+        secret_key => 'this_should_be_a_long_secret_string',
       }
       class { 'puppetboard::apache::conf':
         enable_ldap_auth => true,

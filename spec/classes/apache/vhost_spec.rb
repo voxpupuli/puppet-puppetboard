@@ -17,7 +17,9 @@ describe 'puppetboard::apache::vhost' do
           default_vhost => false,
           default_mods  => false,
         }',
-        'class { "puppetboard": }'
+        'class { "puppetboard":
+           secret_key => "this_should_be_a_long_secret_string",
+         }'
       ]
     end
 

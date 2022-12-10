@@ -10,7 +10,9 @@ describe 'puppetboard::apache::conf' do
     end
     let(:pre_condition) do
       [
-        'class { "puppetboard": }'
+        'class { "puppetboard":
+           secret_key => "this_should_be_a_long_secret_string",
+         }'
       ]
     end
 

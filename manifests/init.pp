@@ -42,6 +42,7 @@
 # @param ldap_require_group LDAP group to require on login
 # @param apache_confd path to the apache2 vhost directory
 # @param apache_service name of the apache2 service
+# @param secret_key used for CSRF prevention and more. It should be a long, secret string, the same for all instances of the app. Required since Puppetboard 5.0.0.
 #
 # @example
 #   configure puppetboard with an apache config for a subpath (http://$fqdn/puppetboard)
@@ -100,7 +101,27 @@ class puppetboard (
   Boolean $ldap_require_group                                 = false,
   Variant[Enum['latest'], String[1]] $version                 = 'latest',
   Boolean $use_pre_releases                                   = false,
+  Optional[String[1]] $secret_key                             = undef,
 ) {
+  if !$secret_key {
+    $message = join([
+        "Starting with Puppetboard 5.0.0 providing own \$secret_key is required.",
+
+        'See https://github.com/voxpupuli/puppetboard/issues/721 for more info.',
+
+        'If you run Puppetboard on a single node with static FQDN then you can set it the following code',
+        "to generate a random but not changing value: \${fqdn_rand_string(32)}",
+    ], ' ')
+
+    if $version == 'latest' or versioncmp($version, '5.0.0') >= 0 {
+      fail($message)
+    } else {
+      notify { 'Warning':
+        message => $message,
+      }
+    }
+  }
+
   if $manage_group {
     group { $group:
       ensure => present,

@@ -52,6 +52,9 @@ DEFAULT_ENVIRONMENT = '<%= @default_environment %>'
 <% if @reports_count -%>
 REPORTS_COUNT = <%= @reports_count %>
 <% end -%>
+<% if @secret_key -%>
+SECRET_KEY = '<%= @secret_key %>'
+<% end -%>
 <% @extra_settings.keys.sort.each do |key| -%>
 <%= key %> = <%= @extra_settings[key] %>
 <% end -%>

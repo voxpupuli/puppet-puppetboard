@@ -83,6 +83,7 @@ The following parameters are available in the `puppetboard` class:
 * [`ldap_require_group`](#-puppetboard--ldap_require_group)
 * [`apache_confd`](#-puppetboard--apache_confd)
 * [`apache_service`](#-puppetboard--apache_service)
+* [`secret_key`](#-puppetboard--secret_key)
 
 ##### <a name="-puppetboard--install_from"></a>`install_from`
 
@@ -413,6 +414,14 @@ path to the apache2 vhost directory
 Data type: `String[1]`
 
 name of the apache2 service
+
+##### <a name="-puppetboard--secret_key"></a>`secret_key`
+
+Data type: `Optional[String[1]]`
+
+used for CSRF prevention and more. It should be a long, secret string, the same for all instances of the app. Required since Puppetboard 5.0.0.
+
+Default value: `undef`
 
 ### <a name="puppetboard--apache--conf"></a>`puppetboard::apache::conf`
 
