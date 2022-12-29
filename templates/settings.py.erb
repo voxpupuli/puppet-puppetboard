@@ -63,6 +63,9 @@ DEFAULT_ENVIRONMENT = '<%= @default_environment %>'
 <% if @reports_count -%>
 REPORTS_COUNT = <%= @reports_count %>
 <% end -%>
+<% if @graph_facts -%>
+GRAPH_FACTS = '<%= @graph_facts.sort.uniq.join(',') %>'
+<% end -%>
 <% @extra_settings.keys.sort.each do |key| -%>
 <%= key %> = <%= @extra_settings[key] %>
 <% end -%>

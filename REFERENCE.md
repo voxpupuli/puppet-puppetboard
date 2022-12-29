@@ -83,6 +83,7 @@ The following parameters are available in the `puppetboard` class:
 * [`ldap_require_group`](#ldap_require_group)
 * [`apache_confd`](#apache_confd)
 * [`apache_service`](#apache_service)
+* [`graph_facts'](#graph_facts)
 
 ##### <a name="install_from"></a>`install_from`
 
@@ -413,6 +414,12 @@ path to the apache2 vhost directory
 Data type: `String[1]`
 
 name of the apache2 service
+
+##### <a name="graph_facts"></a>`graph_facts`
+
+Data type: `Optional[Variant[String[1], Array[String[1]]]]`
+
+An array of the puppet facts to graph.  See ''https://github.com/voxpupuli/puppetboard''
 
 ### <a name="puppetboardapacheconf"></a>`puppetboard::apache::conf`
 
