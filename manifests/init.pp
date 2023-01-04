@@ -5,6 +5,7 @@
 # @param homedir Puppetboard system user's home directory.
 # @param group Puppetboard system group.
 # @param groups additional groups for the user that runs puppetboard
+# @param graph_facts Array of puppet facts to graph (pie/bar chart).
 # @param basedir Base directory where to build puppetboard vcsrepo and python virtualenv.
 # @param git_source Location of upstream Puppetboard GIT repository
 # @param puppetdb_host PuppetDB Host
@@ -67,6 +68,7 @@ class puppetboard (
   Optional[Stdlib::Absolutepath] $homedir                     = undef,
   String $group                                               = 'puppetboard',
   Optional[Variant[String[1], Array[String[1]]]] $groups      = undef,
+  Optional[Variant[String[1], Array[String[1]]]] $graph_facts = undef,
   Stdlib::AbsolutePath $basedir                               = '/srv/puppetboard',
   String $git_source                                          = 'https://github.com/voxpupuli/puppetboard',
   String $puppetdb_host                                       = '127.0.0.1',
