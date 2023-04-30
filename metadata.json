@@ -33,6 +33,18 @@
         "18.04",
         "20.04"
       ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "8"
+      ]
     }
   ],
   "requirements": [
@@ -44,7 +56,7 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 7.0.0 < 9.0.0"
+      "version_requirement": ">= 8.5.0 < 9.0.0"
     },
     {
       "name": "puppet/python",

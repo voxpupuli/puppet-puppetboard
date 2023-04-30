@@ -51,6 +51,18 @@ class puppetboard::apache::vhost (
       package_name => 'libapache2-mod-wsgi-py3',
       mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
     },
+    'RedHat' => $facts['os']['release']['major'] ? {
+      '8'     => {
+        package_name => $puppetboard::python_version ? {
+          '3.6' => 'python3-mod_wsgi',
+          '3.8' => 'python38-mod_wsgi',
+          '3.9' => 'python39-mod_wsgi',
+          default => fail('python version not supported'),
+        },
+        mod_path     => 'modules/mod_wsgi_python3.so',
+      },
+      default => {},
+    },
     default  => {},
   }
   class { 'apache::mod::wsgi':
