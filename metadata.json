@@ -14,24 +14,9 @@
   "issues_url": "https://github.com/voxpupuli/puppet-puppetboard/issues",
   "operatingsystem_support": [
     {
-      "operatingsystem": "Debian",
+      "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "10",
-        "11"
-      ]
-    },
-    {
-      "operatingsystem": "FreeBSD",
-      "operatingsystemrelease": [
-        "12",
-        "13"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "18.04",
-        "20.04"
+        "7"
       ]
     }
   ],

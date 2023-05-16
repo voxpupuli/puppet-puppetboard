@@ -1,1 +1,1 @@
-puppetboard::python_version: '3.6'
+puppetboard::python_version: 'rh-python38'

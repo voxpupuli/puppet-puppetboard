@@ -19,6 +19,7 @@ describe 'puppetboard class', if: has_puppetdb do
       class { 'puppetdb':
         disable_ssl     => true,
         manage_firewall => false,
+        database        => 'embedded',
       }
 
       # Configure Puppetboard
@@ -57,6 +58,7 @@ describe 'puppetboard class', if: has_puppetdb do
       class { 'puppetdb':
         disable_ssl     => true,
         manage_firewall => false,
+        database        => 'embedded',
       }
 
       # Configure Puppetboard
@@ -106,6 +108,7 @@ describe 'puppetboard class', if: has_puppetdb do
       class { 'puppetdb':
         disable_ssl => true,
         manage_firewall => false,
+        database        => 'embedded',
       }
       EOS
 
@@ -146,6 +149,7 @@ describe 'puppetboard class', if: has_puppetdb do
       class { 'puppetdb':
         disable_ssl => true,
         manage_firewall => false,
+        database        => 'embedded',
       }
       EOS
 
@@ -194,6 +198,7 @@ describe 'puppetboard class', if: has_puppetdb do
       class { 'puppetdb':
         disable_ssl => true,
         manage_firewall => false,
+        database        => 'embedded',
       }
       EOS
 
