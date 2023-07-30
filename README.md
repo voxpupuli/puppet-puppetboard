@@ -50,8 +50,8 @@ In most cases the module requires the `virtualenv` package. This can be enabled 
 
 ```puppet
 class { 'puppetboard':
-  python_version    => '3.6',
   manage_virtualenv => true,
+  secret_key        => fqdn_rand_string(32),
 }
 ```
 
@@ -63,11 +63,13 @@ Declare the base puppetboard manifest with the below required parameter(s), set 
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.6',
+  python_version => '3.8',
+  secret_key     => fqdn_rand_string(32),
 }
 ```
 
 This will install the latest stable version of the app from a [PyPI package](https://pypi.org/project/puppetboard/) in a virtualenv created using the requested Python version and keep it up to date.
+This example secret key is fine if you have a single-node deployment of the app. If you have a multi-node deployment, you should generate a secret key and use the same one on all nodes.
 
 ## Number of Reports
 
@@ -82,7 +84,8 @@ controlled to set the number of reports to show.
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.6',
+  python_version => '3.8',
+  secret_key     => fqdn_rand_string(32),
   reports_count  => 40,
 }
 ```
@@ -94,7 +97,8 @@ puppet board can load static assets (jquery, semantic-ui, tablesorter, etc) from
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.6',
+  python_version => '3.8',
+  secret_key     => fqdn_rand_string(32),
   offline_mode   => true,
 }
 ```
@@ -106,7 +110,8 @@ set to default to a different environment.
 
 ```puppet
 class { 'puppetboard':
-  python_version      => '3.6',
+  python_version      => '3.8',
+  secret_key          => fqdn_rand_string(32),
   default_environment => 'customers',
 }
 ```
@@ -115,7 +120,8 @@ or to default to "All environments":
 
 ```puppet
 class { 'puppetboard':
-  python_version      => '3.6',
+  python_version      => '3.8',
+  secret_key          => fqdn_rand_string(32),
   default_environment => '*',
 }
 ```
@@ -124,7 +130,8 @@ class { 'puppetboard':
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.6',
+  python_version => '3.8',
+  secret_key     => fqdn_rand_string(32),
   manage_selinux => false,
 }
 ```
@@ -151,7 +158,8 @@ class { 'apache':
 
 # Configure Puppetboard
 class { 'puppetboard':
-  python_version    => '3.6',
+  python_version    => '3.8',
+  secret_key        => fqdn_rand_string(32),
   manage_virtualenv => true,
 }
 
@@ -170,7 +178,8 @@ http://example.com/puppetboard:
 ```puppet
 # Configure Puppetboard
 class { 'puppetboard':
-  python_version => '3.6',
+  python_version => '3.8',
+  secret_key     => fqdn_rand_string(32),
 }
 
 # Access Puppetboard from example.com/puppetboard
@@ -249,7 +258,8 @@ Here's an example, using new certificates:
 $ssl_dir = '/var/lib/puppetboard/ssl'
 $puppetboard_certname = 'puppetboard.example.com'
 class { 'puppetboard':
-  python_version      => '3.6',
+  python_version      => '3.8',
+  secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   puppetdb_host       => 'puppetdb.example.com',
   puppetdb_port       => 8081,
@@ -267,7 +277,8 @@ Here's a complete example, re-using the puppet client certs:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  python_version      => '3.6',
+  python_version      => '3.8',
+  secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   groups              => 'puppet',
   puppetdb_host       => 'puppetdb.example.com',
@@ -284,7 +295,8 @@ Note that both the above approaches only work if you have the Puppet CA root cer
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  python_version      => '3.6',
+  python_version      => '3.8',
+  secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   groups              => 'puppet',
   puppetdb_host       => 'puppetdb.example.com',
@@ -306,7 +318,8 @@ that host and configure `puppetdb_host` to `127.0.0.1`:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  python_version      => '3.6',
+  python_version      => '3.8',
+  secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   groups              => 'puppet',
   puppetdb_host       => '127.0.0.1',
