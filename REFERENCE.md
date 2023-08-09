@@ -447,6 +447,8 @@ The following parameters are available in the `puppetboard::apache::conf` class:
 * [`ldap_require_group`](#-puppetboard--apache--conf--ldap_require_group)
 * [`ldap_require_group_dn`](#-puppetboard--apache--conf--ldap_require_group_dn)
 * [`virtualenv_dir`](#-puppetboard--apache--conf--virtualenv_dir)
+* [`manage_mod_wsgi`](#-puppetboard--apache--conf--manage_mod_wsgi)
+* [`custom_mod_wsgi_parameters`](#-puppetboard--apache--conf--custom_mod_wsgi_parameters)
 
 ##### <a name="-puppetboard--apache--conf--wsgi_alias"></a>`wsgi_alias`
 
@@ -560,6 +562,22 @@ Set location where virtualenv will be installed
 
 Default value: `$puppetboard::virtualenv_dir`
 
+##### <a name="-puppetboard--apache--conf--manage_mod_wsgi"></a>`manage_mod_wsgi`
+
+Data type: `Boolean`
+
+A parameter to switch off the use of `apache::mod::wsgi`
+
+Default value: `true`
+
+##### <a name="-puppetboard--apache--conf--custom_mod_wsgi_parameters"></a>`custom_mod_wsgi_parameters`
+
+Data type: `Hash`
+
+A hash passed to `apache::mod::wsgi`
+
+Default value: `{}`
+
 ### <a name="puppetboard--apache--vhost"></a>`puppetboard::apache::vhost`
 
 Sets up an apache::vhost to run PuppetBoard, and writes an appropriate wsgi.py from template
@@ -590,6 +608,8 @@ The following parameters are available in the `puppetboard::apache::vhost` class
 * [`ldap_require_group_dn`](#-puppetboard--apache--vhost--ldap_require_group_dn)
 * [`virtualenv_dir`](#-puppetboard--apache--vhost--virtualenv_dir)
 * [`custom_apache_parameters`](#-puppetboard--apache--vhost--custom_apache_parameters)
+* [`manage_mod_wsgi`](#-puppetboard--apache--vhost--manage_mod_wsgi)
+* [`custom_mod_wsgi_parameters`](#-puppetboard--apache--vhost--custom_mod_wsgi_parameters)
 
 ##### <a name="-puppetboard--apache--vhost--vhost_name"></a>`vhost_name`
 
@@ -762,6 +782,22 @@ Default value: `$puppetboard::virtualenv_dir`
 Data type: `Hash`
 
 A hash passed to the `apache::vhost` for custom settings
+
+Default value: `{}`
+
+##### <a name="-puppetboard--apache--vhost--manage_mod_wsgi"></a>`manage_mod_wsgi`
+
+Data type: `Boolean`
+
+A parameter to switch off the use of `apache::mod::wsgi`
+
+Default value: `true`
+
+##### <a name="-puppetboard--apache--vhost--custom_mod_wsgi_parameters"></a>`custom_mod_wsgi_parameters`
+
+Data type: `Hash`
+
+A hash passed to `apache::mod::wsgi`
 
 Default value: `{}`
 
