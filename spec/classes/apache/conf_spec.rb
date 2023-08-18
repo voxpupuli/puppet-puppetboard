@@ -5,8 +5,7 @@ require 'spec_helper'
 describe 'puppetboard::apache::conf' do
   describe 'default params' do
     let :params do
-      {
-      }
+      {}
     end
     let(:pre_condition) do
       [
