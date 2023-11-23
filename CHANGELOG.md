@@ -314,7 +314,7 @@ These should not affect the functionality of the module.
 - Add DEFAULT\_ENVIRONMENT to settings.py [\#132](https://github.com/voxpupuli/puppet-puppetboard/issues/132)
 - Add Ability to pass OFFLINE\_MODE to settings.py [\#130](https://github.com/voxpupuli/puppet-puppetboard/issues/130)
 - Release 2.7.5 to PuppetForge [\#118](https://github.com/voxpupuli/puppet-puppetboard/issues/118)
-- Adding ::puppetboard::apache::ldapauth? [\#110](https://github.com/voxpupuli/puppet-puppetboard/issues/110)
+- Adding puppetboard::apache::ldapauth? [\#110](https://github.com/voxpupuli/puppet-puppetboard/issues/110)
 
 **Merged pull requests:**
 
