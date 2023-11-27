@@ -4,7 +4,31 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v9.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v9.0.0) (2022-07-13)
+## [v10.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v10.0.0) (2023-11-27)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v9.0.0...v10.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#381](https://github.com/voxpupuli/puppet-puppetboard/pull/381) ([bastelfreak](https://github.com/bastelfreak))
+- Remove dependency on vcsrepo [\#367](https://github.com/voxpupuli/puppet-puppetboard/pull/367) ([smortex](https://github.com/smortex))
+- puppet/python: Require 6.3 or newer [\#366](https://github.com/voxpupuli/puppet-puppetboard/pull/366) ([smortex](https://github.com/smortex))
+
+**Implemented enhancements:**
+
+- Add Puppet 8 support [\#386](https://github.com/voxpupuli/puppet-puppetboard/pull/386) ([bastelfreak](https://github.com/bastelfreak))
+- Relax dependencies version requirements [\#384](https://github.com/voxpupuli/puppet-puppetboard/pull/384) ([smortex](https://github.com/smortex))
+- Allow configuring SECRET\_KEY easier [\#375](https://github.com/voxpupuli/puppet-puppetboard/pull/375) ([gdubicki](https://github.com/gdubicki))
+- Add parameter to support system packages in venv [\#313](https://github.com/voxpupuli/puppet-puppetboard/pull/313) ([h0tw1r3](https://github.com/h0tw1r3))
+
+**Fixed bugs:**
+
+- Duplicate statement of the 'virtualenv' package with the python module [\#225](https://github.com/voxpupuli/puppet-puppetboard/issues/225)
+- The apache service is not notified when settings.py is updated [\#170](https://github.com/voxpupuli/puppet-puppetboard/issues/170)
+- allow python\_version \> 3.9 [\#385](https://github.com/voxpupuli/puppet-puppetboard/pull/385) ([zivis](https://github.com/zivis))
+- Do not manage $basedir when installing from packages [\#368](https://github.com/voxpupuli/puppet-puppetboard/pull/368) ([smortex](https://github.com/smortex))
+
+## [v9.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v9.0.0) (2022-07-14)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v8.2.0...v9.0.0)
 
@@ -314,7 +338,7 @@ These should not affect the functionality of the module.
 - Add DEFAULT\_ENVIRONMENT to settings.py [\#132](https://github.com/voxpupuli/puppet-puppetboard/issues/132)
 - Add Ability to pass OFFLINE\_MODE to settings.py [\#130](https://github.com/voxpupuli/puppet-puppetboard/issues/130)
 - Release 2.7.5 to PuppetForge [\#118](https://github.com/voxpupuli/puppet-puppetboard/issues/118)
-- Adding ::puppetboard::apache::ldapauth? [\#110](https://github.com/voxpupuli/puppet-puppetboard/issues/110)
+- Adding puppetboard::apache::ldapauth? [\#110](https://github.com/voxpupuli/puppet-puppetboard/issues/110)
 
 **Merged pull requests:**
 
