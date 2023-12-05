@@ -52,7 +52,10 @@ describe 'puppetboard::apache::vhost' do
             context "with python_versions #{python_version}" do
               let(:pre_condition) do
                 [
-                  "class { 'puppetboard': python_version => \"#{python_version}\", }"
+                  "class { 'puppetboard':
+                    python_version => \"#{python_version}\",
+                    secret_key     => 'this_should_be_a_long_secret_string',
+                  }"
                 ]
               end
 
@@ -73,8 +76,9 @@ describe 'puppetboard::apache::vhost' do
             let(:pre_condition) do
               [
                 "class { 'puppetboard':
-                   python_version => '3.7',
-                 }
+                  python_version => '3.7',
+                  secret_key     => 'this_should_be_a_long_secret_string',
+                }
                 "
               ]
             end
