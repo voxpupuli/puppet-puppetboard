@@ -311,7 +311,7 @@ Default value: `false`
 
 ##### <a name="-puppetboard--python_version"></a>`python_version`
 
-Data type: `Pattern[/^3\.\d{1,2}$|^3\.\d{1,2}\.\d{1,2}$/]`
+Data type: `Python::Version`
 
 Python version to use in virtualenv.
 
