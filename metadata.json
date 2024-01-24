@@ -33,6 +33,12 @@
         "20.04",
         "22.04"
       ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "8"
+      ]
     }
   ],
   "requirements": [
