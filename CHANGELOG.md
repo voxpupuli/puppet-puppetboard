@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v10.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v10.1.0) (2023-12-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v10.0.0...v10.1.0)
+
+**Implemented enhancements:**
+
+- \(\#357\) Add Ubuntu 22.04 LTS \(Jammy Jellyfish\) support [\#358](https://github.com/voxpupuli/puppet-puppetboard/pull/358) ([prolixalias](https://github.com/prolixalias))
+
 ## [v10.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v10.0.0) (2023-11-27)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v9.0.0...v10.0.0)
