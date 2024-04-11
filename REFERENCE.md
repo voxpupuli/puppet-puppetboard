@@ -18,6 +18,7 @@
 
 ### <a name="puppetboard"></a>`puppetboard`
 
+```
 class { 'puppetboard':
    user  => 'pboard',
    group => 'pboard',
@@ -28,6 +29,7 @@ class { 'puppetboard':
    group => 'pboard',
    basedir => '/www/puppetboard'
  }
+```
 
 #### Examples
 
