@@ -1,2 +1,0 @@
-puppetboard::apache_confd: '/etc/apache2/conf.d'
-puppetboard::apache_service: 'apache2'
