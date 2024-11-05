@@ -38,29 +38,8 @@
 # @param settings_file Path to puppetboard configuration file
 # @param extra_settings Defaults to an empty hash '{}'. Used to pass in arbitrary key/value
 # @param override Sets the Apache AllowOverride value
-# @param enable_ldap_auth Whether to enable LDAP auth
-# @param ldap_require_group LDAP group to require on login
-# @param apache_confd path to the apache2 vhost directory
-# @param apache_service name of the apache2 service
 # @param secret_key used for CSRF prevention and more. It should be a long, secret string, the same for all instances of the app. Required since Puppetboard 5.0.0.
-#
-# @example
-#   configure puppetboard with an apache config for a subpath (http://$fqdn/puppetboard)
-#
-#  class { 'puppetboard':
-#    user  => 'pboard',
-#    group => 'pboard',
-#    basedir => '/www/puppetboard'
-#  } ->
-#  class { 'puppetboard::apache::conf':
-#    user  => 'pboard',
-#    group => 'pboard',
-#    basedir => '/www/puppetboard'
-#  }
-#
 class puppetboard (
-  Stdlib::Absolutepath $apache_confd,
-  String[1] $apache_service,
   Python::Version $python_version,
   Enum['package', 'pip', 'vcsrepo'] $install_from             = 'pip',
   Boolean $manage_selinux                                     = pick($facts['os.selinux.enabled'], false),
@@ -97,8 +76,6 @@ class puppetboard (
   Stdlib::Absolutepath $settings_file                         = "${basedir}/puppetboard/settings.py",
   Hash $extra_settings                                        = {},
   Variant[Array[String[1]], String[1]] $override              = ['None'],
-  Boolean $enable_ldap_auth                                   = false,
-  Boolean $ldap_require_group                                 = false,
   Variant[Enum['latest'], String[1]] $version                 = 'latest',
   Boolean $use_pre_releases                                   = false,
   Optional[String[1]] $secret_key                             = undef,

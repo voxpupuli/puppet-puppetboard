@@ -18,8 +18,7 @@
 1. [Offline Mode](#offline-mode)
 1. [Set Default Environment](#set-default-environment)
 1. [Disable SELinux Management](#disable-selinux-management)
-1. [Apache](#apache)
-   - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
+1. [Web server integration](#web-server-integration)
 1. [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)
 1. [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
    - [Using SSL to PuppetDB &gt;= 6.9.1](#using-ssl-to-puppetdb--691)
@@ -41,10 +40,6 @@ for the open source Puppet.
     puppet module install puppet-puppetboard
 
 ### Dependencies
-
-Note that this module no longer explicitly requires the puppetlabs apache module. If you want to use the apache functionality of this module you will have to specify that the apache module is installed with:
-
-    puppet module install puppetlabs-apache
 
 In most cases the module requires the `virtualenv` package. This can be enabled in the module with the `manage_virtualenv` flag set to `true`:
 
@@ -138,92 +133,11 @@ class { 'puppetboard':
 
 If manage_selinux is true, manage policies related to SELinux. If false, do nothing. By default, this module will try to determine if SELinux is enabled, and manage the policies if it is.
 
-## Apache
+## Web server integration
 
-If you want puppetboard accessible through Apache and you're able to use the
-official `puppetlabs/apache` Puppet module, this module contains two classes
-to help configuration.
-
-The first, `puppetboard::apache::vhost`, will use the `apache::vhost`
-defined-type to create a full virtual host. This is useful if you want
-puppetboard to be available under an address like http://pboard.example.com:
-
-(The following is generic code used in our tests, it works on Debian 9 and 10, also on Ubuntu 16.04 and 18.04. It will talk to PuppetDB on localhost via http)
-
-```puppet
-# Configure Apache on this server
-class { 'apache':
-  default_vhost => false,
-}
-
-# Configure Puppetboard
-class { 'puppetboard':
-  python_version    => '3.8',
-  secret_key        => fqdn_rand_string(32),
-  manage_virtualenv => true,
-}
-
-# Access Puppetboard through pboard.example.com
-class { 'puppetboard::apache::vhost':
-  vhost_name => 'pboard.example.com',
-  port       => 80,
-}
-```
-
-The second, `puppetboard::apache::conf`, will create an entry in
-`/etc/apache2/conf.d` (or `/etc/httpd/conf.d`, depending on your distribution).
-This is useful if you simply want puppetboard accessible from
-http://example.com/puppetboard:
-
-```puppet
-# Configure Puppetboard
-class { 'puppetboard':
-  python_version => '3.8',
-  secret_key     => fqdn_rand_string(32),
-}
-
-# Access Puppetboard from example.com/puppetboard
-class { 'puppetboard::apache::conf': }
-```
-
-### Apache (with Reverse Proxy)
-
-You can also relocate puppetboard to a sub-URI of a Virtual Host. This is
-useful if you want to reverse-proxy puppetboard, but are not planning on
-dedicating a domain just for puppetboard:
-
-```puppet
-class { 'puppetboard::apache::vhost':
-  vhost_name => 'dashes.acme',
-  wsgi_alias => '/pboard',
-}
-```
-
-In this case puppetboard will be available (on the default) on
-http://dashes.acme:5000/pboard. You can then reverse-proxy to it like so:
-
-```apache
-Redirect /pboard /pboard/
-ProxyPass /pboard/ http://dashes.acme:5000/pboard/
-ProxyPassReverse /pboard/ http://dashes.acme:5000/pboard/
-```
-
-Using the puppetlabs/apache module:
-
-```puppet
-apache::vhost { 'example.acme':
-  port            => '80',
-  docroot         => '/var/www/html',
-  redirect_source => [ '/pboard' ],
-  redirect_dest   => [ '/pboard/' ],
-  proxy_pass      => [
-    {
-      'path' => '/pboard/',
-      'url'  => 'http://dashes.acme:5000/pboard/',
-    },
-  ],
-}
-```
+Integration PuppetBoard in your infrastructure is very site-specific, for this reason, the module does not manage web server configuration.
+The `examples` directory contains example configurations sniptes for various web servers, using various systems to run the Python middleware and offering various authentication schemes.
+Refer to them to implement a configuration that fits your needs.
 
 ## RedHat/CentOS 7 with Python 3
 
