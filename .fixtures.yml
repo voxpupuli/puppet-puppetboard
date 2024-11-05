@@ -5,6 +5,5 @@ fixtures:
     concat: https://github.com/puppetlabs/puppetlabs-concat.git
     python: https://github.com/voxpupuli/puppet-python.git
     epel: https://github.com/voxpupuli/puppet-epel.git
-    apache: https://github.com/puppetlabs/puppetlabs-apache.git
     selinux_core: https://github.com/puppetlabs/puppetlabs-selinux_core.git
     yumrepo_core: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git

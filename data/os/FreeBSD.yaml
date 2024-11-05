@@ -1,6 +1,4 @@
 ---
-puppetboard::apache_confd: "/usr/local/etc/apache24/conf.d"
-puppetboard::apache_service: "apache24"
 puppetboard::install_from: "package"
 puppetboard::package_name: "py39-puppetboard"
 puppetboard::python_version: "3.9"
