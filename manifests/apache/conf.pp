@@ -13,6 +13,10 @@
 # @param ldap_bind_authoritative Determines if other authentication providers are used when a user can be mapped to a DN but the server cannot bind with the credentials
 # @param ldap_require_group LDAP group to require on login
 # @param ldap_require_group_dn LDAP group DN for LDAP group
+# @param ldap_require_user if set, list of uids for Require ldap-user directive
+# @param ldap_require_dn if set, dn to be matched by Require ldap-dn directive
+# @param ldap_require_attribute if set, attributes of LDAP users for Require ldap-attribute directive
+# @param ldap_require_filter if set, LDAP search filter for Require ldap-filter directive 
 # @param virtualenv_dir Set location where virtualenv will be installed
 #
 # @note Make sure you have purge_configs set to false in your apache class!
@@ -32,6 +36,10 @@ class puppetboard::apache::conf (
   Optional[String[1]] $ldap_bind_authoritative = undef,
   Boolean $ldap_require_group                  = $puppetboard::ldap_require_group,
   Optional[String[1]] $ldap_require_group_dn   = undef,
+  Optional[String[1]] $ldap_require_user          = undef,
+  Optional[String[1]] $ldap_require_dn            = undef,
+  Optional[String[1]] $ldap_require_attribute     = undef,
+  Optional[String[1]] $ldap_require_filter        = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
 ) {
   $wsgi = $facts['os']['family'] ? {
@@ -70,6 +78,10 @@ class puppetboard::apache::conf (
         'ldap_bind_password'      => $ldap_bind_password,
         'ldap_require_group_dn'   => $ldap_require_group_dn,
         'ldap_require_group'      => $ldap_require_group,
+        'ldap_require_user'       => $ldap_require_user,
+        'ldap_require_dn'         => $ldap_require_dn,
+        'ldap_require_attribute'  => $ldap_require_attribute,
+        'ldap_require_filter'     => $ldap_require_filter,
         'ldap_url'                => $ldap_url,
         'max_reqs'                => $max_reqs,
         'threads'                 => $threads,
