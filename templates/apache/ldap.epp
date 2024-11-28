@@ -17,9 +17,17 @@
     <%- if $ldap_bind_authoritative { %>
     AuthLDAPBindAuthoritative <%= $ldap_bind_authoritative %>
     <%- } %>
-    <%- if $ldap_require_group { %>
+    <%- if $ldap_require_user { %>
+    Require ldap-user <%= $ldap_require_user %>
+    <%- } elsif $ldap_require_group { %>
     Require ldap-group <%= $ldap_require_group_dn %>
-    <% } else { %>
+    <%- } elsif $ldap_require_dn { %>
+    Require ldap-dn <%= $ldap_require_dn %>
+    <%- } elsif $ldap_require_attribute { %>
+    Require ldap-attribute <%= $ldap_require_attribute %>
+    <%- } elsif $ldap_require_filter { %>
+    Require ldap-filter <%= $ldap_require_filter %>
+    <% } else  { %>
     Require valid-user
     <% } %>
 </LocationMatch>

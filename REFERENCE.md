@@ -446,6 +446,10 @@ The following parameters are available in the `puppetboard::apache::conf` class:
 * [`ldap_bind_authoritative`](#-puppetboard--apache--conf--ldap_bind_authoritative)
 * [`ldap_require_group`](#-puppetboard--apache--conf--ldap_require_group)
 * [`ldap_require_group_dn`](#-puppetboard--apache--conf--ldap_require_group_dn)
+* [`ldap_require_user`](#-puppetboard--apache--conf--ldap_require_user)
+* [`ldap_require_dn`](#-puppetboard--apache--conf--ldap_require_dn)
+* [`ldap_require_attribute`](#-puppetboard--apache--conf--ldap_require_attribute)
+* [`ldap_require_filter`](#-puppetboard--apache--conf--ldap_require_filter)
 * [`virtualenv_dir`](#-puppetboard--apache--conf--virtualenv_dir)
 
 ##### <a name="-puppetboard--apache--conf--wsgi_alias"></a>`wsgi_alias`
@@ -552,6 +556,38 @@ LDAP group DN for LDAP group
 
 Default value: `undef`
 
+##### <a name="-puppetboard--apache--conf--ldap_require_user"></a>`ldap_require_user`
+
+Data type: `Optional[String[1]]`
+
+if set, list of uids for Require ldap-user directive
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--conf--ldap_require_dn"></a>`ldap_require_dn`
+
+Data type: `Optional[String[1]]`
+
+if set, dn to be matched by Require ldap-dn directive
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--conf--ldap_require_attribute"></a>`ldap_require_attribute`
+
+Data type: `Optional[String[1]]`
+
+if set, attributes of LDAP users for Require ldap-attribute directive
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--conf--ldap_require_filter"></a>`ldap_require_filter`
+
+Data type: `Optional[String[1]]`
+
+if set, LDAP search filter for Require ldap-filter directive
+
+Default value: `undef`
+
 ##### <a name="-puppetboard--apache--conf--virtualenv_dir"></a>`virtualenv_dir`
 
 Data type: `Stdlib::Absolutepath`
@@ -588,6 +624,10 @@ The following parameters are available in the `puppetboard::apache::vhost` class
 * [`ldap_bind_authoritative`](#-puppetboard--apache--vhost--ldap_bind_authoritative)
 * [`ldap_require_group`](#-puppetboard--apache--vhost--ldap_require_group)
 * [`ldap_require_group_dn`](#-puppetboard--apache--vhost--ldap_require_group_dn)
+* [`ldap_require_user`](#-puppetboard--apache--vhost--ldap_require_user)
+* [`ldap_require_dn`](#-puppetboard--apache--vhost--ldap_require_dn)
+* [`ldap_require_attribute`](#-puppetboard--apache--vhost--ldap_require_attribute)
+* [`ldap_require_filter`](#-puppetboard--apache--vhost--ldap_require_filter)
 * [`virtualenv_dir`](#-puppetboard--apache--vhost--virtualenv_dir)
 * [`custom_apache_parameters`](#-puppetboard--apache--vhost--custom_apache_parameters)
 
@@ -746,6 +786,38 @@ Default value: `$puppetboard::ldap_require_group`
 Data type: `Optional[String[1]]`
 
 LDAP group DN for LDAP group
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--vhost--ldap_require_user"></a>`ldap_require_user`
+
+Data type: `Optional[String[1]]`
+
+if set, list of uids for Require ldap-user directive
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--vhost--ldap_require_dn"></a>`ldap_require_dn`
+
+Data type: `Optional[String[1]]`
+
+if set, dn to be matched by Require ldap-dn directive
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--vhost--ldap_require_attribute"></a>`ldap_require_attribute`
+
+Data type: `Optional[String[1]]`
+
+if set, attributes of LDAP users for Require ldap-attribute directive
+
+Default value: `undef`
+
+##### <a name="-puppetboard--apache--vhost--ldap_require_filter"></a>`ldap_require_filter`
+
+Data type: `Optional[String[1]]`
+
+if set, LDAP search filter for Require ldap-filter directive
 
 Default value: `undef`
 
