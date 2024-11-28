@@ -20,7 +20,6 @@
 - [Disable SELinux Management](#disable-selinux-management)
 - [Apache](#apache)
   - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
-- [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)
 - [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
   - [Using SSL to PuppetDB \>= 6.9.1](#using-ssl-to-puppetdb--691)
 - [Development](#development)
@@ -224,14 +223,6 @@ apache::vhost { 'example.acme':
   ],
 }
 ```
-
-## RedHat/CentOS 7 with Python 3
-
-CentOS/RedHat 7 is pretty old. Python 3 got added after the initial release and
-a lot of packages are missing. For example python3.6 is available as a package,
-but no matching wsgi module for apache is available. Because of that, we don't
-test on CentOS 7 anymore. However, it's still possible to setup Puppetboard on
-CentOS with gunicorn as a webserver and nginx/apache forwarding to it.
 
 ## Using SSL to the PuppetDB host
 
