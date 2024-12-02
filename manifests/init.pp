@@ -274,17 +274,74 @@ class puppetboard (
   }
 
   if $manage_selinux {
-    selboolean { 'httpd_can_network_relay':
-      persistent => true,
-      value      => 'on',
+    # Include puppet/selinux
+    include selinux
+    # Set SELinux booleans required for httpd proper functioning
+    # https://linux.die.net/man/8/httpd_selinux
+    selinux::boolean {
+      default:
+        ensure     => 'on',
+        persistent => true,
+        ;
+      # allow httpd scripts to connect to network: Puppetboard connects
+      # to PuppetDB
+      'httpd_can_network_connect':
+        ;
+      # allow httpd script to connect to database servers: PuppetDB relies
+      # on PostgreSQL
+      'httpd_can_network_connect_db':
+        ;
+      # allow httpd to be used as a forward/reverse proxy
+      'httpd_can_network_relay':
+        ;
+      # enable cgi support
+      'httpd_enable_cgi':
+        ;
     }
-    selboolean { 'httpd_can_network_connect':
-      persistent => true,
-      value      => 'on',
+    # Set context for wsgi and settings
+    selinux::fcontext {
+      default:
+        ensure => present,
+        notify => Selinux::Exec_restorecon["${basedir}/puppetboard"],
+        ;
+      "${basedir}/puppetboard/wsgi.py":
+        seltype  => 'httpd_sys_script_exec_t',
+        ;
+      $settings_file :
+        require => File[$settings_file],
+        seltype => 'httpd_sys_content_t',
+        ;
     }
-    selboolean { 'httpd_can_network_connect_db':
-      persistent => true,
-      value      => 'on',
+    # Apply changes above
+    selinux::exec_restorecon { "${basedir}/puppetboard":
+      notify => Service['httpd'],
+    }
+
+    if $manage_virtualenv {
+      # Set context for venv files
+      selinux::fcontext {
+        default:
+          ensure  => present,
+          require => Python::Pip['puppetboard'],
+          notify  => Selinux::Exec_restorecon[$virtualenv_dir],
+          ;
+        "${virtualenv_dir} static files":
+          seltype  => 'httpd_sys_content_t',
+          pathspec => "${virtualenv_dir}(/.*\\.(cfg|css|html|ico|js|pem|png|svg|ttf|txt|woff|woff2|xml))?",
+          ;
+        "${virtualenv_dir} METADATA":
+          seltype  => 'httpd_sys_content_t',
+          pathspec => "${virtualenv_dir}(/.*/METADATA)?",
+          ;
+        "${virtualenv_dir} executables":
+          seltype  => 'httpd_sys_script_exec_t',
+          pathspec => "${virtualenv_dir}(/.*\\.(pth|py|pyc|pyi|so))?",
+          ;
+      }
+      # Apply changes above
+      selinux::exec_restorecon { $virtualenv_dir :
+        notify => Service['httpd'],
+      }
     }
   }
 }

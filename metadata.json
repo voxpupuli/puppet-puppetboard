@@ -73,6 +73,10 @@
     {
       "name": "puppet/python",
       "version_requirement": ">= 6.3.0 < 8.0.0"
+    },
+    {
+      "name": "puppet/selinux",
+      "version_requirement": ">= 3.0.0 < 5.0.0"
     }
   ]
 }
