@@ -29,14 +29,16 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "10",
-        "11"
+        "11",
+        "12"
       ]
     },
     {
       "operatingsystem": "FreeBSD",
       "operatingsystemrelease": [
         "12",
-        "13"
+        "13",
+        "14"
       ]
     },
     {

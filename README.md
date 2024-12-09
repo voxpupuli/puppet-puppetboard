@@ -9,22 +9,21 @@
 
 #### Table of Contents
 
-1. [Overview](#overview)
-1. [Setup](#setup)
-   - [Installation](#installation)
-   - [Dependencies](#dependencies)
-1. [Usage](#usage)
-1. [Number of Reports](#number-of-reports)
-1. [Offline Mode](#offline-mode)
-1. [Set Default Environment](#set-default-environment)
-1. [Disable SELinux Management](#disable-selinux-management)
-1. [Apache](#apache)
-   - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
-1. [RedHat/CentOS 7 with Python 3](#redhatcentos-7-with-python-3)
-1. [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
-   - [Using SSL to PuppetDB &gt;= 6.9.1](#using-ssl-to-puppetdb--691)
-1. [Development](#development)
-   - [Authors](#authors)
+- [Overview](#overview)
+- [Setup](#setup)
+  - [Installation](#installation)
+  - [Dependencies](#dependencies)
+- [Usage](#usage)
+- [Number of Reports](#number-of-reports)
+- [Offline Mode](#offline-mode)
+- [Set Default Environment](#set-default-environment)
+- [Disable SELinux Management](#disable-selinux-management)
+- [Apache](#apache)
+  - [Apache (with Reverse Proxy)](#apache-with-reverse-proxy)
+- [Using SSL to the PuppetDB host](#using-ssl-to-the-puppetdb-host)
+  - [Using SSL to PuppetDB \>= 6.9.1](#using-ssl-to-puppetdb--691)
+- [Development](#development)
+  - [Authors](#authors)
 
 ## Overview
 
@@ -63,7 +62,7 @@ Declare the base puppetboard manifest with the below required parameter(s), set 
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.8',
+  python_version => '3.9',
   secret_key     => fqdn_rand_string(32),
 }
 ```
@@ -84,7 +83,7 @@ controlled to set the number of reports to show.
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.8',
+  python_version => '3.9',
   secret_key     => fqdn_rand_string(32),
   reports_count  => 40,
 }
@@ -97,7 +96,7 @@ puppet board can load static assets (jquery, semantic-ui, tablesorter, etc) from
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.8',
+  python_version => '3.9',
   secret_key     => fqdn_rand_string(32),
   offline_mode   => true,
 }
@@ -110,7 +109,7 @@ set to default to a different environment.
 
 ```puppet
 class { 'puppetboard':
-  python_version      => '3.8',
+  python_version      => '3.9',
   secret_key          => fqdn_rand_string(32),
   default_environment => 'customers',
 }
@@ -120,7 +119,7 @@ or to default to "All environments":
 
 ```puppet
 class { 'puppetboard':
-  python_version      => '3.8',
+  python_version      => '3.9',
   secret_key          => fqdn_rand_string(32),
   default_environment => '*',
 }
@@ -130,7 +129,7 @@ class { 'puppetboard':
 
 ```puppet
 class { 'puppetboard':
-  python_version => '3.8',
+  python_version => '3.9',
   secret_key     => fqdn_rand_string(32),
   manage_selinux => false,
 }
@@ -158,7 +157,7 @@ class { 'apache':
 
 # Configure Puppetboard
 class { 'puppetboard':
-  python_version    => '3.8',
+  python_version    => '3.9',
   secret_key        => fqdn_rand_string(32),
   manage_virtualenv => true,
 }
@@ -178,7 +177,7 @@ http://example.com/puppetboard:
 ```puppet
 # Configure Puppetboard
 class { 'puppetboard':
-  python_version => '3.8',
+  python_version => '3.9',
   secret_key     => fqdn_rand_string(32),
 }
 
@@ -225,14 +224,6 @@ apache::vhost { 'example.acme':
 }
 ```
 
-## RedHat/CentOS 7 with Python 3
-
-CentOS/RedHat 7 is pretty old. Python 3 got added after the initial release and
-a lot of packages are missing. For example python3.6 is available as a package,
-but no matching wsgi module for apache is available. Because of that, we don't
-test on CentOS 7 anymore. However, it's still possible to setup Puppetboard on
-CentOS with gunicorn as a webserver and nginx/apache forwarding to it.
-
 ## Using SSL to the PuppetDB host
 
 If you would like to use certificate auth into the PuppetDB service you must configure puppetboard to use a client certificate and private key.
@@ -258,7 +249,7 @@ Here's an example, using new certificates:
 $ssl_dir = '/var/lib/puppetboard/ssl'
 $puppetboard_certname = 'puppetboard.example.com'
 class { 'puppetboard':
-  python_version      => '3.8',
+  python_version      => '3.9',
   secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   puppetdb_host       => 'puppetdb.example.com',
@@ -277,7 +268,7 @@ Here's a complete example, re-using the puppet client certs:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  python_version      => '3.8',
+  python_version      => '3.9',
   secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   groups              => 'puppet',
@@ -295,7 +286,7 @@ Note that both the above approaches only work if you have the Puppet CA root cer
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  python_version      => '3.8',
+  python_version      => '3.9',
   secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   groups              => 'puppet',
@@ -318,7 +309,7 @@ that host and configure `puppetdb_host` to `127.0.0.1`:
 $ssl_dir = $::settings::ssldir
 $puppetboard_certname = $::certname
 class { 'puppetboard':
-  python_version      => '3.8',
+  python_version      => '3.9',
   secret_key          => fqdn_rand_string(32),
   manage_virtualenv   => true,
   groups              => 'puppet',
