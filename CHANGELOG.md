@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v11.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v11.0.0) (2024-12-14)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v10.0.0...v11.0.0)
+
+**Breaking changes:**
+
+- Drop Debian 10 and FreeBSD 12 [\#419](https://github.com/voxpupuli/puppet-puppetboard/pull/419) ([d1nuc0m](https://github.com/d1nuc0m))
+- Drop EOL Ubuntu 18.04 support [\#402](https://github.com/voxpupuli/puppet-puppetboard/pull/402) ([kenyon](https://github.com/kenyon))
+
+**Implemented enhancements:**
+
+- feat: add ldap user/dn/attribute/filter [\#416](https://github.com/voxpupuli/puppet-puppetboard/pull/416) ([d1nuc0m](https://github.com/d1nuc0m))
+- Add support for FreeBSD 14 [\#412](https://github.com/voxpupuli/puppet-puppetboard/pull/412) ([smortex](https://github.com/smortex))
+- Add EL 9 support [\#403](https://github.com/voxpupuli/puppet-puppetboard/pull/403) ([kenyon](https://github.com/kenyon))
+- Add Debian 12 support [\#396](https://github.com/voxpupuli/puppet-puppetboard/pull/396) ([bastelfreak](https://github.com/bastelfreak))
+- Allow puppet-python 7.x [\#388](https://github.com/voxpupuli/puppet-puppetboard/pull/388) ([smortex](https://github.com/smortex))
+- \(\#357\) Add Ubuntu 22.04 LTS \(Jammy Jellyfish\) support [\#358](https://github.com/voxpupuli/puppet-puppetboard/pull/358) ([prolixalias](https://github.com/prolixalias))
+
+**Fixed bugs:**
+
+- params class leaks wrong selinux context [\#228](https://github.com/voxpupuli/puppet-puppetboard/issues/228)
+
+**Merged pull requests:**
+
+- Docs: drop EOL CentOS/RHEL 7; bump Python to 3.9 [\#417](https://github.com/voxpupuli/puppet-puppetboard/pull/417) ([d1nuc0m](https://github.com/d1nuc0m))
+- .fixtures.yml: Remove puppet version constraint [\#409](https://github.com/voxpupuli/puppet-puppetboard/pull/409) ([bastelfreak](https://github.com/bastelfreak))
+- Add EL9 python\_version [\#401](https://github.com/voxpupuli/puppet-puppetboard/pull/401) ([h0tw1r3](https://github.com/h0tw1r3))
+- Use Python::Version as type for puppetboard::python\_version [\#398](https://github.com/voxpupuli/puppet-puppetboard/pull/398) ([nmaludy](https://github.com/nmaludy))
+
 ## [v10.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v10.0.0) (2023-11-27)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v9.0.0...v10.0.0)
@@ -529,7 +558,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- add class parameters to configure default\_settings.py [\#10](https://github.com/voxpupuli/puppet-puppetboard/pull/10) ([juliushaertl](https://github.com/juliushaertl))
+- add class parameters to configure default\_settings.py [\#10](https://github.com/voxpupuli/puppet-puppetboard/pull/10) ([juliusknorr](https://github.com/juliusknorr))
 - change base install directory to '$basedir' [\#9](https://github.com/voxpupuli/puppet-puppetboard/pull/9) ([ashleygould](https://github.com/ashleygould))
 - Fix typo in $docroot declaration [\#8](https://github.com/voxpupuli/puppet-puppetboard/pull/8) ([cmurphy](https://github.com/cmurphy))
 - Fix parameter list typo in README [\#5](https://github.com/voxpupuli/puppet-puppetboard/pull/5) ([cmurphy](https://github.com/cmurphy))
