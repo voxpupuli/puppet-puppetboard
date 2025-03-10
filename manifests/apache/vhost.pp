@@ -26,6 +26,8 @@
 # @param ldap_require_filter if set, LDAP search filter for Require ldap-filter directive 
 # @param virtualenv_dir Set location where virtualenv will be installed
 # @param custom_apache_parameters A hash passed to the `apache::vhost` for custom settings
+# @param manage_mod_wsgi A parameter to switch off the use of `apache::mod::wsgi`
+# @param custom_mod_wsgi_parameters A hash passed to `apache::mod::wsgi`
 class puppetboard::apache::vhost (
   String[1] $vhost_name,
   Stdlib::Unixpath $wsgi_alias                 = '/',
@@ -53,16 +55,20 @@ class puppetboard::apache::vhost (
   Optional[String[1]] $ldap_require_filter        = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
   Hash $custom_apache_parameters               = {},
+  Boolean $manage_mod_wsgi                     = true,
+  Hash $custom_mod_wsgi_parameters             = {},
 ) {
-  $wsgi = $facts['os']['family'] ? {
-    'Debian' => {
-      package_name => 'libapache2-mod-wsgi-py3',
-      mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
-    },
-    default  => {},
-  }
-  class { 'apache::mod::wsgi':
-    * => $wsgi,
+  if $manage_mod_wsgi {
+    $wsgi = $facts['os']['family'] ? {
+      'Debian' => {
+        package_name => 'libapache2-mod-wsgi-py3',
+        mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
+      },
+      default  => $custom_mod_wsgi_parameters,
+    }
+    class { 'apache::mod::wsgi':
+      * => $wsgi,
+    }
   }
 
   $docroot = "${basedir}/puppetboard"
