@@ -93,7 +93,6 @@ describe 'puppetboard class', if: has_puppetdb do
       pp = <<-EOS
       # Configure Apache on this server
       class { 'apache': }
-      class { 'apache::mod::wsgi': }
       class { 'puppetboard':
         manage_virtualenv => true,
         manage_git => true,
@@ -110,6 +109,8 @@ describe 'puppetboard class', if: has_puppetdb do
         disable_ssl => true,
         manage_firewall => false,
       }
+
+      class { 'puppetboard::apache::conf': }
       EOS
 
       # Run it twice and test for idempotency
