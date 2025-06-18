@@ -266,8 +266,19 @@ class puppetboard (
   }
 
   if $manage_virtualenv {
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '8') == 0 {
+      $_package_version = $python_version ? {
+        '3.6'  => '36',
+        '3.8'  => '38',
+        '3.9'  => '39',
+        '3.11' => 'python3.11',
+        '3.12' => 'python3.12',
+      }
+    } else {
+      $_package_version = $python_version
+    }
     class { 'python':
-      version => $python_version,
+      version => $_package_version,
       dev     => 'present',
       venv    => 'present',
     }
