@@ -18,6 +18,8 @@
 # @param ldap_require_attribute if set, attributes of LDAP users for Require ldap-attribute directive
 # @param ldap_require_filter if set, LDAP search filter for Require ldap-filter directive 
 # @param virtualenv_dir Set location where virtualenv will be installed
+# @param manage_mod_wsgi A parameter to switch off the use of `apache::mod::wsgi`
+# @param custom_mod_wsgi_parameters A hash passed to `apache::mod::wsgi`
 #
 # @note Make sure you have purge_configs set to false in your apache class!
 # @note This runs the WSGI application with a WSGIProcessGroup of $user and a WSGIApplicationGroup of %{GLOBAL}.
@@ -41,16 +43,20 @@ class puppetboard::apache::conf (
   Optional[String[1]] $ldap_require_attribute     = undef,
   Optional[String[1]] $ldap_require_filter        = undef,
   Stdlib::Absolutepath $virtualenv_dir         = $puppetboard::virtualenv_dir,
+  Boolean $manage_mod_wsgi                     = true,
+  Hash $custom_mod_wsgi_parameters             = {},
 ) {
-  $wsgi = $facts['os']['family'] ? {
-    'Debian' => {
-      package_name => 'libapache2-mod-wsgi-py3',
-      mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
-    },
-    default  => {},
-  }
-  class { 'apache::mod::wsgi':
-    * => $wsgi,
+  if $manage_mod_wsgi {
+    $wsgi = $facts['os']['family'] ? {
+      'Debian' => {
+        package_name => 'libapache2-mod-wsgi-py3',
+        mod_path     => '/usr/lib/apache2/modules/mod_wsgi.so',
+      },
+      default  => $custom_mod_wsgi_parameters,
+    }
+    class { 'apache::mod::wsgi':
+      * => $wsgi,
+    }
   }
 
   $docroot = "${basedir}/puppetboard"
