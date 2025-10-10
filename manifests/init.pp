@@ -105,12 +105,12 @@ class puppetboard (
 ) {
   if !$secret_key {
     $message = join([
-        "Starting with Puppetboard 5.0.0 providing own \$secret_key is required.",
+      "Starting with Puppetboard 5.0.0 providing own \$secret_key is required.",
 
-        'See https://github.com/voxpupuli/puppetboard/issues/721 for more info.',
+      'See https://github.com/voxpupuli/puppetboard/issues/721 for more info.',
 
-        'If you run Puppetboard on a single node with static FQDN then you can set it the following code',
-        "to generate a random but not changing value: \${fqdn_rand_string(32)}",
+      'If you run Puppetboard on a single node with static FQDN then you can set it the following code',
+      "to generate a random but not changing value: \${fqdn_rand_string(32)}",
     ], ' ')
 
     if $version == 'latest' or versioncmp($version, '5.0.0') >= 0 {
