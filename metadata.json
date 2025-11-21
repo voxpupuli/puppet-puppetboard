@@ -16,6 +16,7 @@
     {
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
+        "8",
         "9"
       ]
     },
@@ -42,12 +43,14 @@
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
+        "8",
         "9"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
+        "8",
         "9"
       ]
     },

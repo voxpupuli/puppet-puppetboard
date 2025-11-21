@@ -6,3 +6,13 @@ if $facts['os']['name'] == 'Ubuntu' {
     }
   }
 }
+
+if $facts['os']['family'] == 'RedHat' {
+  if versioncmp($facts['os']['release']['major'], '8') >= 0 {
+    package { 'disable-builtin-dnf-postgresql-module':
+      ensure   => 'disabled',
+      name     => 'postgresql',
+      provider => 'dnfmodule',
+    }
+  }
+}
