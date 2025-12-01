@@ -20,6 +20,13 @@
       ]
     },
     {
+      "operatingsystem": "Amazon",
+      "operatingsystemrelease": [
+        "2.0",
+        "2023"
+      ]
+    },
+    {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "9"
