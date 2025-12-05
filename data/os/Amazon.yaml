@@ -1,0 +1,3 @@
+---
+puppetboard::apache_confd: '/etc/httpd/conf.d'
+puppetboard::apache_service: 'httpd'
