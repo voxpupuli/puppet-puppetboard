@@ -17,8 +17,9 @@ describe 'puppetboard class', if: has_puppetdb do
       pp = <<-EOS
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl     => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
 
       # Configure Puppetboard
@@ -56,8 +57,9 @@ describe 'puppetboard class', if: has_puppetdb do
 
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl     => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
 
       # Configure Puppetboard
@@ -107,8 +109,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
@@ -148,8 +151,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
@@ -197,8 +201,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
@@ -246,8 +251,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
@@ -295,8 +301,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
@@ -344,8 +351,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
@@ -393,8 +401,9 @@ describe 'puppetboard class', if: has_puppetdb do
       }
       # Configure PuppetDB
       class { 'puppetdb':
-        disable_ssl => true,
-        manage_firewall => false,
+        puppetdb_package => 'openvoxdb', # Workaround waiting for puppet-openvoxdb
+        disable_ssl      => true,
+        manage_firewall  => false,
       }
       EOS
 
