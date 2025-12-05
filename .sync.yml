@@ -3,3 +3,6 @@
   enabled_lint_checks:
     - parameter_documentation
     - parameter_types
+.github/workflows/ci.yml:
+  with:
+    beaker_hypervisor: 'docker'
