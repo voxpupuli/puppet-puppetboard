@@ -8,7 +8,7 @@ describe 'puppetboard::apache::vhost' do
       {
         'vhost_name' => 'puppetboard.local',
         'port' => 80,
-        'enable_ldap_auth' => true
+        'enable_ldap_auth' => true,
       }
     end
     let(:pre_condition) do
@@ -19,7 +19,7 @@ describe 'puppetboard::apache::vhost' do
         }',
         'class { "puppetboard":
            secret_key => "this_should_be_a_long_secret_string",
-         }'
+         }',
       ]
     end
 
@@ -37,13 +37,13 @@ describe 'puppetboard::apache::vhost' do
         it do
           expect(subject).to contain_apache__vhost('puppetboard.local').with(
             'ensure' => 'present',
-            'port' => 80
+            'port' => 80,
           ).that_requires('File[/srv/puppetboard/puppetboard/wsgi.py]')
         end
 
         it do
           expect(subject).to contain_file('puppetboard-ldap.part').with(
-            'ensure' => 'file'
+            'ensure' => 'file',
           )
         end
       end

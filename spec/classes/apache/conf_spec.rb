@@ -11,7 +11,7 @@ describe 'puppetboard::apache::conf' do
       [
         'class { "puppetboard":
            secret_key => "this_should_be_a_long_secret_string",
-         }'
+         }',
       ]
     end
 

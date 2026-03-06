@@ -10,7 +10,7 @@ describe 'puppetboard', type: :class do
       end
 
       # With version == 'latest' $secret_key is de facto required
-      let(:params) { { 'secret_key' => 'this_should_be_a_long_secret_string', } }
+      let(:params) { { 'secret_key' => 'this_should_be_a_long_secret_string' } }
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('puppetboard') }
