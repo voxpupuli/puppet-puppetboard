@@ -4,14 +4,21 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v12.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.0.0) (2025-12-26)
+## [v12.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.1.0) (2026-05-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v12.0.0...v12.1.0)
+
+**Implemented enhancements:**
+
+- puppet/python: Allow 9.x [\#454](https://github.com/voxpupuli/puppet-puppetboard/pull/454) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v12.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.0.0) (2026-01-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v11.0.0...v12.0.0)
 
 **Breaking changes:**
 
 - Drop support for EOL Ubuntu 18.04 [\#394](https://github.com/voxpupuli/puppet-puppetboard/issues/394)
-- Drop support for EoL Ubuntu 20.04 [\#441](https://github.com/voxpupuli/puppet-puppetboard/pull/441) ([bastelfreak](https://github.com/bastelfreak))
 - Drop puppet, update openvox minimum version to 8.19 [\#429](https://github.com/voxpupuli/puppet-puppetboard/pull/429) ([TheMeier](https://github.com/TheMeier))
 
 **Implemented enhancements:**
@@ -19,7 +26,6 @@ These should not affect the functionality of the module.
 - Add support for Debian 13 [\#445](https://github.com/voxpupuli/puppet-puppetboard/pull/445) ([smortex](https://github.com/smortex))
 - Add support for Ubuntu 24.04 [\#435](https://github.com/voxpupuli/puppet-puppetboard/pull/435) ([bwitt](https://github.com/bwitt))
 - Allow puppet-python 8.x [\#425](https://github.com/voxpupuli/puppet-puppetboard/pull/425) ([teluq-pbrideau](https://github.com/teluq-pbrideau))
-- Add support for OpenVox [\#424](https://github.com/voxpupuli/puppet-puppetboard/pull/424) ([jstraw](https://github.com/jstraw))
 
 **Fixed bugs:**
 
@@ -31,10 +37,6 @@ These should not affect the functionality of the module.
 - Acceptance tests are failing on `master` [\#436](https://github.com/voxpupuli/puppet-puppetboard/issues/436)
 - Compatible with Ubuntu 24.04? [\#434](https://github.com/voxpupuli/puppet-puppetboard/issues/434)
 - Support for AWS2 Linux? [\#325](https://github.com/voxpupuli/puppet-puppetboard/issues/325)
-
-**Merged pull requests:**
-
-- Fix README badges [\#438](https://github.com/voxpupuli/puppet-puppetboard/pull/438) ([d1nuc0m](https://github.com/d1nuc0m))
 
 ## [v11.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v11.0.0) (2024-12-14)
 
