@@ -1,0 +1,60 @@
+<%- if $puppetboard::python_loglevel { -%>
+LOGLEVEL = '<%= $puppetboard::python_loglevel-%>'
+<%- } -%>
+<%- if $puppetboard::puppetdb_host { -%>
+PUPPETDB_HOST = '<%= $puppetboard::puppetdb_host %>'
+<%- } -%>
+<%- if $puppetboard::puppetdb_port { -%>
+PUPPETDB_PORT = <%= $puppetboard::puppetdb_port %>
+<%- } -%>
+<%- if type($puppetboard::puppetdb_ssl_verify) == String { -%>
+PUPPETDB_SSL_VERIFY = '<%= $puppetboard::puppetdb_ssl_verify %>'
+<%- } elsif $puppetboard::puppetdb_ssl_verify { -%>
+PUPPETDB_SSL_VERIFY = True
+<%- } else { -%>
+PUPPETDB_SSL_VERIFY = False
+<%- } -%>
+<%- if $puppetboard::puppetdb_key { -%>
+PUPPETDB_KEY = '<%= $puppetboard::puppetdb_key %>'
+<%- }-%>
+<%- if $puppetboard::puppetdb_cert { -%>
+PUPPETDB_CERT = '<%= $puppetboard::puppetdb_cert %>'
+<%- } -%>
+<%- if $puppetboard::puppetdb_timeout { -%>
+PUPPETDB_TIMEOUT = <%= $puppetboard::puppetdb_timeout %>
+<%- } -%>
+<%- if $puppetboard::unresponsive { -%>
+UNRESPONSIVE_HOURS = <%= $puppetboard::unresponsive %>
+<%- } -%>
+<%- if $puppetboard::enable_catalog { -%>
+ENABLE_CATALOG = True
+<%- } else { -%>
+ENABLE_CATALOG = False
+<%- } -%>
+<%- if $puppetboard::enable_query { -%>
+ENABLE_QUERY = True
+<%- } else { -%>
+ENABLE_QUERY = False
+<%- } -%>
+<%- if $puppetboard::localise_timestamp { -%>
+LOCALISE_TIMESTAMP = True
+<%- } else { -%>
+LOCALISE_TIMESTAMP = False
+<%- } -%>
+<%- if $puppetboard::offline_mode { -%>
+OFFLINE_MODE = True
+<%- } else { -%>
+OFFLINE_MODE = False
+<%- } -%>
+<%- if $puppetboard::default_environment { -%>
+DEFAULT_ENVIRONMENT = '<%= $puppetboard::default_environment %>'
+<%- } -%>
+<%- if $puppetboard::reports_count { -%>
+REPORTS_COUNT = <%= $puppetboard::reports_count %>
+<%- } -%>
+<%- if $puppetboard::secret_key { -%>
+SECRET_KEY = '<%= $puppetboard::secret_key %>'
+<%- } -%>
+<%- $puppetboard::extra_settings.keys.sort.each |$key| { -%>
+<%= $key %> = <%= $puppetboard::extra_settings[$key] %>
+<%- } -%>
