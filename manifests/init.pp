@@ -259,7 +259,7 @@ class puppetboard (
     group   => $group,
     mode    => '0644',
     owner   => $user,
-    content => template('puppetboard/settings.py.erb'),
+    content => epp('puppetboard/settings.py.epp'),
   }
 
   if $manage_git and !defined(Package['git']) {
