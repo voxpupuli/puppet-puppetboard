@@ -16,13 +16,15 @@
     {
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
-        "9"
+        "9",
+	      "10"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "9"
+        "9",
+	      "10"
       ]
     },
     {
@@ -43,20 +45,23 @@
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "9"
+        "9",
+	      "10"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
-        "9"
+        "9",
+	      "10"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "22.04",
-        "24.04"
+        "24.04",
+	      "26.04"
       ]
     }
   ],
