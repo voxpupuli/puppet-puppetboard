@@ -177,6 +177,8 @@ class puppetboard (
         ensure  => directory,
         recurse => true,
         force   => true,
+        owner   => $user,
+        group   => $group,
         mode    => '0755',
         purge   => true, # such cleanup is needed in case of a switch from install_from=vcsrepo to install_from=pip
       }
