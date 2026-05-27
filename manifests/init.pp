@@ -43,6 +43,9 @@
 # @param apache_confd path to the apache2 vhost directory
 # @param apache_service name of the apache2 service
 # @param secret_key used for CSRF prevention and more. It should be a long, secret string, the same for all instances of the app. Required since Puppetboard 5.0.0.
+# @param query_presets_file
+#   Path of the file with PQL query presets (Puppetboard >= 7.0.2).
+#   An example is distributed with the module. Set to 'None' to disable.
 #
 # @example
 #   configure puppetboard with an apache config for a subpath (http://$fqdn/puppetboard)
@@ -102,6 +105,7 @@ class puppetboard (
   Variant[Enum['latest'], String[1]] $version                 = 'latest',
   Boolean $use_pre_releases                                   = false,
   Optional[String[1]] $secret_key                             = undef,
+  Variant[Enum['None'], Stdlib::Unixpath] $query_presets_file = "${basedir}/puppetboard/query_presets_example.yaml",
 ) {
   if !$secret_key {
     $message = join(
@@ -260,6 +264,14 @@ class puppetboard (
     mode    => '0644',
     owner   => $user,
     content => epp('puppetboard/settings.py.epp'),
+  }
+
+  file { $query_presets_file:
+    ensure  => file,
+    content => file("${module_name}/query_presets_example.yaml"),
+    owner   => $user,
+    group   => $group,
+    mode    => '0644',
   }
 
   if $manage_git and !defined(Package['git']) {
