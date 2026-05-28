@@ -1,3 +1,5 @@
+# THIS FILE IS MANAGED BY PUPPET
+# DO NOT EDIT MANUALLY!
 <%- if $puppetboard::python_loglevel { -%>
 LOGLEVEL = '<%= $puppetboard::python_loglevel-%>'
 <%- } -%>
@@ -54,6 +56,9 @@ REPORTS_COUNT = <%= $puppetboard::reports_count %>
 <%- } -%>
 <%- if $puppetboard::secret_key { -%>
 SECRET_KEY = '<%= $puppetboard::secret_key %>'
+<%- } -%>
+<%- if $puppetboard::query_presets_file { -%>
+QUERY_PRESETS_FILE = '<%= $puppetboard::query_presets_file %>'
 <%- } -%>
 <%- $puppetboard::extra_settings.keys.sort.each |$key| { -%>
 <%= $key %> = <%= $puppetboard::extra_settings[$key] %>

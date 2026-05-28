@@ -84,6 +84,7 @@ The following parameters are available in the `puppetboard` class:
 * [`apache_confd`](#-puppetboard--apache_confd)
 * [`apache_service`](#-puppetboard--apache_service)
 * [`secret_key`](#-puppetboard--secret_key)
+* [`query_presets_file`](#-puppetboard--query_presets_file)
 
 ##### <a name="-puppetboard--install_from"></a>`install_from`
 
@@ -422,6 +423,15 @@ Data type: `Optional[String[1]]`
 used for CSRF prevention and more. It should be a long, secret string, the same for all instances of the app. Required since Puppetboard 5.0.0.
 
 Default value: `undef`
+
+##### <a name="-puppetboard--query_presets_file"></a>`query_presets_file`
+
+Data type: `Variant[Enum['None'], Stdlib::Unixpath]`
+
+Path of the file with PQL query presets (Puppetboard >= 7.0.2).
+An example is distributed with the module. Set to 'None' to disable.
+
+Default value: `"${basedir}/puppetboard/query_presets_example.yaml"`
 
 ### <a name="puppetboard--apache--conf"></a>`puppetboard::apache::conf`
 
