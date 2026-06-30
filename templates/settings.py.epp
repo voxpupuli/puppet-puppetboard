@@ -9,7 +9,7 @@ PUPPETDB_HOST = '<%= $puppetboard::puppetdb_host %>'
 <%- if $puppetboard::puppetdb_port { -%>
 PUPPETDB_PORT = <%= $puppetboard::puppetdb_port %>
 <%- } -%>
-<%- if type($puppetboard::puppetdb_ssl_verify) == String { -%>
+<%- if $puppetboard::puppetdb_ssl_verify =~ String { -%>
 PUPPETDB_SSL_VERIFY = '<%= $puppetboard::puppetdb_ssl_verify %>'
 <%- } elsif $puppetboard::puppetdb_ssl_verify { -%>
 PUPPETDB_SSL_VERIFY = True
