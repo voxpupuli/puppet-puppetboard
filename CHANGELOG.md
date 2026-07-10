@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v12.2.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.2.0) (2026-07-10)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v12.1.0...v12.2.0)
+
+**Implemented enhancements:**
+
+- feat: allow to set QUERY\_PRESETS\_FILE [\#458](https://github.com/voxpupuli/puppet-puppetboard/pull/458) ([d1nuc0m](https://github.com/d1nuc0m))
+- EL10 + Ubuntu 26.04 support [\#457](https://github.com/voxpupuli/puppet-puppetboard/pull/457) ([d1nuc0m](https://github.com/d1nuc0m))
+- refactor: rewrite settings template as EPP [\#456](https://github.com/voxpupuli/puppet-puppetboard/pull/456) ([d1nuc0m](https://github.com/d1nuc0m))
+
+**Fixed bugs:**
+
+- PuppetDB CA cert not resolved in EPP template [\#459](https://github.com/voxpupuli/puppet-puppetboard/issues/459)
+- Fix conditional check for puppetdb\_ssl\_verify [\#460](https://github.com/voxpupuli/puppet-puppetboard/pull/460) ([tindelli](https://github.com/tindelli))
+
+**Merged pull requests:**
+
+- Fix ownership of ${basedir}/puppetboard [\#450](https://github.com/voxpupuli/puppet-puppetboard/pull/450) ([sbraz](https://github.com/sbraz))
+
 ## [v12.1.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.1.0) (2026-05-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v12.0.0...v12.1.0)
@@ -19,6 +38,7 @@ These should not affect the functionality of the module.
 **Breaking changes:**
 
 - Drop support for EOL Ubuntu 18.04 [\#394](https://github.com/voxpupuli/puppet-puppetboard/issues/394)
+- Drop support for EoL Ubuntu 20.04 [\#441](https://github.com/voxpupuli/puppet-puppetboard/pull/441) ([bastelfreak](https://github.com/bastelfreak))
 - Drop puppet, update openvox minimum version to 8.19 [\#429](https://github.com/voxpupuli/puppet-puppetboard/pull/429) ([TheMeier](https://github.com/TheMeier))
 
 **Implemented enhancements:**
@@ -26,6 +46,7 @@ These should not affect the functionality of the module.
 - Add support for Debian 13 [\#445](https://github.com/voxpupuli/puppet-puppetboard/pull/445) ([smortex](https://github.com/smortex))
 - Add support for Ubuntu 24.04 [\#435](https://github.com/voxpupuli/puppet-puppetboard/pull/435) ([bwitt](https://github.com/bwitt))
 - Allow puppet-python 8.x [\#425](https://github.com/voxpupuli/puppet-puppetboard/pull/425) ([teluq-pbrideau](https://github.com/teluq-pbrideau))
+- Add support for OpenVox [\#424](https://github.com/voxpupuli/puppet-puppetboard/pull/424) ([jstraw](https://github.com/jstraw))
 
 **Fixed bugs:**
 
@@ -37,6 +58,10 @@ These should not affect the functionality of the module.
 - Acceptance tests are failing on `master` [\#436](https://github.com/voxpupuli/puppet-puppetboard/issues/436)
 - Compatible with Ubuntu 24.04? [\#434](https://github.com/voxpupuli/puppet-puppetboard/issues/434)
 - Support for AWS2 Linux? [\#325](https://github.com/voxpupuli/puppet-puppetboard/issues/325)
+
+**Merged pull requests:**
+
+- Fix README badges [\#438](https://github.com/voxpupuli/puppet-puppetboard/pull/438) ([d1nuc0m](https://github.com/d1nuc0m))
 
 ## [v11.0.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v11.0.0) (2024-12-14)
 

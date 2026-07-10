@@ -1,6 +1,6 @@
 {
   "name": "puppet-puppetboard",
-  "version": "12.1.0",
+  "version": "12.2.0",
   "author": "Vox Pupuli",
   "summary": "Install and configure PuppetBoard",
   "license": "Apache-2.0",
@@ -17,14 +17,14 @@
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
         "9",
-	      "10"
+        "10"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "9",
-	      "10"
+        "10"
       ]
     },
     {
@@ -46,14 +46,14 @@
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
         "9",
-	      "10"
+        "10"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
         "9",
-	      "10"
+        "10"
       ]
     },
     {
@@ -61,7 +61,7 @@
       "operatingsystemrelease": [
         "22.04",
         "24.04",
-	      "26.04"
+        "26.04"
       ]
     }
   ],
