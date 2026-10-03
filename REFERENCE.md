@@ -426,12 +426,12 @@ Default value: `undef`
 
 ##### <a name="-puppetboard--query_presets_file"></a>`query_presets_file`
 
-Data type: `Variant[Enum['None'], Stdlib::Unixpath]`
+Data type: `Optional[Stdlib::Unixpath]`
 
-Path of the file with PQL query presets (Puppetboard >= 7.0.2).
-An example is distributed with the module. Set to 'None' to disable.
+Path to a file with PQL query presets (requires Puppetboard >= 7.0.0).
+An example file is distributed with PuppetBoard: query_presets.yaml.example.
 
-Default value: `"${basedir}/puppetboard/query_presets_example.yaml"`
+Default value: `undef`
 
 ### <a name="puppetboard--apache--conf"></a>`puppetboard::apache::conf`
 
