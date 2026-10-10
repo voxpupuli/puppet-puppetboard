@@ -31,7 +31,7 @@ class { 'puppetboard':
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 configure puppetboard with an apache config for a subpath (http://$fqdn/puppetboard)
@@ -854,4 +854,3 @@ Default value: `{}`
 type for the different Python log levels
 
 Alias of `Enum['debug', 'info', 'notice', 'warning', 'err', 'crit', 'alert', 'emerg']`
-
