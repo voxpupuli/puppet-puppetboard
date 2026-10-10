@@ -1,65 +1,27 @@
 # THIS FILE IS MANAGED BY PUPPET
 # DO NOT EDIT MANUALLY!
-<%- if $puppetboard::python_loglevel { -%>
-LOGLEVEL = '<%= $puppetboard::python_loglevel-%>'
-<%- } -%>
-<%- if $puppetboard::puppetdb_host { -%>
-PUPPETDB_HOST = '<%= $puppetboard::puppetdb_host %>'
-<%- } -%>
-<%- if $puppetboard::puppetdb_port { -%>
-PUPPETDB_PORT = <%= $puppetboard::puppetdb_port %>
-<%- } -%>
-<%- if $puppetboard::puppetdb_ssl_verify =~ String { -%>
-PUPPETDB_SSL_VERIFY = '<%= $puppetboard::puppetdb_ssl_verify %>'
-<%- } elsif $puppetboard::puppetdb_ssl_verify { -%>
-PUPPETDB_SSL_VERIFY = True
-<%- } else { -%>
-PUPPETDB_SSL_VERIFY = False
-<%- } -%>
+LOGLEVEL = <%= $puppetboard::python_loglevel.to_python %>
+PUPPETDB_HOST = <%= $puppetboard::puppetdb_host.to_python %>
+PUPPETDB_PORT = <%= $puppetboard::puppetdb_port.to_python %>
+PUPPETDB_SSL_VERIFY = <%= $puppetboard::puppetdb_ssl_verify.to_python %>
 <%- if $puppetboard::puppetdb_key { -%>
-PUPPETDB_KEY = '<%= $puppetboard::puppetdb_key %>'
+PUPPETDB_KEY = <%= $puppetboard::puppetdb_key.to_python %>
 <%- }-%>
 <%- if $puppetboard::puppetdb_cert { -%>
-PUPPETDB_CERT = '<%= $puppetboard::puppetdb_cert %>'
+PUPPETDB_CERT = <%= $puppetboard::puppetdb_cert.to_python %>
 <%- } -%>
-<%- if $puppetboard::puppetdb_timeout { -%>
-PUPPETDB_TIMEOUT = <%= $puppetboard::puppetdb_timeout %>
-<%- } -%>
-<%- if $puppetboard::unresponsive { -%>
-UNRESPONSIVE_HOURS = <%= $puppetboard::unresponsive %>
-<%- } -%>
-<%- if $puppetboard::enable_catalog { -%>
-ENABLE_CATALOG = True
-<%- } else { -%>
-ENABLE_CATALOG = False
-<%- } -%>
-<%- if $puppetboard::enable_query { -%>
-ENABLE_QUERY = True
-<%- } else { -%>
-ENABLE_QUERY = False
-<%- } -%>
-<%- if $puppetboard::localise_timestamp { -%>
-LOCALISE_TIMESTAMP = True
-<%- } else { -%>
-LOCALISE_TIMESTAMP = False
-<%- } -%>
-<%- if $puppetboard::offline_mode { -%>
-OFFLINE_MODE = True
-<%- } else { -%>
-OFFLINE_MODE = False
-<%- } -%>
-<%- if $puppetboard::default_environment { -%>
-DEFAULT_ENVIRONMENT = '<%= $puppetboard::default_environment %>'
-<%- } -%>
-<%- if $puppetboard::reports_count { -%>
-REPORTS_COUNT = <%= $puppetboard::reports_count %>
-<%- } -%>
+PUPPETDB_TIMEOUT = <%= $puppetboard::puppetdb_timeout.to_python %>
+UNRESPONSIVE_HOURS = <%= $puppetboard::unresponsive.to_python %>
+ENABLE_CATALOG = <%= $puppetboard::enable_catalog.to_python %>
+ENABLE_QUERY = <%= $puppetboard::enable_query.to_python %>
+LOCALISE_TIMESTAMP = <%= $puppetboard::localise_timestamp.to_python %>
+OFFLINE_MODE = <%= $puppetboard::offline_mode.to_python %>
+DEFAULT_ENVIRONMENT = <%= $puppetboard::default_environment.to_python %>
+REPORTS_COUNT = <%= $puppetboard::reports_count.to_python %>
 <%- if $puppetboard::secret_key { -%>
-SECRET_KEY = '<%= $puppetboard::secret_key %>'
+SECRET_KEY = <%= $puppetboard::secret_key.to_python %>
 <%- } -%>
-<%- if $puppetboard::query_presets_file { -%>
-QUERY_PRESETS_FILE = '<%= $puppetboard::query_presets_file %>'
-<%- } -%>
+QUERY_PRESETS_FILE = <%= $puppetboard::query_presets_file.to_python %>
 <%- $puppetboard::extra_settings.keys.sort.each |$key| { -%>
-<%= $key %> = <%= $puppetboard::extra_settings[$key] %>
+<%= $key %> = <%= $puppetboard::extra_settings[$key].to_python %>
 <%- } -%>
