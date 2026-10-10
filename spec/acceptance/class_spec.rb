@@ -121,8 +121,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 
@@ -169,8 +169,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 
@@ -220,8 +220,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 
@@ -270,8 +270,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 
@@ -320,8 +320,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 
@@ -370,8 +370,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 
@@ -420,8 +420,8 @@ describe 'puppetboard class', if: has_puppetdb do
     end
 
     describe file('/srv/puppetboard/puppetboard/settings.py') do
-      it { is_expected.to contain "PUPPETDB_KEY = '/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem'" }
-      it { is_expected.to contain "PUPPETDB_CERT = '/var/lib/puppet/ssl/certs/test.networkninjas.net.pem'" }
+      it { is_expected.to contain 'PUPPETDB_KEY = "/var/lib/puppet/ssl/private_keys/test.networkninjas.net.pem"' }
+      it { is_expected.to contain 'PUPPETDB_CERT = "/var/lib/puppet/ssl/certs/test.networkninjas.net.pem"' }
     end
   end
 end
