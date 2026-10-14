@@ -71,13 +71,11 @@ class puppetboard::apache::vhost (
     "${wsgi_alias}" => "${docroot}/wsgi.py",
   }
 
-  $wsgi_daemon_process = {
-    $user => {
-      threads     => $threads,
-      group       => $group,
-      user        => $user,
-      python-home => $virtualenv_dir,
-    },
+  $wsgi_daemon_process_options = {
+    threads     => $threads,
+    group       => $group,
+    user        => $user,
+    python-home => $virtualenv_dir,
   }
 
   file { "${docroot}/wsgi.py":
@@ -118,22 +116,23 @@ class puppetboard::apache::vhost (
     $ldap_require = undef
   }
   apache::vhost { $vhost_name:
-    port                => $port,
-    ip                  => $ip,
-    docroot             => $docroot,
-    manage_docroot      => false,
-    ssl                 => $ssl,
-    ssl_cert            => $ssl_cert,
-    ssl_key             => $ssl_key,
-    ssl_chain           => $ssl_chain,
-    additional_includes => $ldap_additional_includes,
-    wsgi_daemon_process => $wsgi_daemon_process,
-    wsgi_process_group  => $group,
-    wsgi_script_aliases => $wsgi_script_aliases,
-    override            => [$override].flatten,
-    require             => [File["${docroot}/wsgi.py"], $ldap_require],
-    notify              => Service[$puppetboard::apache_service],
-    *                   => $custom_apache_parameters,
+    port                        => $port,
+    ip                          => $ip,
+    docroot                     => $docroot,
+    manage_docroot              => false,
+    ssl                         => $ssl,
+    ssl_cert                    => $ssl_cert,
+    ssl_key                     => $ssl_key,
+    ssl_chain                   => $ssl_chain,
+    additional_includes         => $ldap_additional_includes,
+    wsgi_daemon_process         => $user,
+    wsgi_daemon_process_options => $wsgi_daemon_process_options,
+    wsgi_process_group          => $group,
+    wsgi_script_aliases         => $wsgi_script_aliases,
+    override                    => [$override].flatten,
+    require                     => [File["${docroot}/wsgi.py"], $ldap_require],
+    notify                      => Service[$puppetboard::apache_service],
+    *                           => $custom_apache_parameters,
   }
 
   File[$puppetboard::settings_file] ~> Service[$puppetboard::apache_service]
