@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v12.3.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.3.0) (2026-10-16)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v12.2.0...v12.3.0)
+
+**Implemented enhancements:**
+
+- puppetlabs/stdlib: Allow 10.x [\#468](https://github.com/voxpupuli/puppet-puppetboard/pull/468) ([bastelfreak](https://github.com/bastelfreak))
+- allow python 10.x [\#462](https://github.com/voxpupuli/puppet-puppetboard/pull/462) ([marcusdots](https://github.com/marcusdots))
+
+**Fixed bugs:**
+
+- Fix regression introduced in 12.2.0 [\#467](https://github.com/voxpupuli/puppet-puppetboard/pull/467) ([smortex](https://github.com/smortex))
+
+**Closed issues:**
+
+- Switch to EPP in 12.2.0 break existing setup [\#466](https://github.com/voxpupuli/puppet-puppetboard/issues/466)
+
+**Merged pull requests:**
+
+- Fix support for `$query_presets_file` [\#463](https://github.com/voxpupuli/puppet-puppetboard/pull/463) ([smortex](https://github.com/smortex))
+
 ## [v12.2.0](https://github.com/voxpupuli/puppet-puppetboard/tree/v12.2.0) (2026-07-10)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-puppetboard/compare/v12.1.0...v12.2.0)
