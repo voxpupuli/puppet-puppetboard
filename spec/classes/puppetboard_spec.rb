@@ -63,7 +63,25 @@ describe 'puppetboard', type: :class do
         SETTINGS
         it { is_expected.to contain_file('/srv/puppetboard') }
         it { is_expected.to contain_python__pyvenv('/srv/puppetboard/virtenv-puppetboard') }
-        it { is_expected.to contain_python__pip('puppetboard') }
+        it { is_expected.to contain_python__pip('puppetboard').with_pkgname('puppetboard') }
+      end
+
+      context 'with install_from pip and the default pip_package_name' do
+        let(:params) do
+          super().merge('install_from' => 'pip')
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_python__pip('puppetboard').with_pkgname('puppetboard') }
+      end
+
+      context 'with install_from pip and a custom pip_package_name' do
+        let(:params) do
+          super().merge('install_from' => 'pip', 'pip_package_name' => 'puppetboard-dp')
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_python__pip('puppetboard').with_pkgname('puppetboard-dp').with_ensure('latest') }
       end
     end
   end

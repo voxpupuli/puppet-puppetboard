@@ -74,6 +74,7 @@ The following parameters are available in the `puppetboard` class:
 * [`manage_user`](#-puppetboard--manage_user)
 * [`manage_group`](#-puppetboard--manage_group)
 * [`package_name`](#-puppetboard--package_name)
+* [`pip_package_name`](#-puppetboard--pip_package_name)
 * [`manage_selinux`](#-puppetboard--manage_selinux)
 * [`reports_count`](#-puppetboard--reports_count)
 * [`settings_file`](#-puppetboard--settings_file)
@@ -347,6 +348,14 @@ Data type: `Optional[String[1]]`
 Name of the package to install puppetboard
 
 Default value: `undef`
+
+##### <a name="-puppetboard--pip_package_name"></a>`pip_package_name`
+
+Data type: `String[1]`
+
+Name of the PyPI package to install with install_from 'pip', e.g. a fork published on PyPI
+
+Default value: `'puppetboard'`
 
 ##### <a name="-puppetboard--manage_selinux"></a>`manage_selinux`
 
