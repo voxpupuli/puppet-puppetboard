@@ -33,6 +33,7 @@
 # @param manage_user If true, manage (create) this group. If false do nothing.
 # @param manage_group If true, manage (create) this group. If false do nothing.
 # @param package_name Name of the package to install puppetboard
+# @param pip_package_name Name of the PyPI package to install with install_from 'pip', e.g. a fork published on PyPI
 # @param manage_selinux If true, manage selinux policies for puppetboard. If false do nothing.
 # @param reports_count This is the number of reports that we want the dashboard to display.
 # @param settings_file Path to puppetboard configuration file
@@ -91,6 +92,7 @@ class puppetboard (
   Boolean $manage_user                                        = true,
   Boolean $manage_group                                       = true,
   Optional[String[1]] $package_name                           = undef,
+  String[1] $pip_package_name                                 = 'puppetboard',
   Boolean $manage_git                                         = false,
   Boolean $manage_virtualenv                                  = false,
   Stdlib::Absolutepath $virtualenv_dir                        = "${basedir}/virtenv-puppetboard",
@@ -204,6 +206,7 @@ class puppetboard (
 
       python::pip { 'puppetboard':
         ensure       => $version,
+        pkgname      => $pip_package_name,
         virtualenv   => $virtualenv_dir,
         proxy        => $python_proxy,
         owner        => $user,
